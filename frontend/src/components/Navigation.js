@@ -11,6 +11,9 @@ function Navigation(){
                 <Nav.Item>
                     <Nav.Link>Dashboard</Nav.Link>
                 </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link>Create Survey</Nav.Link>
+                </Nav.Item>
                 <Dropdown as={Nav.Item} className="ml-auto">
                     <Dropdown.Toggle as={Nav.Link}>Hi User!</Dropdown.Toggle>
                     <Dropdown.Menu>
