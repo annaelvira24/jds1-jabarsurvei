@@ -1,14 +1,20 @@
-import { Container,Row,Col } from 'react-bootstrap';
-import './App.css';
-import LandingPage from './LandingPage';
+import React from 'react';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import LandingPage from './views/LandingPage';
+import Survey from './views/Survey';
+
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <LandingPage/>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+      <Switch>
+          <Route exact path="/" component={LandingPage}/>
+          <Route exact path="/Survey" component={Survey}/>
+      </Switch>
+      </div>
+    </Router>
   );
 }
 

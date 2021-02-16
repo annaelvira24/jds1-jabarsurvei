@@ -1,0 +1,33 @@
+.Addition-header{
+    padding: 15px;
+    display: flex;
+        justify-content: center;
+        align-items: center;;
+}
+
+.Upper-header{
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;;
+}
+
+.carousel {
+    width:900px;
+    margin: auto;
+  }
+.Survey-Container{
+    padding: 20px;
+}
+.SearchBar-Container{
+    padding: 15px;
+    display: flex;
+        justify-content: center;
+        align-items: center;;
+}
+
+.ListSurvey-Container{
+    padding-left: 100px;
+    padding-right: 100px;
+
+}
