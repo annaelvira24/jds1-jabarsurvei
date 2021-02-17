@@ -1,8 +1,9 @@
 .Addition-header{
-    padding: 15px;
+    padding-left: 110px;
+    padding-right: 110px;
     display: flex;
-        justify-content: center;
-        align-items: center;;
+    justify-content: center;
+    align-items: center;
 }
 
 .Upper-header{
@@ -13,7 +14,7 @@
 }
 
 .carousel {
-    width:900px;
+    width:915px;
     margin: auto;
   }
 .Survey-Container{
@@ -26,8 +27,11 @@
         align-items: center;;
 }
 
-.ListSurvey-Container{
-    padding-left: 100px;
-    padding-right: 100px;
 
+.Addition-Card{
+    box-shadow: 10px 5px 10px rgb(235, 233, 233);
 }
+
+
+
+
