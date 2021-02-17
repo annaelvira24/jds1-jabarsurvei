@@ -3,13 +3,24 @@ import './App.css';
 import './assets/scss/App.scss';
 import Navigation from './components/Navigation';
 import Demo from './components/Demo';
+import React from 'react';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import LandingPage from './views/LandingPage';
+import Survey from './views/Survey';
+
 
 function App() {
+
   return (
-    <div className="App">
+    <Router>
+      <div className="App">
       <Navigation/>
-      <Demo/>
-    </div>
+      <Switch>
+          <Route exact path="/" component={LandingPage}/>
+          <Route exact path="/Survey" component={Survey}/>
+      </Switch>
+      </div>
+    </Router>
   );
 }
 

@@ -1,0 +1,7 @@
+.Table-Container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-left: 136px;
+        padding-right: 136px;
+}
