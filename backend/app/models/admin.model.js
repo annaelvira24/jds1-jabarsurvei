@@ -23,12 +23,11 @@ Admin.findById = function (id, result) {
 };
 
 Admin.login = function (req, result) {
-    //var post  = req.body;
-    // var email= post.email;
-    // var password= post.password;
+    var email  = req.body.email;
+    var password = req.body.password;
 
-    var email = "example@gmail.com";
-    var password = "password123";
+    // var email = "example@gmail.com";
+    // var password = "password123";
 
     console.log("hei");
 
@@ -37,12 +36,10 @@ Admin.login = function (req, result) {
         if(res.length>0){
             //req.session.userId = results[0].id;
             //req.session.user = results[0];
-            console.log(res[0]);
+            //console.log(res[0]);
             result(null, res);
-            // TODO: res.redirect('/');
          }
          else{
-            err = "wrong email/password"
             result(err, null);
          }
     });

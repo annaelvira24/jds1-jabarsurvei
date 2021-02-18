@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import Cookies from 'universal-cookie';
+import http from "../http-common";
 import './../assets/css/LoginPage.css'
+import { setUserCookie } from './../util/Common';
+import Logo from './../assets/image/logo.png';
 
 class Login extends Component{
     state = {
@@ -9,26 +11,57 @@ class Login extends Component{
 
     constructor(){
         super();
-        let cookie = new Cookies();
-        this.state.cookie = cookie.get("admin");
     }
 
+    handleLogin(e){
+        e.preventDefault();
+        
+        let email = document.getElementById('email-input').value;
+        let password = document.getElementById('password-input').value;
 
+        http.post('http://localhost:5000/api/admin/login', { email : email, password : password })
+        .then(res => {
+            console.log(res);
+            if(res.data != null){
+                setUserCookie(res.data);
+                
+                //TODO: redirect ke dashboard admin;
+                //window.location.href="/"
+            }
+            else{
+                document.getElementById('email-input').style.borderColor = 'red';
+                document.getElementById('email-input').style.borderWidth = '1.5px';
+                document.getElementById('password-input').style.borderColor = 'red';
+                document.getElementById('password-input').style.borderWidth = '1.5px';
+                document.getElementById('false-msg').style.color = 'red';
+                document.getElementById('false-msg').innerHTML = `Email atau password salah`;
+            }   
+        })
+    }
+
+    clearSpan = async e => {
+        document.getElementById('email-input').style.borderColor = '#ccc';
+        document.getElementById('email-input').style.borderWidth = '1px';
+        document.getElementById('password-input').style.borderColor = '#ccc';
+        document.getElementById('password-input').style.borderWidth = '1px';
+        document.getElementById('false-msg').innerHTML = ``;
+    }
 
     render(){
         return(
             <div className="wrapper-login">
-                <h3>JABAR CROWDSOURCE</h3>
+                <img src={Logo} className = "logo"/>
                 <div className="container-login">
-                    <form class="login-form">             
+                    <form className="login-form">             
                         <div className="form-group">
-                            <input type="email" className="form-control" placeholder="Email" />
+                            <input type="email" id="email-input" className="form-control" placeholder="Email" onClick={this.clearSpan}/>
                         </div>
                 
                         <div className="form-group">
-                            <input type="password" className="form-control" placeholder="Password" />
+                            <input type="password" id="password-input" className="form-control" placeholder="Password" onClick={this.clearSpan}/>
+                            <span id="false-msg" className="input-message"></span>
                         </div>
-                        <button type="submit" className="btn btn-t-blue btn-block">Log in</button>
+                        <button type="submit" id="btn-login" className="btn btn-t-blue btn-block" onClick={(e) => this.handleLogin(e)}>Log in</button>
                     </form>
                 </div>
             </div>

@@ -17,3 +17,11 @@
     min-width: 300px;
     text-align: left;
 }
+
+.input-message {
+    font-size: 0.9rem;
+}
+
+.logo{
+    width: 250px;
+}

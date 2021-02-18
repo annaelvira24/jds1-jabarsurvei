@@ -1,16 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 import './assets/scss/App.scss';
-import Navigation from './components/Navigation';
-import Demo from './components/Demo';
-import LoginPage from './views/LoginPage'
+import './App.css';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+//import LandingPage from './views/LandingPage';
+//import Survey from './views/Survey';
+import LoginPage from './views/LoginPage';
+
 
 function App() {
+
   return (
-    <div className="App">
-      <Navigation/>
-      <LoginPage/>
-    </div>
+    <Router>
+      <div className="App">
+      <Switch>
+          {/* <Route exact path="/" component={LandingPage}/>
+          <Route exact path="/Survey" component={Survey}/> */}
+          <Route exact path="/login" component={LoginPage}/>
+
+      </Switch>
+      </div>
+    </Router>
   );
 }
 

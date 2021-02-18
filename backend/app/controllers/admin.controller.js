@@ -13,7 +13,12 @@ exports.findById = function(req, res) {
 exports.login = function(req, res) {
     Admin.login(req,
     function(err, admin) {  
-        if (err)  res.send(err);  
-        res.json(admin);
+        if (err){
+            res.send(err);
+        }
+        else{
+            res.status(200).json(admin);
+        }
+        return;
     });
 };
