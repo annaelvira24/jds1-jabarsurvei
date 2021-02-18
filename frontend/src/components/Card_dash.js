@@ -1,6 +1,8 @@
 import { Card,Col, Row, Container,CardDeck} from 'react-bootstrap';
 import React from 'react';
 import square from '../assets/image/square_image.png';
+import '../assets/css/Card.dash.css';
+
 
 
 const Card_dash = () => {

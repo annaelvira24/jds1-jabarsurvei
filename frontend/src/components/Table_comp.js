@@ -14,6 +14,8 @@ const Table_comp = ({ daftar_survey, daftar_coloumn }) => {
         history.push(path);
     };
 
+
+
     return(
         <div className='Table-Container'>
             <Container>
