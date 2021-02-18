@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
+import {Button} from 'react-bootstrap';
 import Table_comp from '../components/Table_comp.js';
+import '../assets/scss/Custom.scss';
+import '../assets/css/DashboardAdmin.css';
+
+
 
 
 
@@ -33,7 +38,15 @@ class DashboardAdmin extends Component {
     render(){
       return (
         <div className="Content-Container">
-              <Table_comp daftar_survey={this.constructor.datas}  daftar_coloumn={this.constructor.coloumns}/>
+          <header>
+            <h1 className = 'Title-h1-Dashboard'> Daftar Survey Milikmu ! </h1>
+            <Button variant="outline-success" size="lg" block className='btn-newsurvey'>
+              Buat Survey
+            </Button>
+          </header>
+          <body>
+            <Table_comp daftar_survey={this.constructor.datas}  daftar_coloumn={this.constructor.coloumns}/>
+          </body>
         </div>
       );
     }
