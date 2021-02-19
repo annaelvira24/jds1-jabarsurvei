@@ -8,7 +8,6 @@ import CreateSurvey from './components/CreateSurvey';
 function App() {
   return (
     <div className="App">
-      <Navigation/>
       <CreateSurvey/>
     </div>
   );
