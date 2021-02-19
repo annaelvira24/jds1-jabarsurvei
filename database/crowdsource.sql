@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
 --
 -- Host: localhost    Database: crowdsource
 -- ------------------------------------------------------
--- Server version	8.0.19
+-- Server version	8.0.23
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -67,6 +67,7 @@ CREATE TABLE `survey` (
 
 LOCK TABLES `survey` WRITE;
 /*!40000 ALTER TABLE `survey` DISABLE KEYS */;
+INSERT INTO `survey` VALUES (1,1,'Survey Kepuasan Layanan',''),(2,3,'Survey Kepuasan Pelayanan Pendidikan Sekolah Dasar',''),(3,3,'Evaluasi Kualitas Pembelajaran Jarak Jauh','Survey untuk menilai kualitas dari pelaksanaan Pembelajaran Jarak Jauh'),(4,2,'Feedback Pelayanan Kesehatan','Survey ini digunakan untuk mengetahui performansi dari pelayanan kesehatan yang disediakan oleh XYZ. Mohon diisi sesuai dengan pengalaman masing-masing'),(5,1,'Survey Mengenai User Experience','Survey untuk mengukur user experience yang dialami oleh pengguna website Crowd Source. Hasil dari survey ini akan digunakan untuk meningkatkan kualitas dari website Crowd Source. Estimasi waktu pengisian survey ini adalah 5 menit.'),(6,2,'Survey Konsumsi Makanan','Survey untuk mengetahui tren dari konsumsi makanan'),(7,1,'Survey Pengeluaran Sehari-hari','Survey untuk mendata pengeluaran masyarakat untuk kebutuhan sehari-hari'),(8,1,'Pengalaman Terhadap Transportasi Umum',''),(9,2,'Survey Aksesibilitas Dokter',''),(10,1,'Survey Sarana dan Prasarana Tempat Wisata',''),(11,1,'','');
 /*!40000 ALTER TABLE `survey` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -79,4 +80,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-12 21:47:50
+-- Dump completed on 2021-02-18 17:44:54
