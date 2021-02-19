@@ -16,14 +16,14 @@ class LandingPage extends Component {
     static get coloumns() { 
       return (
         [{
-          dataField: 'id',
-          text: 'Nomor'
+          dataField: 'id_survey',
+          text: 'Nomor Survey'
         }, {
-          dataField: 'judul',
+          dataField: 'survey_title',
           text: 'Judul Suvey'
         }, {
-          dataField: 'maker',
-          text: 'Pembuat Survey'
+          dataField: 'description',
+          text: 'Deskripsi'
         }]
       )
   } 
