@@ -37,9 +37,10 @@ const Table_comp = ({ daftar_survey, daftar_coloumn }) => {
                     <tbody>
                         {daftar_survey.map((survey) => (
                             <tr onClick={routeChange}>
-                                <td>{survey.id}</td>
-                                <td>{survey.judul}</td>
-                                <td>{survey.maker}</td>
+                                <td>{survey.id_survey}</td>
+                                <td>{survey.survey_title}</td>
+                                <td>{survey.username}</td>
+                                <td>{survey.decription}</td>
                             </tr>
                     ))}
                     </tbody>

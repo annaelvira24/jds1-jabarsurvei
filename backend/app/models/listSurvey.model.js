@@ -14,7 +14,7 @@ var ListSurvey = function(survey){
 
 ListSurvey.findAll = function (result) {
     dbConn.query(
-        "SELECT survey.id_survey, survey.id_admin, survey.survey_title, survey.decription FROM survey LEFT JOIN admin ON survey.id_admin = admin.id_admin ORDER BY survey.id_survey",
+        "SELECT survey.id_survey, survey.id_admin, survey.survey_title, survey.decription, admin.username FROM survey LEFT JOIN admin ON survey.id_admin = admin.id_admin ORDER BY survey.id_survey",
         
 
         function (err, res) {
