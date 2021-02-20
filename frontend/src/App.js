@@ -3,6 +3,7 @@ import './assets/scss/App.scss';
 import './App.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import LandingPage from './views/LandingPage';
+import Dashboard from './views/DashboardAdmin';
 import Survey from './views/Survey';
 import LoginPage from './views/LoginPage';
 import Navbar from './components/Navigation';
@@ -17,6 +18,7 @@ function App() {
       <Switch>
           <Route exact path="/" component={LandingPage}/>
           <Route exact path="/Survey" component={Survey}/>
+          <Route exact path="/Dashboard" component={Dashboard}/>
           <Route exact path="/login" component={LoginPage}/>
 
       </Switch>
