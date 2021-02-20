@@ -6,6 +6,7 @@ import LandingPage from './views/LandingPage';
 import Dashboard from './views/DashboardAdmin';
 import Survey from './views/Survey';
 import LoginPage from './views/LoginPage';
+import Navbar from './components/Navigation';
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
   return (
     <Router>
       <div className="App">
+      <Navbar/>
       <Switch>
           <Route exact path="/" component={LandingPage}/>
           <Route exact path="/Survey" component={Survey}/>
