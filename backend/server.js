@@ -41,6 +41,3 @@ app.listen(PORT, () => {
 
 const listSurveyRoutes = require('./app/routes/listSurvey.routes')
 app.use('/api/listSurvey', listSurveyRoutes);
-
-const surveyAdminRoutes = require('./app/routes/surveyAdmin.routes')
-app.use('/api/surveyAdmin', surveyAdminRoutes);
