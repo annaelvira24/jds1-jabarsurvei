@@ -6,6 +6,7 @@ import LandingPage from './views/LandingPage';
 import Survey from './views/Survey';
 import LoginPage from './views/LoginPage';
 import Navbar from './components/Navigation';
+import Demo from './components/Demo';
 
 
 function App() {

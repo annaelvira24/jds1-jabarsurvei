@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
 import http from "../http-common";
 import './../assets/css/LoginPage.css'
 import { setUserCookie } from './../util/Common';
@@ -61,7 +62,7 @@ class Login extends Component{
                             <input type="password" id="password-input" className="form-control" placeholder="Password" onClick={this.clearSpan}/>
                             <span id="false-msg" className="input-message"></span>
                         </div>
-                        <button type="submit" id="btn-login" className="btn btn-t-blue btn-block" onClick={(e) => this.handleLogin(e)}>Log in</button>
+                        <Button type="submit" id="btn-login" className="btn btn-t-blue btn-block" onClick={(e) => this.handleLogin(e)}>Log in</Button>
                     </form>
                 </div>
             </div>
