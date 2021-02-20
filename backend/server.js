@@ -16,10 +16,22 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// var session = require('express-session');
+// app.use(session({
+//   secret: 'keyboard cat',
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: { maxAge: 60000 }
+// }));
+
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "testing" });
 });
+
+const adminRoutes = require('./app/routes/admin.routes')
+// using as middleware
+app.use('/api/admin', adminRoutes);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 5000;
