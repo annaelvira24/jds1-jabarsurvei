@@ -7,38 +7,67 @@ window.jQuery = $;
 window.$ = $;
 
 require('formBuilder');
+require('formBuilder/dist/form-render.min.js');
 
 const formData = [];
 
-/* 
-The order of the imports and requires is very important, especially in the online enviornment.
-The two jQuery libraries must be imported using Node's require(), and not ES6 import.
-Also, these two requires MUST come after setting the global jQuery and $ symbols.
-
-In my Babel/Webpack project, the type and order of the imports is a little less sensitive.
-For my project, the following alternative works:
-
-    import $ from 'jquery';
-    import React from 'react';
-    import ReactDOM from 'react-dom';
-    import 'jquery-ui-sortable';
-
-    window.jQuery = $;
-    window.$ = $;
-
-    require('formBuilder');
-*/
-
+/* fbOptions = {
+      onSave: function() {
+        $fbEditor.toggle();
+        $formContainer.toggle();
+        $('form', $formContainer).formRender({
+          formData: formBuilder.formData
+        });
+      }
+    } */
 class FormBuilder extends Component {
-    fb = createRef();
+    fbBuilder = createRef();
+    fbBuilderWrapper = createRef();
+    fbRender = createRef();
+    fbRenderWrapper = createRef();
+    
     componentDidMount() {
-      $(this.fb.current).formBuilder({ formData });
+      $(this.fbBuilder.current).formBuilder({ formData });
+      $(this.fbRenderWrapper.current).toggle();
+      $(this.fbRender.current).formRender({
+      dataType: 'json',
+      formData: $(this.fbBuilder.current).formBuilder('getData', 'json')
+      });
     }
-  
+    handlePreviewEdit() {
+      $(this.fbBuilderWrapper.current).toggle();
+      $(this.fbRenderWrapper.current).toggle();
+      $(this.fbRender.current).formRender({
+      dataType: 'json',
+      formData: $(this.fbBuilder.current).formBuilder('getData', 'json')
+      });
+    }
+    handleClearBuilder() {
+      /* TODO
+      button buat clear builder (MASIH ERROR)
+      */
+      $(this.fbBuilder.current).formBuilder().actions.clearFields();
+      //$(this.fbBuilder.current).formBuilder.actions.clearFields();
+    }
+    
     render() {
-      return <div id="fb-editor" ref={this.fb} />;
+      return(
+        <div>
+          <div id="fb-editor-form" ref={this.fbBuilderWrapper}>
+            <div id="fb-editor" ref={this.fbBuilder}>
+
+            </div>
+            <button id="render" onClick={this.handleClearBuilder.bind(this)}>Clear</button>
+            <button id="clear" onClick={this.handlePreviewEdit.bind(this)}>Preview</button>
+          </div>
+          <div id="fb-rendered-form" ref={this.fbRenderWrapper}>
+            <div id="fb-rendered" ref={this.fbRender}>
+
+            </div>
+            <button id="render" onClick={this.handlePreviewEdit.bind(this)}>Edit</button>
+          </div>
+        </div>
+      );
     }
   }
 export default FormBuilder;
-
-//ReactDOM.render(<FormBuilder />, document.getElementById("root"));  
