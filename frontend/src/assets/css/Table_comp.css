@@ -1,7 +1,16 @@
 .Table-Container{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding-left: 136px;
-        padding-right: 136px;
+        
+}
+.table-header{
+        text-align: center;
+        vertical-align: middle;
+}
+.List-Table{
+        max-width: 84%;
+        margin-left: auto;
+margin-right: auto;
+}
+.Table2-Container{
+justify-content: center;
+
 }

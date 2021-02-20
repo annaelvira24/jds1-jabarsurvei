@@ -14,9 +14,11 @@ const Table_comp = ({ daftar_survey, daftar_coloumn }) => {
         history.push(path);
     };
 
+
+
     return(
         <div className='Table-Container'>
-            <Container>
+            <Container className='Table2-Container'>
                 <Row className="SearchBar-Container">
                     <Form inline>
                         {/* <Form.Control size="sm" type="text" placeholder="Search" /> */}
@@ -24,20 +26,21 @@ const Table_comp = ({ daftar_survey, daftar_coloumn }) => {
                         <Button type="submit">Search</Button>
                     </Form>
                 </Row>
-                <Table hover size="sm" className="List-Table">
-                    <thead>
-                        <tr>
+                <Table striped hover size="sm" className="List-Table">
+                    <thead >
+                        <tr >
                         {daftar_coloumn.map((coloumn) => (
-                                <th>{coloumn.text}</th>
+                                <th className = 'table-header'>{coloumn.text}</th>
                         ))}
                         </tr>
                     </thead>
                     <tbody>
                         {daftar_survey.map((survey) => (
                             <tr onClick={routeChange}>
-                                <td>{survey.id}</td>
-                                <td>{survey.judul}</td>
-                                <td>{survey.maker}</td>
+                                <td>{survey.id_survey}</td>
+                                <td>{survey.survey_title}</td>
+                                <td>{survey.username}</td>
+                                <td>{survey.decription}</td>
                             </tr>
                     ))}
                     </tbody>

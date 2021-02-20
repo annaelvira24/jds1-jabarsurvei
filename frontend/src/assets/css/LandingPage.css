@@ -16,6 +16,7 @@
 .carousel {
     width:915px;
     margin: auto;
+    font-family: 'Lato',Helvetica,Arial,Lucida,sans-serif;
   }
 .Survey-Container{
     padding: 20px;
@@ -31,7 +32,6 @@
 .Addition-Card{
     box-shadow: 10px 5px 10px rgb(235, 233, 233);
 }
-
 
 
 
