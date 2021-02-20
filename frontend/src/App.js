@@ -5,6 +5,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import LandingPage from './views/LandingPage';
 import Survey from './views/Survey';
 import LoginPage from './views/LoginPage';
+import DashboardAdmin from './views/DashboardAdmin';
 import Navbar from './components/Navigation';
 
 
@@ -18,6 +19,7 @@ function App() {
           <Route exact path="/" component={LandingPage}/>
           <Route exact path="/Survey" component={Survey}/>
           <Route exact path="/login" component={LoginPage}/>
+          <Route exact path="/Dashboard" component={DashboardAdmin}/>
 
       </Switch>
       </div>
