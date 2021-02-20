@@ -11,29 +11,32 @@ import '../assets/css/DashboardAdmin.css';
 class DashboardAdmin extends Component {
 
 
-    static get coloumns() { 
-      return (
-        [{
-          dataField: 'id',
-          text: 'Nomor'
-        }, {
-          dataField: 'judul',
-          text: 'Judul Suvey'
-        }, {
-          dataField: 'maker',
-          text: 'Pembuat Survey'
-        }]
-      )
-  } 
-  static get datas() { 
+  static get coloumns() { 
     return (
-      [{id: 1, judul: 'Penggunaan sabun cari di kala pandemi', maker: 'otto'},
-      {id: 2, judul: 'Usia emas untuk memulai bisnis', maker: 'ot'},
-      {id: 3, judul: 'Tingkat konsumsi kopo', maker: 'sfs'},
-      {id: 4, judul: 'Pandangan masyarakat terkait vaksin', maker: 'fere'},
-      {id: 5, judul: 'Jumlah pengguna sampah', maker: 'gere'}]
+      [{
+        dataField: 'id_survey',
+        text: 'Nomor Survey'
+      },{
+        dataField: 'survey_title',
+        text: 'Judul Suvey'
+      }, {
+        dataField: 'username',
+        text: 'Pembuat Survey'
+      }, {
+        dataField: 'decription',
+        text: 'Deskripsi'
+      }]
     )
-} 
+  } 
+  // static get datas() { 
+  //   return (
+  //     [{id: 1, judul: 'Penggunaan sabun cari di kala pandemi', maker: 'otto'},
+  //     {id: 2, judul: 'Usia emas untuk memulai bisnis', maker: 'ot'},
+  //     {id: 3, judul: 'Tingkat konsumsi kopo', maker: 'sfs'},
+  //     {id: 4, judul: 'Pandangan masyarakat terkait vaksin', maker: 'fere'},
+  //     {id: 5, judul: 'Jumlah pengguna sampah', maker: 'gere'}]
+  //   )
+  // } 
 
     render(){
       return (
@@ -51,7 +54,15 @@ class DashboardAdmin extends Component {
       );
     }
 
-
-
+    componentDidMount() {
+      http.get('http://localhost:5000/api/listSurvey/findAll')
+        .then(res => {
+          
+          const listSurvey = res.data;
+          this.setState({ listSurvey });
+          console.log(listSurvey);
+        })
+      
+    }
 };
   export default DashboardAdmin;
