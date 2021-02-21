@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-top: 150px;
+    margin-top: 100px;
 }
 
 .container-login {
@@ -20,6 +20,14 @@
 
 .input-message {
     font-size: 0.9rem;
+}
+
+#btn-login{
+    background-color: #00A5E1;
+}
+
+#btn-login:hover{
+    background-color: rgb(2, 135, 184);
 }
 
 .logo{
