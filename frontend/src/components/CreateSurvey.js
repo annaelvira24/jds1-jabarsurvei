@@ -4,13 +4,13 @@ import './../assets/css/CreateSurvey.css';
 
 function ShortAnswer() {
     return (
-        <Form.Control type="text" placeholder="Answer" />
+        <Form.Control id="form-survey" type="text" placeholder="Answer" />
     )
 }
 
 function LongAnswer() {
     return (
-        <Form.Control type="text" as="textarea" placeholder="Answer" />
+        <Form.Control id="form-survey" type="text" as="textarea" placeholder="Answer" />
     )
 }
 
@@ -59,7 +59,7 @@ function Question(props){
         <Container className="my-4 p-4 w-100 bg-white rounded box-shadow-container" id={"question-"+props.qno}>
             <Row>
                 <Col>
-                    <Form.Control type="text" placeholder={"Question "+props.qno}/>
+                    <Form.Control id="form-survey" type="text" placeholder={"Question "+props.qno}/>
                 </Col>
                 <Col md={3}>
                     <Form.Group>
@@ -86,9 +86,9 @@ function Section(props){
     }
     return (
         <Container className="my-3 p-3 rounded box-shadow-container" id={"section-"+props.secno}>
-            <Container>
-                <Form.Control type="text" placeholder={"Section "+props.secno} size="lg"/>
-                <Form.Control as="textarea" rows={1} type="text" placeholder="Section description"/>
+            <Container  id = "box-shadow-survey">
+                <Form.Control id="form-survey" type="text" placeholder={"Section "+props.secno} size="lg"/>
+                <Form.Control id="form-survey" as="textarea" rows={1} type="text" placeholder="Section description"/>
             </Container>
             {questions}
             <Button type="button" variant="secondary" onClick={addQuestion}>+ Add Question</Button>
@@ -109,8 +109,8 @@ function CreateSurvey(){
             </Jumbotron>
             <Form>
                 <Container className="p-4 rounded box-shadow-container">
-                    <Form.Control type="text" placeholder="Title" size="lg" className="my-1"/>
-                    <Form.Control as="textarea" rows={1} placeholder="Description" className="my-1"/>
+                    <Form.Control id="form-survey" type="text" placeholder="Title" size="lg" className="my-1"/>
+                    <Form.Control id="form-survey" as="textarea" rows={1} placeholder="Description" className="my-1"/>
                 </Container>
                 { sections }
                 <Button type="button" variant="secondary" onClick={ addSection }>+ Add Section</Button>
