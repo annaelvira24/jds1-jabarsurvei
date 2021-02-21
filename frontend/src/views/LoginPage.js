@@ -26,8 +26,7 @@ class Login extends Component{
             if(res.data != null){
                 setUserCookie(res.data);
                 
-                //TODO: redirect ke dashboard admin;
-                window.location.href="/Dashboard"
+                window.location.href="/dashboard"
             }
             else{
                 document.getElementById('email-input').style.borderColor = 'red';

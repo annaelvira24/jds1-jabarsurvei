@@ -26,11 +26,6 @@ Admin.login = function (req, result) {
     var email  = req.body.email;
     var password = req.body.password;
 
-    // var email = "example@gmail.com";
-    // var password = "password123";
-
-    console.log("hei");
-
     dbConn.query("Select * from admin where email = '"+email+"' and password_hashed = md5('"+password+"') ",
     function (err, res) {
         if(res.length>0){
