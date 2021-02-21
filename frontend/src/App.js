@@ -7,6 +7,7 @@ import Survey from './views/Survey';
 import LoginPage from './views/LoginPage';
 import DashboardAdmin from './views/DashboardAdmin';
 import Navbar from './components/Navigation';
+import CreateSurvey from './components/CreateSurvey';
 import { getUser } from './util/Common';
 
 
@@ -22,6 +23,10 @@ function App() {
           <Route exact path="/dashboard" component={DashboardAdmin}>
             { (!getUser()) && (<Redirect to="/" />) }
           </Route>
+          <Route exact path="/create-survey" component={CreateSurvey}>
+            { (!getUser()) && (<Redirect to="/" />) }
+          </Route>
+
       </Switch>
       </div>
     </Router>

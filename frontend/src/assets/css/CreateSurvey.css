@@ -1,0 +1,9 @@
+.form-control {
+    border: 0 !important;
+    border-bottom: 1px solid black !important;
+    border-radius: 0 !important;
+}
+
+.box-shadow-container {
+   box-shadow: 0 .125rem .3rem rgba(#000, .2) !important;
+}

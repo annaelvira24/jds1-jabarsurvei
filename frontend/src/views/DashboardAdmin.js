@@ -53,7 +53,7 @@ class DashboardAdmin extends Component {
         <div className="Content-Container">
           <header>
             <h1 className = 'Title-h1-Dashboard'> Daftar Survey Milikmu ! </h1>
-            <Button variant="outline-success" size="lg" block className='btn-newsurvey'>
+            <Button variant="outline-success" size="lg" block className='btn-newsurvey' onClick = {event =>  window.location.href='/create-survey'}>
               Buat Survey
             </Button>
           </header>
