@@ -1,0 +1,37 @@
+.Addition-header{
+    padding-left: 110px;
+    padding-right: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Upper-header{
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;;
+}
+
+.carousel {
+    width:915px;
+    margin: auto;
+    font-family: 'Lato',Helvetica,Arial,Lucida,sans-serif;
+  }
+.Survey-Container{
+    padding: 20px;
+}
+.SearchBar-Container{
+    padding: 15px;
+    display: flex;
+        justify-content: center;
+        align-items: center;;
+}
+
+
+.Addition-Card{
+    box-shadow: 10px 5px 10px rgb(235, 233, 233);
+}
+
+
+
