@@ -41,13 +41,13 @@ class Navigation extends Component{
                         </Navbar.Brand>
                     </Nav.Item>
                     <Navbar.Collapse className="justify-content-end">
-                        {(this.state.username)
+                        {(this.state.cookie)
                             && (<Nav.Link href="/dashboard">Dashboard</Nav.Link>
                         )}
-                        {(!this.state.username)
+                        {(!this.state.cookie)
                             && (<Nav.Link href="/login">Login</Nav.Link>
                         )}
-                        {(this.state.username)
+                        {(this.state.cookie)
                             && (<Nav.Link onClick= {(e)=> this.handleLogout(e)}>Logout</Nav.Link>
                         )}
                     </Navbar.Collapse>
