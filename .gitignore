@@ -5,3 +5,5 @@ frontend/yarn.lock
 backend/node_modules
 backend/package-lock.json
 frontend/yarn.lock
+frontend/yarn.lock
+frontend/package-lock.json
