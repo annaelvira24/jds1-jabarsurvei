@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Container, Form, Row, Col } from 'react-bootstrap';
+import { Button, Container, Form, Row, Col, Jumbotron } from 'react-bootstrap';
 
 function ShortAnswer() {
     return (
@@ -55,7 +55,7 @@ function Question(props){
     }
 
     return (
-        <Container className="my-4 p-4 w-100 bg-white rounded" id={"question-"+props.qno}>
+        <Container className="my-4 p-4 w-100 bg-white rounded box-shadow-container" id={"question-"+props.qno}>
             <Row>
                 <Col>
                     <Form.Control type="text" placeholder={"Question "+props.qno}/>
@@ -65,8 +65,8 @@ function Question(props){
                         <Form.Control as="select" onChange={handleChange}>
                             <option value="sa">Short Answer</option>
                             <option value="la">Long Answer</option>
-                            <option value="mc">Multiple Choice</option>
-                            <option value="ms">Multiple Select</option>
+                            { /*<option value="mc">Multiple Choice</option>
+                            <option value="ms">Multiple Select</option>*/ }
                         </Form.Control>
                     </Form.Group>
                 </Col>
@@ -84,7 +84,7 @@ function Section(props){
         setQuestions(questions.concat(<Question qno={ questions.length+1 } secno={ props.secno } />));
     }
     return (
-        <Container className="my-3 p-3 border border-secondary rounded bg-light" id={"section-"+props.secno}>
+        <Container className="my-3 p-3 rounded box-shadow-container" id={"section-"+props.secno}>
             <Container>
                 <Form.Control type="text" placeholder={"Section "+props.secno} size="lg"/>
                 <Form.Control as="textarea" rows={1} type="text" placeholder="Section description"/>
@@ -103,8 +103,11 @@ function CreateSurvey(){
     }
     return (
         <Container className="my-3 p-3">
+            <Jumbotron className="bg-t-green text-white">
+                <h3>Create Survey</h3>
+            </Jumbotron>
             <Form>
-                <Container className="p-4 border border-secondary rounded">
+                <Container className="p-4 rounded box-shadow-container">
                     <Form.Control type="text" placeholder="Title" size="lg" className="my-1"/>
                     <Form.Control as="textarea" rows={1} placeholder="Description" className="my-1"/>
                 </Container>
