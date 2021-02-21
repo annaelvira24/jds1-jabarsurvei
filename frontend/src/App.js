@@ -24,7 +24,7 @@ function App() {
             { (!getUser()) && (<Redirect to="/" />) }
           </Route>
           <Route exact path="/create-survey" component={CreateSurvey}>
-            {/* { (!getUser()) && (<Redirect to="/" />) } */}
+            { (!getUser()) && (<Redirect to="/" />) }
           </Route>
 
       </Switch>
