@@ -1,0 +1,18 @@
+.navbar{
+    height: 70px;
+    box-shadow: 0px 0px 20px rgb(235, 233, 233);
+    background-color: white;
+}
+
+#sticky-navbar{
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.navbar-brand img {
+  padding: 7px 14px;
+  width: 140px;
+  margin-top: -7;
+}
+

@@ -1,0 +1,9 @@
+#form-survey {
+    border: 0;
+    border-bottom: 1px solid black;
+    border-radius: 0;
+}
+
+.box-shadow-container {
+   box-shadow: 0 .125rem .3rem rgba(#000, .2) !important;
+}
