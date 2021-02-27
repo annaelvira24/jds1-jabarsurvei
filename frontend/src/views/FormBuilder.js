@@ -27,7 +27,7 @@ class FormBuilder extends Component {
     fbRenderWrapper = createRef();
     
     componentDidMount() {
-      $(this.fbBuilder.current).formBuilder({ formData });
+      $(this.fbBuilder.current).formBuilder({ formData , disabledActionButtons: ['data','clear','save']});
       $(this.fbRenderWrapper.current).toggle();
       $(this.fbRender.current).formRender({
       dataType: 'json',
@@ -43,11 +43,7 @@ class FormBuilder extends Component {
       });
     }
     handleClearBuilder() {
-      /* TODO
-      button buat clear builder (MASIH ERROR)
-      */
-      $(this.fbBuilder.current).formBuilder().actions.clearFields();
-      //$(this.fbBuilder.current).formBuilder.actions.clearFields();
+     $(this.fbBuilder.current).formBuilder('clearFields')
     }
     
     render() {
@@ -57,14 +53,15 @@ class FormBuilder extends Component {
             <div id="fb-editor" ref={this.fbBuilder}>
 
             </div>
-            <button id="render" onClick={this.handleClearBuilder.bind(this)}>Clear</button>
-            <button id="clear" onClick={this.handlePreviewEdit.bind(this)}>Preview</button>
+            <button id="render" onClick={this.handleClearBuilder.bind(this)}>Bersihkan</button>
+            <button id="clear" onClick={this.handlePreviewEdit.bind(this)}>Tampilan</button>
           </div>
           <div id="fb-rendered-form" ref={this.fbRenderWrapper}>
             <div id="fb-rendered" ref={this.fbRender}>
 
             </div>
-            <button id="render" onClick={this.handlePreviewEdit.bind(this)}>Edit</button>
+            <button id="render" onClick={this.handlePreviewEdit.bind(this)}>Edit kembali</button>
+            <button id="render" onClick={this.handlePreviewEdit.bind(this)}>Simpan (WIP)</button>
           </div>
         </div>
       );
