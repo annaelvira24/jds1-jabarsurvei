@@ -27,7 +27,118 @@ class FormBuilder extends Component {
     fbRenderWrapper = createRef();
     
     componentDidMount() {
-      $(this.fbBuilder.current).formBuilder({ formData , disabledActionButtons: ['data','clear','save']});
+      $(this.fbBuilder.current).formBuilder({ formData , disabledActionButtons: ['data','clear','save'],
+        i18n: {
+          override: {
+            'en-US': {
+              addOption: 'Tambah Opsi +',
+            allFieldsRemoved: 'All fields were removed.',
+            allowMultipleFiles: 'Perbolehkan pengguna untuk upload banyak file',
+            autocomplete: 'Autocomplete',
+            button: 'Tombol',
+            cannotBeEmpty: 'Tidak boleh kosong',
+            checkboxGroup: 'Checkboxes',
+            className: 'Class',
+            clearAllMessage: 'Are you sure you want to clear all fields?',
+            clear: 'Hapus semua',
+            close: 'Tutup',
+            content: 'Konten',
+            copy: 'Salin Ke Clipboard',
+            copyButton: '&#43;',
+            copyButtonTooltip: 'Salin',
+            dateField: 'Pilih Tanggal',
+            description: 'Teks Bantuan',
+            descriptionField: 'Deskripsi',
+            devMode: 'Mode Pengembang',
+            editNames: 'Edit Names',
+            editorTitle: 'Form Elements',
+            editXML: 'Edit XML',
+            enableOther: 'Enable &quot;Other&quot;',
+            enableOtherMsg: 'Let users to enter an unlisted option',
+            fieldNonEditable: 'This field cannot be edited.',
+            fieldRemoveWarning: 'Are you sure you want to remove this field?',
+            fileUpload: 'Upload File',
+            formUpdated: 'Form Diperbaharui',
+            getStarted: 'Drag a field from the right to this area',
+            header: 'Header',
+            hide: 'Edit',
+            hidden: 'Input Tersembunyi',
+            inline: 'Inline',
+            inlineDesc: 'Display {type} inline',
+            label: 'Label',
+            labelEmpty: 'Field Label cannot be empty',
+            limitRole: 'Limit access to one or more of the following roles:',
+            mandatory: 'Wajib',
+            maxlength: 'Panjang Maksimum',
+            minOptionMessage: 'This field requires a minimum of 2 options',
+            multipleFiles: 'File Jamak',
+            name: 'Nama',
+            no: 'Tidak',
+            noFieldsToClear: 'There are no fields to clear',
+            number: 'Angka',
+            off: 'Off',
+            on: 'On',
+            option: 'Pilihan',
+            options: 'Pilihan',
+            optional: 'opsional',
+            optionLabelPlaceholder: 'Label',
+            optionValuePlaceholder: 'Value',
+            optionEmpty: 'Option value required',
+            other: 'Lain-lain',
+            paragraph: 'Paragraf',
+            placeholder: 'Placeholder',
+            'placeholder.value': 'Value',
+            'placeholder.label': 'Label',
+            'placeholder.text': '',
+            'placeholder.textarea': '',
+            'placeholder.email': 'isi alamat email anda',
+            'placeholder.placeholder': '',
+            'placeholder.className': 'space separated classes',
+            'placeholder.password': 'Isi kata sandi',
+            preview: 'Preview',
+            radioGroup: 'Radio Group',
+            radio: 'Radio',
+            removeMessage: 'Hapus Elemen',
+            removeOption: 'Hapus Opsi',
+            remove: '&#215;',
+            required: 'Dibutuhkan',
+            richText: 'Rich Text Editor',
+            roles: 'Akses',
+            rows: 'Baris',
+            save: 'Simpan',
+            selectOptions: 'Opsi',
+            select: 'Select',
+            selectColor: 'Pilih Warna',
+            selectionsMessage: 'Perbolehkan banyak pilihan',
+            size: 'Ukuran',
+            'size.xs': 'Sangat Kecil',
+            'size.sm': 'Kecil',
+            'size.m': 'Sedang',
+            'size.lg': 'Besar',
+            style: 'Style',
+            styles: {
+              btn: {
+                default: 'Default',
+                danger: 'Bahaya',
+                info: 'Info',
+                primary: 'Utama',
+                success: 'Sukses',
+                warning: 'Peringatan'
+              }
+            },
+            subtype: 'Tipe',
+            text: 'Text Field',
+            textArea: 'Text Area',
+            toggle: 'Toggle',
+            warning: 'Peringatan!',
+            value: 'Value',
+            viewJSON: '{  }',
+            viewXML: '&lt;/&gt;',
+            yes: 'Ya'
+            }
+          }
+        }
+      });
       $(this.fbRenderWrapper.current).toggle();
       $(this.fbRender.current).formRender({
       dataType: 'json',
@@ -48,7 +159,7 @@ class FormBuilder extends Component {
     
     render() {
       return(
-        <div>
+        <div id="formBuilderMain">
           <div id="fb-editor-form" ref={this.fbBuilderWrapper}>
             <div id="fb-editor" ref={this.fbBuilder}>
 
@@ -61,10 +172,11 @@ class FormBuilder extends Component {
 
             </div>
             <button id="render" onClick={this.handlePreviewEdit.bind(this)}>Edit kembali</button>
-            <button id="render" onClick={this.handlePreviewEdit.bind(this)}>Simpan (WIP)</button>
+            <button id="save" onClick={this.handlePreviewEdit.bind(this)}>Simpan (WIP)</button>
           </div>
         </div>
       );
     }
   }
 export default FormBuilder;
+
