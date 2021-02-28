@@ -16,12 +16,6 @@ class Navigation extends Component{
         this.state.cookie = getUser();
     }
 
-    componentDidMount() {
-        if (this.state.cookie && !this.state.username) {
-            this.setState({ username: JSON.parse(atob(this.state.cookie))["username"] });
-        }
-    }
-
     handleLogout = async e => {
         e.preventDefault();
         removeUserCookie();

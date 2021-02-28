@@ -76,7 +76,7 @@ class DashboardAdmin extends Component {
           this.setState({ listSurveyAdmin});
           console.log(listSurveyAdmin);
         })
-      
+       
     }
 };
   export default DashboardAdmin;

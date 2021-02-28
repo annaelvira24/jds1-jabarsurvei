@@ -1,13 +1,31 @@
 'use strict';
 
 var dbConn = require('./../config/db.config');
+var md5 = require('md5');
 
 //Admin object create 
 
 var Admin = function(admin){
     this.email = admin.email;
     this.username = admin.username;
-    this.password_hashed  = admin.password_hashed;
+    this.password_hashed  = md5(admin.password);
+    this.gender = admin.gender;
+    this.city = admin.city;
+    this.phone = admin.phone;
+};
+
+Admin.create = function(newAdmin, result){
+    dbConn.query("INSERT INTO admin set ?", 
+    newAdmin, function (err, res) {
+        if(err) {  
+            console.log("error: ", err);  
+            result(err, null);
+        }
+        else{  
+            console.log(res.insertId);  
+            result(null, res.insertId);
+        }
+    });
 };
 
 Admin.findById = function (id, result) {
@@ -29,9 +47,6 @@ Admin.login = function (req, result) {
     dbConn.query("Select * from admin where email = '"+email+"' and password_hashed = md5('"+password+"') ",
     function (err, res) {
         if(res.length>0){
-            //req.session.userId = results[0].id;
-            //req.session.user = results[0];
-            //console.log(res[0]);
             result(null, res);
          }
          else{
