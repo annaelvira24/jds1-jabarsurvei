@@ -10,5 +10,16 @@ exports.findAll = function(req,res) {
     });
 };
 
+exports.findPart = function(req,res) {
+    // res.send(req.query)
+    ListSurvey.findPart (
+        req.query.offset, req.query.limit,
+        function(err, listSurvey) {  
+            if (err)  res.send(err);  
+            res.json(listSurvey);
+        }
+    );
+}
+
 
 

@@ -73,14 +73,12 @@ class LandingPage extends Component {
   componentDidMount() {
     http.get('http://localhost:5000/api/listSurvey/findAll')
       .then(res => {
-        console.log("Mounted")
         const listSurvey = res.data;
         const count = Math.ceil(listSurvey.length/this.state.perPage)
         const display = listSurvey.slice(0, this.state.perPage)
 
         this.setState({ 
-          listSurvey,
-          display,
+          display: display,
           pageCount: count,
           currentPage: 1
         });
@@ -102,13 +100,15 @@ class LandingPage extends Component {
     }
 
     const offset = (parseInt(button)-1)*this.state.perPage
-    const display = this.state.listSurvey.slice(offset, offset+this.state.perPage)
-
-    this.setState({
-      display: display,
-      currentPage: parseInt(button),
-    })
-    console.log(this.state)
+    http.get('http://localhost:5000/api/listSurvey/findPart?offset='+offset+'&limit='+this.state.perPage)
+      .then((res) => {
+        console.log("Inside http")
+        const display = res.data
+        this.setState({
+          display: display,
+          currentPage: parseInt(button),
+        })
+      })
   }
 };
   
