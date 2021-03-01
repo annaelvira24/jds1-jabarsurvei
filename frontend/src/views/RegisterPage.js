@@ -55,11 +55,11 @@ class Register extends Component{
         let errors = this.state.errors;
         let email = document.getElementById('email-input');
         if(!Validator.isEmail(email.value)){
-            errors["email"] = false;
+            errors["email"] = true;
             email.style.borderColor = 'red';
         }
         else{
-            errors["email"] = true;
+            errors["email"] = false;
             email.style.borderColor = '#ccc';
         }
     }
@@ -156,13 +156,13 @@ class Register extends Component{
 
                             <Col>                      
                                 <div className="form-group">
-                                    <input id="phone-input" className="form-control" placeholder="No Telepon" onChange = {this.handlePhoneValidation} onBlur = {this.handlePhoneValidation} onClick={this.clearSpan.bind(this,"phone-input")}/>
+                                    <input id="phone-input" className="form-control" placeholder="No Telepon" onBlur = {this.handlePhoneValidation} onClick={this.clearSpan.bind(this,"phone-input")}/>
                                 </div>    
                             </Col>
                         </Row>
                         
                         <div className="form-group">
-                            <input type="text" id="email-input" className="form-control" placeholder="Email" onChange = {this.handleEmailValidation} onBlur = {this.handleEmailValidation} onClick={this.clearSpan.bind(this, "email-input")}/>
+                            <input type="text" id="email-input" className="form-control" placeholder="Email" onBlur = {this.handleEmailValidation} onClick={this.clearSpan.bind(this, "email-input")}/>
                         </div>
                 
                         <div className="form-group">
