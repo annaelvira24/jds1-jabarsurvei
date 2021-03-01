@@ -11,7 +11,6 @@ class LandingPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      listSurvey: [],
       display: [],
       offset: 0,
       currentPage: 1,
@@ -91,7 +90,7 @@ class LandingPage extends Component {
     const total = this.state.pageCount
 
     var button = e.target.text
-
+    console.log(button)
     if (button == undefined) return // Error?
     if (button == '‹Previous') {
       button = current == 1 ? 1 : current-1
@@ -100,7 +99,7 @@ class LandingPage extends Component {
     }
 
     const offset = (parseInt(button)-1)*this.state.perPage
-    http.get('http://localhost:5000/api/listSurvey/findPart?offset='+offset+'&limit='+this.state.perPage)
+    http.get(`http://localhost:5000/api/listSurvey/findAll?offset=${offset}&limit=${this.state.perPage}`)
       .then((res) => {
         console.log("Inside http")
         const display = res.data

@@ -12,12 +12,12 @@ var ListSurvey = function(survey){
 
 };
 
-ListSurvey.findAll = function (result) {
+ListSurvey.findAll = function (offset,limit,result) {
+    var q = "SELECT survey.id_survey, survey.id_admin, survey.survey_title, survey.decription, admin.username FROM survey LEFT JOIN admin ON survey.id_admin = admin.id_admin ORDER BY survey.id_survey"
+    if (offset && limit) 
+        q += ` LIMIT ${limit} OFFSET ${offset}` 
     dbConn.query(
-        "SELECT survey.id_survey, survey.id_admin, survey.survey_title, survey.decription, admin.username FROM survey LEFT JOIN admin ON survey.id_admin = admin.id_admin ORDER BY survey.id_survey",
-        
-
-        function (err, res) {
+        q, function (err, res) {
         if(err) {
             console.log("error: ", err);
             result(err, null);
@@ -27,23 +27,5 @@ ListSurvey.findAll = function (result) {
         }
     });
 };
-
-ListSurvey.findPart = function (offset,limit,result) {
-    console.log(offset)
-    console.log(limit)
-    dbConn.query(
-        "SELECT survey.id_survey, survey.id_admin, survey.survey_title, survey.decription, admin.username FROM survey LEFT JOIN admin ON survey.id_admin = admin.id_admin ORDER BY survey.id_survey LIMIT "+limit+" OFFSET "+offset,
-        function (err, res) {
-            if(err) {
-                console.log("error: ", err);
-                result(err, null);
-            }
-            else {
-                result(null, res);
-            }
-        }
-    )
-}
-
 
 module.exports = ListSurvey;
