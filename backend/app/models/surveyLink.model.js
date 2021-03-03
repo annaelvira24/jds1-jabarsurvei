@@ -1,4 +1,5 @@
 'use strict';
+const { nanoid } = require('nanoid')
 
 var dbConn = require('./../config/db.config');
 
@@ -13,6 +14,8 @@ var SurveyLink = function(surveyL){
 
 SurveyLink.findLinkById = function (id, result) {
     dbConn.query("Select randomlink from link where id_survey = ? ", id, function (err, res) {
+        // let randomlink = nanoid();
+        // console.log(randomlink);
         if(err) {
             console.log("error: ", err);
             result(err, null);
@@ -24,22 +27,28 @@ SurveyLink.findLinkById = function (id, result) {
 };
 
 SurveyLink.createLink = function (req, result) {
-    var id_survey  = req.body.id_survey;
-    var id_admin = req.body.id_admin;
-    var randomlink;
-    var table_name = "table_" + id_survey;
+    let id_survey  = req.body.id_survey;
+    let id_admin = req.body.id_admin;
+    let randomlink = nanoid();
+    let status = 0;
+    let query = "INSERT INTO link (randomLink, id_survey, id_admin)"+" SELECT * FROM (SELECT'" + randomlink + "',"+ id_survey +","+id_admin+") AS cek " + "WHERE NOT EXISTS(SELECT randomLink FROM link WHERE randomLink ='"+ randomlink + "')";
 
-    var query = " INSERT INTO Link VALUES ('"+ randomlink +"', "+ id_survey +", "+ id_admin+", '"+table_name+"')"
-    
     dbConn.query(query,
-    function (err, res) {
-        if(res.length>0){
-            result(null, res);
-         }
-         else{
-            result(err, null);
-         }
-    });
+        function (err, res) {
+            if(err) {
+                console.log("error: ", err);
+                result(err, null);
+              }
+              else{
+                console.log(randomlink);
+                result(null, randomlink);
+              }
+        }
+    );
+
+  
+    
+    
 };
 
 

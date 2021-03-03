@@ -9,3 +9,16 @@ exports.findLinkById = function(req, res) {
         res.json(surveyLink);
     });
 };
+
+exports.createLink = function(req, res) {
+    SurveyLink.createLink(req, 
+    function(err, surveyLink) {  
+        if (err){
+            res.send(err);
+        }
+        else{
+            res.status(200).json(surveyLink);
+        }
+        return;
+    });
+};
