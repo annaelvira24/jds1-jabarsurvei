@@ -14,8 +14,6 @@ const Table_comp = ({ daftar_survey, daftar_coloumn }) => {
         history.push(path);
     };
 
-
-
     return(
         <div className='Table-Container'>
             <Container className='Table2-Container'>
@@ -42,7 +40,7 @@ const Table_comp = ({ daftar_survey, daftar_coloumn }) => {
                                 <td>{survey.username}</td>
                                 <td>{survey.decription}</td>
                             </tr>
-                    ))}
+                        ))}
                     </tbody>
                 </Table>      
             </Container>
