@@ -6,6 +6,10 @@
     align-items: center;
 }
 
+.Landing-Container{
+    margin-top: 10px;
+}
+
 .Upper-header{
     padding: 15px;
     display: flex;
@@ -13,14 +17,38 @@
     align-items: center;;
 }
 
+#carousel-image{
+    display: block;
+    max-width:980px;
+    max-height:530px;
+    min-height: 301px;
+    width: auto;
+    height: auto;
+    border-radius: 20px;
+    filter: brightness(0.5);
+}
+
 .carousel {
-    width:915px;
+    width:980px;
     margin: auto;
-    font-family: 'Lato',Helvetica,Arial,Lucida,sans-serif;
-  }
+}
+
+.carousel-caption{
+    margin-bottom: 7%;
+}
+
+.carousel-caption h1{
+    font-weight: bold;
+}
+
+.carousel-caption p{
+    font-size: 18px;
+}
+
 .Survey-Container{
     padding: 20px;
 }
+
 .SearchBar-Container{
     padding: 15px;
     display: flex;

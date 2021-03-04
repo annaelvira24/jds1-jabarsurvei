@@ -1,5 +1,7 @@
 import { Card,Col, Row, Container,CardDeck} from 'react-bootstrap';
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPollH } from '@fortawesome/free-solid-svg-icons'
 import square from '../assets/image/square_image.png';
 import '../assets/css/Card.dash.css';
 
@@ -18,6 +20,7 @@ const Card_dash = () => {
                                 src={square}
                                 alt="Third slide"
                                 />
+                                <FontAwesomeIcon className="pin" icon={faPollH} />
                             </Col>
                             <Col sm={7}>
                                     <Card.Title>
