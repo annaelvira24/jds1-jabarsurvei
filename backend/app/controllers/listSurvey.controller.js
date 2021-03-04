@@ -10,5 +10,13 @@ exports.findAll = function(req,res) {
     });
 };
 
+exports.count = function(req,res) {
+    ListSurvey.count(
+    function(err, count) {  
+        if (err)  res.send(err);  
+        res.json(count[0]);
+    });
+};
+
 
 
