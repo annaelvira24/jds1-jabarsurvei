@@ -52,7 +52,6 @@ class LandingPage extends Component {
             </Container>
         </header>
         <body className="Survey-Container border">
-          <PaginationButton totalPage={this.state.pageCount} pageMargin={1} onPageClick={this.handlePageClick} currentPage={this.state.currentPage} className='mx-auto' />
           <Table_comp daftar_survey={this.state.display}  daftar_coloumn={this.constructor.coloumns}/>
           <PaginationButton totalPage={this.state.pageCount} pageMargin={1} onPageClick={this.handlePageClick} currentPage={this.state.currentPage} className='mx-auto' />
         </body>
