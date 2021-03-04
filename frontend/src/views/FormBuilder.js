@@ -2,6 +2,7 @@ import $ from "jquery";
 import React, { Component, createRef } from "react";
 import ReactDOM from 'react-dom';
 import 'jquery-ui-sortable';
+import { json } from "express";
 
 window.jQuery = $;
 window.$ = $;
@@ -27,7 +28,7 @@ class FormBuilder extends Component {
     fbRenderWrapper = createRef();
     
     componentDidMount() {
-      $(this.fbBuilder.current).formBuilder({ formData , disabledActionButtons: ['clear','save'],
+      $(this.fbBuilder.current).formBuilder({ formData , disabledActionButtons: ['clear','save'], disableFields: ['autocomplete','button'],
         i18n: {
           override: {
             'en-US': {
@@ -156,6 +157,22 @@ class FormBuilder extends Component {
     handleClearBuilder() {
      $(this.fbBuilder.current).formBuilder('clearFields')
     }
+    handleSaveForm() {
+      /* 
+      TODO
+      SEND FORM, MOVE PARSER TO BACKEND
+       */
+      var questions = JSON.parse($(this.fbBuilder.current).formBuilder('getData', 'json'));
+      var question_detail = (questions[0]);
+      for(var x in question_detail){
+        if(x == "values"){
+          for(var y in question_detail[x]){
+            console.log(question_detail[x][y])
+          }
+        }
+        console.log(x + " " +question_detail[x])
+      }
+    }
     
     render() {
       return(
@@ -172,7 +189,7 @@ class FormBuilder extends Component {
 
             </div>
             <button id="render" onClick={this.handlePreviewEdit.bind(this)}>Edit kembali</button>
-            <button id="save" onClick={this.handlePreviewEdit.bind(this)}>Simpan (WIP)</button>
+            <button id="save" onClick={this.handleSaveForm.bind(this)}>Simpan (WIP)</button>
           </div>
         </div>
       );
