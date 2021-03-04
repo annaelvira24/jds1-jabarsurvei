@@ -41,3 +41,6 @@ app.listen(PORT, () => {
 
 const listSurveyRoutes = require('./app/routes/listSurvey.routes')
 app.use('/api/listSurvey', listSurveyRoutes);
+
+const fBuilderRoutes = require('./app/routes/fBuilder.routes')
+app.use('/api/fBuilder', fBuilderRoutes);

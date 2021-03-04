@@ -162,7 +162,7 @@ class FormBuilder extends Component {
       SEND FORM, MOVE PARSER TO BACKEND
        */
       var jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json')
-      http.post('http://localhost:5000/api/admin/createform', jsonform)
+      http.post('http://localhost:5000/api/fBuilder/createform', jsonform)
     }
     
     render() {
