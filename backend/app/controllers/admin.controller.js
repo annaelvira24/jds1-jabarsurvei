@@ -22,3 +22,15 @@ exports.login = function(req, res) {
         return;
     });
 };
+
+exports.createForm = function(req, res) {
+    Admin.createForm(req, function(err, admin) {
+        if (err) {
+            res.send(err);  
+        } 
+        else{
+            res.status(200).json(admin);
+        }
+        return;
+    });
+};

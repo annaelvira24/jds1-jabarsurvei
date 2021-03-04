@@ -1,8 +1,7 @@
 import $ from "jquery";
 import React, { Component, createRef } from "react";
-import ReactDOM from 'react-dom';
+import http from "../http-common";
 import 'jquery-ui-sortable';
-import { json } from "express";
 
 window.jQuery = $;
 window.$ = $;
@@ -162,16 +161,8 @@ class FormBuilder extends Component {
       TODO
       SEND FORM, MOVE PARSER TO BACKEND
        */
-      var questions = JSON.parse($(this.fbBuilder.current).formBuilder('getData', 'json'));
-      var question_detail = (questions[0]);
-      for(var x in question_detail){
-        if(x == "values"){
-          for(var y in question_detail[x]){
-            console.log(question_detail[x][y])
-          }
-        }
-        console.log(x + " " +question_detail[x])
-      }
+      var jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json')
+      http.post('http://localhost:5000/api/admin/createform', jsonform)
     }
     
     render() {
