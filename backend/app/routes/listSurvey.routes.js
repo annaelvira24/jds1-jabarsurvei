@@ -6,5 +6,6 @@ const listSurveyController = require('../controllers/listSurvey.controller');
 
 // Retrieve a single admin with id
 router.get('/findAll', listSurveyController.findAll);
+router.get('/count', listSurveyController.count);
 
 module.exports = router;

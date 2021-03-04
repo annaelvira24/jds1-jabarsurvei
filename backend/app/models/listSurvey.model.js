@@ -28,4 +28,20 @@ ListSurvey.findAll = function (offset,limit,result) {
     });
 };
 
+ListSurvey.count = function (result) {
+    dbConn.query(
+        "SELECT COUNT(*) as count from survey",
+        
+        function (err, res) {
+        if(err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else{
+            result(null, res);
+        }
+    });
+};
+
+
 module.exports = ListSurvey;

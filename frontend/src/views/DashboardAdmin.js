@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import {Button} from 'react-bootstrap';
-import { getUser, removeUserCookie } from './../util/Common.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { getUser} from './../util/Common.js';
 import Table_comp from '../components/Table_comp.js';
 import '../assets/scss/Custom.scss';
 import '../assets/css/DashboardAdmin.css';
@@ -13,6 +14,7 @@ class DashboardAdmin extends Component {
   state = {
     // listSurveyAdmin: [],
     id_admin: undefined,
+    username: undefined,
     cookie: undefined,
     display: [],
     offset: 0,
@@ -45,26 +47,27 @@ class DashboardAdmin extends Component {
       }]
     )
   } 
-  // static get datas() { 
-  //   return (
-  //     [{id: 1, judul: 'Penggunaan sabun cari di kala pandemi', maker: 'otto'},
-  //     {id: 2, judul: 'Usia emas untuk memulai bisnis', maker: 'ot'},
-  //     {id: 3, judul: 'Tingkat konsumsi kopo', maker: 'sfs'},
-  //     {id: 4, judul: 'Pandangan masyarakat terkait vaksin', maker: 'fere'},
-  //     {id: 5, judul: 'Jumlah pengguna sampah', maker: 'gere'}]
-  //   )
-  // } 
 
     render(){
       return (
-        <div className="Content-Container">
+        <div className="Content-Container" id="dashboard-admin">
           <header>
-            <h1 className = 'Title-h1-Dashboard'> Daftar Survey Milikmu ! </h1>
-            <Button variant="outline-success" size="lg" block className='btn-newsurvey' onClick = {event =>  window.location.href='/create-survey'}>
-              Buat Survey
-            </Button>
+            <h1 className = 'Title-h1-Dashboard'> DAFTAR SURVEI</h1>
+            <h2 className = 'Title-h2-Dashboard'> {this.state.username}</h2>
+            <br/>
+            <div className="wrapper-button-create">
+              <button type="button" className='btn btn-outline-t-green' id="button-create" onClick = {event =>  window.location.href='/create-survey'}>
+              <FontAwesomeIcon icon={faPlus} /> Survei Baru
+              </button>
+            </div>
           </header>
           <body>
+            {(this.state.listSurveyAdmin.length > 0)
+              && (<Table_comp daftar_survey={this.state.listSurveyAdmin} daftar_coloumn={this.constructor.coloumns}/>
+            )}
+            {(this.state.listSurveyAdmin.length == 0)
+              && <span id="empty-survey">Belum ada survei</span>
+            }
             <PaginationButton totalPage={this.state.pageCount} pageMargin={1} onPageClick={this.handlePageClick} currentPage={this.state.currentPage} className='mx-auto' />
             <Table_comp daftar_survey={this.state.display} daftar_coloumn={this.constructor.coloumns}/>
             <PaginationButton totalPage={this.state.pageCount} pageMargin={1} onPageClick={this.handlePageClick} currentPage={this.state.currentPage} className='mx-auto' />
@@ -103,11 +106,20 @@ class DashboardAdmin extends Component {
     
 
     componentDidMount() {
+      if(!this.state.username){
+        let url = 'http://localhost:5000/api/admin/' + this.state.id_admin
+        http.get(url)
+        .then(res => {
+          this.setState({ username : res.data[0].username });
+        })
+      }
+
+
       let url = 'http://localhost:5000/api/surveyAdmin/' + this.state.id_admin
-      console.log(this.state.id_admin);
       http.get(url)
         .then(res => {
           const listSurveyAdmin = res.data;
+          this.setState({ listSurveyAdmin});
           const count = Math.ceil(listSurveyAdmin.length/this.state.perPage)
           const display = listSurveyAdmin.slice(0,this.state.perPage)
           this.setState({

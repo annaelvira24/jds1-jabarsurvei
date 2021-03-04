@@ -37,16 +37,7 @@ class LandingPage extends Component {
         }]
       )
   } 
-  // static get datas() { 
-  //   return (
-  //     [{id: 1, judul: 'Penggunaan sabun cari di kala pandemi', maker: 'otto'},
-  //     {id: 2, judul: 'Usia emas untuk memulai bisnis', maker: 'ot'},
-  //     {id: 3, judul: 'Tingkat konsumsi kopo', maker: 'sfs'},
-  //     {id: 4, judul: 'Pandangan masyarakat terkait vaksin', maker: 'fere'},
-  //     {id: 5, judul: 'Jumlah pengguna sampah', maker: 'gere'}]
-  //   )
-  // } 
-
+  
   render(){
     return (
       <div className="Content-Container">
