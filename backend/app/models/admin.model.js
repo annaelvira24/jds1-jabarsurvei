@@ -49,18 +49,21 @@ Admin.createForm = function (req, result) {
     console.log("inside model")
     console.log(req.body)
     var jsonform = JSON.stringify(req.body)
-    var tempidsurvey = 1;
-    var tempidadmin = 1;
+    var tempidsurvey = 69; //temp aja ini
+    var tempidadmin = 1; //temp aja ini
 
     var questions = JSON.parse(jsonform);
-    var question_detail = (questions[0]);
-    for(var x in question_detail){
-        if(x == "values"){
-            for(var y in question_detail[x]){
-            console.log(question_detail[x][y])
+    //var question_detail = (questions[0]);
+    for(var i = 0; i < length(questions);i++){ //iterasi per pertanyaan
+
+        /* for(var x in questions[i]){ //iterasi per properties pertanyaan
+            if(x == "values"){ // untuk radio button atau checkbox
+                for(var y in questions[i][x]){
+                console.log(questions[i][x][y])
+                }
             }
-        }
-        console.log(x + " " +question_detail[x])
+            console.log(x + " " +questions[i][x])
+        }   */
     }
     // var email = "example@gmail.com";
     // var password = "password123";
