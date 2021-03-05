@@ -31,7 +31,7 @@ SurveyLink.createLink = function (req, result) {
     let id_admin = req.body.id_admin;
     let randomlink = nanoid();
     let status = 0;
-    let query = "INSERT INTO link (randomLink, id_survey, id_admin)"+" SELECT * FROM (SELECT'" + randomlink + "',"+ id_survey +","+id_admin+") AS cek " + "WHERE NOT EXISTS(SELECT randomLink FROM link WHERE randomLink ='"+ randomlink + "')";
+    let query = "INSERT INTO link (randomLink, id_survey, id_admin)"+" SELECT * FROM (SELECT'" + randomlink + "' as ranlink,"+ id_survey +" as surveyid,"+id_admin+" as adminid) AS cek " + "WHERE NOT EXISTS(SELECT randomLink FROM link WHERE randomLink ='"+ randomlink + "')";
 
     dbConn.query(query,
         function (err, res) {
