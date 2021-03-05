@@ -111,11 +111,12 @@ DROP TABLE IF EXISTS `question`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `question` (
-  `id_question` int NOT NULL,
+  `id_question` int NOT NULL AUTO_INCREMENT,
   `id_survey` int NOT NULL,
-  `number` int NOT NULL,
-  `section` int NOT NULL,
-  `status` varchar(255) NOT NULL,
+  `order_number` int NOT NULL,
+  `active_status` tinyint(1) DEFAULT NULL,
+  `section` int DEFAULT NULL,
+  `details` text,
   PRIMARY KEY (`id_question`),
   KEY `id_survey` (`id_survey`),
   CONSTRAINT `question_ibfk_1` FOREIGN KEY (`id_survey`) REFERENCES `survey` (`id_survey`)
@@ -129,36 +130,6 @@ CREATE TABLE `question` (
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `question_detail`
---
-
-DROP TABLE IF EXISTS `question_detail`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `question_detail` (
-  `id_question` int NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `required` varchar(255) NOT NULL,
-  `label` text NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `access` varchar(255) DEFAULT NULL,
-  `subtype` varchar(255) DEFAULT NULL,
-  `value` varchar(255) NOT NULL,
-  PRIMARY KEY (`id_question`),
-  CONSTRAINT `question_detail_ibfk_1` FOREIGN KEY (`id_question`) REFERENCES `question` (`id_question`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `question_detail`
---
-
-LOCK TABLES `question_detail` WRITE;
-/*!40000 ALTER TABLE `question_detail` DISABLE KEYS */;
-/*!40000 ALTER TABLE `question_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -198,4 +169,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-02 15:42:26
+-- Dump completed on 2021-03-05 22:00:45

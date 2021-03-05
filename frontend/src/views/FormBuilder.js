@@ -9,7 +9,7 @@ window.$ = $;
 require('formBuilder');
 require('formBuilder/dist/form-render.min.js');
 
-const formData = [];
+var formDataTemp = [];
 
 /* fbOptions = {
       onSave: function() {
@@ -25,9 +25,29 @@ class FormBuilder extends Component {
     fbBuilderWrapper = createRef();
     fbRender = createRef();
     fbRenderWrapper = createRef();
+
+    state = {
+      idSurvey : undefined
+    }
+
+    constructor(){
+      super();
+    }
     
     componentDidMount() {
-      $(this.fbBuilder.current).formBuilder({ formData , disabledActionButtons: ['clear','save'], disableFields: ['autocomplete','button'],
+      this.state.idSurvey = this.props.match.params.id;
+      // console.log(values.id) // "top"
+      http.get('http://localhost:5000/api/fBuilder/findById/' + this.state.idSurvey)
+      .then(res => {
+        formDataTemp = JSON.parse(res.data[0].details);
+        console.log('formdata', formDataTemp);
+      });
+
+      $(this.fbBuilder.current).formBuilder({ 
+        formDataTemp, 
+        disabledActionButtons: ['clear','save'], 
+        disableFields: ['autocomplete','button', 'hidden'],
+        disabledAttrs: ['name', 'access', 'className', 'value', 'maxlength'],
         i18n: {
           override: {
             'en-US': {
@@ -53,7 +73,7 @@ class FormBuilder extends Component {
             editNames: 'Edit Names',
             editorTitle: 'Form Elements',
             editXML: 'Edit XML',
-            enableOther: 'Aktifkan &quot;Lain-Lain&quot;',
+            enableOther: 'Opsi Lainnya',
             enableOtherMsg: 'Perbolehkan pengguna untuk mengisi opsi yang tidak terdaftar',
             fieldNonEditable: 'Field ini tidak bisa di-edit.',
             fieldRemoveWarning: 'Are you sure you want to remove this field?',
@@ -84,7 +104,7 @@ class FormBuilder extends Component {
             optionLabelPlaceholder: 'Label',
             optionValuePlaceholder: 'Nilai',
             optionEmpty: 'Nilai opsi dibutuhkan',
-            other: 'Lain-lain',
+            other: 'Lainnya',
             paragraph: 'Paragraf',
             placeholder: 'Placeholder',
             'placeholder.value': 'Nilai',
@@ -101,7 +121,7 @@ class FormBuilder extends Component {
             removeMessage: 'Hapus Elemen',
             removeOption: 'Hapus Opsi',
             remove: '&#215;',
-            required: 'Dibutuhkan',
+            required: 'Wajib diisi',
             richText: 'Rich Text Editor',
             roles: 'Akses',
             rows: 'Baris',
@@ -142,27 +162,42 @@ class FormBuilder extends Component {
       $(this.fbRenderWrapper.current).toggle();
       $(this.fbRender.current).formRender({
       dataType: 'json',
-      formData: $(this.fbBuilder.current).formBuilder('getData', 'json')
+      formData:  $(this.fbBuilder.current).formBuilder('getData', 'json')
       });
+      console.log('formData', $(this.fbBuilder.current).formBuilder('getData', 'json'));
+
     }
+
+
     handlePreviewEdit() {
       $(this.fbBuilderWrapper.current).toggle();
       $(this.fbRenderWrapper.current).toggle();
       $(this.fbRender.current).formRender({
       dataType: 'json',
-      formData: $(this.fbBuilder.current).formBuilder('getData', 'json')
+      formData:  [formDataTemp]
       });
+
     }
     handleClearBuilder() {
+      console.log('formData', $(this.fbBuilder.current).formBuilder('getData', 'json'));
+      console.log('formData', formDataTemp);
+
      $(this.fbBuilder.current).formBuilder('clearFields')
     }
     handleSaveForm() {
-      /* 
-      TODO
-      SEND FORM, MOVE PARSER TO BACKEND
-       */
-      var jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json')
-      http.post('http://localhost:5000/api/fBuilder/createform', jsonform)
+      var jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json');
+
+      http.post('http://localhost:5000/api/fBuilder/createform', {
+        id_survey : this.state.idSurvey,
+        status : true,
+        details: jsonform
+      })
+      .then(res => {
+        if(res.status === 200){
+            // TODO : redirect to dashoard
+            window.location.href="/"
+        }
+      })
     }
     
     render() {
