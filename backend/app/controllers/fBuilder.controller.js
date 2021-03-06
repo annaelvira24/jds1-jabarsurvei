@@ -2,15 +2,35 @@
 
 const FBuilder = require('../models/fBuilder.model');
 
-exports.createForm = function(req, res) {
-    FBuilder.createForm(req, function(err, formBuilder) {
-        console.log("control")
-        if (err) {
-            res.send(err);  
-        } 
-        else{
-            res.status(200).json(formBuilder);
-        }
-        return;
+exports.create = function(req, res) {
+    const id_survey = req.body.id_survey;
+    const details = JSON.parse(req.body.details);
+    
+    for(var i = 0; i<details.length; i++){
+        const question = new FBuilder({
+            id_survey : id_survey,
+            order_number : i,
+            section : 1,
+            active_status : 1,
+            details : JSON.stringify(details[i])
+        });
+        FBuilder.create(question, function(err, result) {
+            if (err) {
+                res.send(err);  
+            } 
+            else{
+                res.status(200).send('OK');
+            }
+            return;
+        });
+    }
+};
+
+exports.findById = function(req, res) {
+    FBuilder.findById(req.params.id, 
+    function(err, form) {  
+        if (err)  res.send(err);  
+        res.json(form);
     });
 };
+

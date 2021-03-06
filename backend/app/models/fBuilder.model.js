@@ -2,47 +2,38 @@
 
 var dbConn = require('../config/db.config');
 
-var FBuilder = function(admin){
-    //masih kosong
-    /* this.email = admin.email;
-    this.json = admin.username;
-    this.password_hashed  = admin.password_hashed; */
+var FBuilder = function(fBuilder){
+    this.id_survey = fBuilder.id_survey;
+    this.order_number = fBuilder.order_number;
+    this.section = fBuilder.section;
+    this.active_status = fBuilder.active_status;
+    this.details = fBuilder.details;
+
 };
 
-FBuilder.createForm = function (req, result) {
-    console.log("inside model")
-    var jsonform = JSON.stringify(req.body)
-    var tempidsurvey = 69; //temp aja ini
-    var tempidadmin = 1; //temp aja ini
-
-    var questions = JSON.parse(jsonform);
-    //var question_detail = (questions[0]);
-    for(var i = 0; i < questions.length;i++){ //iterasi per pertanyaan
-        console.log(questions[i])
-        /* for(var x in questions[i]){ //iterasi per properties pertanyaan
-            if(x == "values"){ // untuk radio button atau checkbox
-                for(var y in questions[i][x]){
-                console.log(questions[i][x][y])
-                }
-            }
-            console.log(x + " " +questions[i][x])
-        }   */
-    }
-    // var email = "example@gmail.com";
-    // var password = "password123";
-
-    /* console.log("formSQL");
-
-    dbConn.query("INSERT INTO admin set ?", 
-    newAdmin, function (err, res) {
+FBuilder.create = function(newFBuilder, result){
+    dbConn.query("INSERT INTO question set ?", 
+    newFBuilder, function (err, res) {
         if(err) {  
             console.log("error: ", err);  
             result(err, null);
         }
-        else{  
-            console.log(res.insertId);  
-            result(null, res.insertId);
+        else{ 
+            result(null, res.insertID);
         }
-    }); */
+    });
 };
+
+FBuilder.findById = function(id, result) {
+    dbConn.query("Select details from question where id_survey = ? ", id, function (err, res) {
+        if(err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else{
+            result(null, res);
+        }
+    });
+};
+
 module.exports = FBuilder;

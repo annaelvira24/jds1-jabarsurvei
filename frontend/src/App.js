@@ -16,7 +16,8 @@ function App() {
           <Route exact path="/" component={LandingPage}/>
           <Route exact path="/Survey" component={Survey}/>
           <Route exact path="/login" component={LoginPage}/>
-          <Route exact path="/FormBuilder" component={FormBuilder}/>
+          <Route exact path="/FormBuilder/create" component={FormBuilder}/>
+          <Route path="/FormBuilder/edit/id=:id" component={FormBuilder}/>
       </Switch>
       </div>
     </Router>
