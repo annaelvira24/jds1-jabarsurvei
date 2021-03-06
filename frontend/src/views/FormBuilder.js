@@ -36,17 +36,23 @@ class FormBuilder extends Component {
     
     componentDidMount() {
       this.state.idSurvey = this.props.match.params.id;
-      // console.log(values.id) // "top"
-      http.get('http://localhost:5000/api/fBuilder/findById/' + this.state.idSurvey)
-      .then(res => {
-        formDataTemp = JSON.parse(res.data[0].details);
-        console.log('formdata', formDataTemp);
-      });
 
-      $(this.formBuilder.actions).setData([formDataTemp]);
-
-      $(this.fbBuilder.current).formBuilder({ 
-        formDataTemp, 
+      // create NEW survey
+      if(this.state.idSurvey == undefined){
+        // TODO: create new survey, api belom ada
+      }
+      // edit existing survey
+      else{
+        http.get('http://localhost:5000/api/fBuilder/findById/' + this.state.idSurvey)
+        .then(res => {
+          for (var i = 0; i<res.data.length; i++){
+            formDataTemp.push(JSON.parse(res.data[i].details));
+          }
+        });
+      }
+ 
+      $(this.fbBuilder.current).formBuilder({
+        formData: formDataTemp,
         disabledActionButtons: ['clear','save'], 
         disableFields: ['autocomplete','button', 'hidden'],
         disabledAttrs: ['name', 'access', 'className', 'value', 'maxlength'],
@@ -163,20 +169,17 @@ class FormBuilder extends Component {
       });
       $(this.fbRenderWrapper.current).toggle();
       $(this.fbRender.current).formRender({
-      dataType: 'json',
-      formData:  $(this.fbBuilder.current).formBuilder('getData', 'json')
+        dataType: 'json',
+        formData:  formDataTemp
       });
-      console.log('formData', $(this.fbBuilder.current).formBuilder('getData', 'json'));
-
     }
-
 
     handlePreviewEdit() {
       $(this.fbBuilderWrapper.current).toggle();
       $(this.fbRenderWrapper.current).toggle();
       $(this.fbRender.current).formRender({
       dataType: 'json',
-      formData:  [formDataTemp]
+      formData:  $(this.fbBuilder.current).formBuilder('getData', 'json')
       });
 
     }
@@ -190,7 +193,8 @@ class FormBuilder extends Component {
       var jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json');
 
       http.post('http://localhost:5000/api/fBuilder/createform', {
-        id_survey : this.state.idSurvey,
+        // TODO : Change id_survey
+        id_survey : 1,
         status : true,
         details: jsonform
       })
