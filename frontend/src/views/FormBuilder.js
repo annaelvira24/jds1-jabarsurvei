@@ -43,6 +43,8 @@ class FormBuilder extends Component {
         console.log('formdata', formDataTemp);
       });
 
+      $(this.formBuilder.actions).setData([formDataTemp]);
+
       $(this.fbBuilder.current).formBuilder({ 
         formDataTemp, 
         disabledActionButtons: ['clear','save'], 
