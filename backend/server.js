@@ -35,3 +35,6 @@ app.use('/api/listSurvey', listSurveyRoutes);
 
 const surveyAdminRoutes = require('./app/routes/surveyAdmin.routes')
 app.use('/api/surveyAdmin', surveyAdminRoutes);
+
+const surveyLinkRoutes = require('./app/routes/surveyLink.routes')
+app.use('/api/surveyLink', surveyLinkRoutes);
