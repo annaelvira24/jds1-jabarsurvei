@@ -53,7 +53,7 @@ class FormBuilder extends Component {
  
       $(this.fbBuilder.current).formBuilder({
         formData: formDataTemp,
-        disabledActionButtons: ['clear','save'], 
+        disabledActionButtons: ['clear','save','data'], 
         disableFields: ['autocomplete','button', 'hidden'],
         disabledAttrs: ['name', 'access', 'className', 'value', 'maxlength'],
         i18n: {
@@ -221,7 +221,7 @@ class FormBuilder extends Component {
 
             </div>
             <button id="render" onClick={this.handlePreviewEdit.bind(this)}>Edit kembali</button>
-            <button id="save" onClick={this.handleSaveForm.bind(this)}>Simpan (WIP)</button>
+            <button id="save" onClick={this.handleSaveForm.bind(this)}>Simpan</button>
           </div>
         </div>
       );
