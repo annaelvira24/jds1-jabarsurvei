@@ -28,6 +28,30 @@ ListSurvey.findAll = function (offset,limit,result) {
     });
 };
 
+ListSurvey.findById = function (id, result) {
+    dbConn.query("Select survey_title, decription from survey where id_survey = ? ", id, function (err, res) {
+        if(err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else{
+            result(null, res);
+        }
+    });
+};
+
+ListSurvey.findByLink = function (link, result) {
+    dbConn.query("Select survey_title, decription from survey join link using (id_survey) where randomlink = ? ", link, function (err, res) {
+        if(err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else{
+            result(null, res);
+        }
+    });
+};
+
 ListSurvey.count = function (result) {
     dbConn.query(
         "SELECT COUNT(*) as count from survey",

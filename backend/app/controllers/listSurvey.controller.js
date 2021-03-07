@@ -14,6 +14,22 @@ exports.findAll = function(req,res) {
     );
 };
 
+exports.findById = function(req, res) {
+    ListSurvey.findById(req.params.id, 
+    function(err, listSurvey) {  
+        if (err)  res.send(err);  
+        res.json(listSurvey);
+    });
+};
+
+exports.findByLink = function(req, res) {
+    ListSurvey.findByLink(req.params.link, 
+    function(err, listSurvey) {  
+        if (err)  res.send(err);  
+        res.json(listSurvey);
+    });
+};
+
 exports.count = function(req,res) {
     ListSurvey.count(
     function(err, count) {  
