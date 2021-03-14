@@ -1,8 +1,8 @@
 stages:
-  - testOne
+  - testAPI
 
-testOne:
-  stage: testOne
+testAPI:
+  stage: testAPILogin
   image: node:latests
   script:
     - cd backend/

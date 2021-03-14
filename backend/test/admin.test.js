@@ -32,3 +32,31 @@ describe("Admin unit test",function(){
   });
 
 });
+
+describe("Admin unit test",function(){
+
+  // #1 should return home page
+
+  it("should successfully login",function(done){
+
+    let admin = {
+      email : "example@gmail.com", 
+      password : "password123"
+    }
+    // calling home page api
+    server
+    .post("/api/admin/login")
+    .send(admin)
+    .expect("Content-type",/json/)
+    .expect(200) // THis is HTTP response
+    .end(function(err,res){
+      // HTTP status should be 200
+      expect(res.status).to.eql(200);
+      // Error key should be false.
+      expect(res.error).to.eql(false);
+      expect(res.body[0].id_admin).to.eql(1);
+      done();
+    });
+  });
+
+});
