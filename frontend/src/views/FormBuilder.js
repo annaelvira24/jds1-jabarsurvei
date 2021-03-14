@@ -192,9 +192,10 @@ class FormBuilder extends Component {
     handleSaveForm() {
       var jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json');
 
+
       http.post('http://localhost:5000/api/fBuilder/createform', {
         // TODO : Change id_survey
-        id_survey : 1,
+        id_survey : this.state.idSurvey,
         status : true,
         details: jsonform
       })
