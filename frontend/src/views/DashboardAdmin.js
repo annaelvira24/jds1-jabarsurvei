@@ -56,7 +56,7 @@ class DashboardAdmin extends Component {
             <h2 className = 'Title-h2-Dashboard'> {this.state.username}</h2>
             <br/>
             <div className="wrapper-button-create">
-              <button type="button" className='btn btn-outline-t-green' id="button-create" onClick = {event =>  window.location.href='/create-survey'}>
+              <button type="button" className='btn btn-outline-t-green' id="button-create" onClick = {event =>  window.location.href='/formbuilder/create'}>
               <FontAwesomeIcon icon={faPlus} /> Survei Baru
               </button>
             </div>
