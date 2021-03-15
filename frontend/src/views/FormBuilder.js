@@ -1,6 +1,7 @@
 import $ from "jquery";
 import React, { Component, createRef } from "react";
 import http from "../http-common";
+import { getUser } from './../util/Common.js';
 import 'jquery-ui-sortable';
 import './../assets/scss/FormBuilder.scss'
 
@@ -12,15 +13,6 @@ require('formBuilder/dist/form-render.min.js');
 
 var formDataTemp = [];
 
-/* fbOptions = {
-      onSave: function() {
-        $fbEditor.toggle();
-        $formContainer.toggle();
-        $('form', $formContainer).formRender({
-          formData: formBuilder.formData
-        });
-      }
-    } */
 class FormBuilder extends Component {
     fbBuilder = createRef();
     fbBuilderWrapper = createRef();
@@ -28,23 +20,25 @@ class FormBuilder extends Component {
     fbRenderWrapper = createRef();
 
     state = {
-      idSurvey : undefined
+      cookie: undefined,
+      idSurvey : undefined,
+      idAdmin : undefined
     }
 
     constructor(){
       super();
+      this.state.cookie = getUser();
+      this.state.idAdmin = JSON.parse(atob(this.state.cookie))[0].id_admin;
+
+      this.handleSaveForm = this.handleSaveForm.bind(this);
     }
     
     componentDidMount() {
       if (this.props.match)
         this.state.idSurvey = this.props.match.params.id;
 
-      // create NEW survey
-      if(this.state.idSurvey == undefined){
-        // TODO: create new survey, api belom ada
-      }
       // edit existing survey
-      else{
+      if(this.state.idSurvey !== undefined){
         http.get('http://localhost:5000/api/fBuilder/findById/' + this.state.idSurvey)
         .then(res => {
           for (var i = 0; i<res.data.length; i++){
@@ -192,46 +186,72 @@ class FormBuilder extends Component {
      $(this.fbBuilder.current).formBuilder('clearFields')
     }
     handleSaveForm() {
+      const surveyTitle = document.getElementById('title-input').value;
+      const surveyDescription = document.getElementById('description-input').value;
+
+
+      http.post('http://localhost:5000/api/listSurvey/create', {
+        id_admin : this.state.idAdmin,
+        survey_title : surveyTitle,
+        decription : surveyDescription
+      })
+      .then(res=>{
+        console.log(res.data.data.id_survey);
+        if(res.status === 200){
+          this.setState ({idSurvey : res.data.data.id_survey
+          });
+        }
+      })
+
+      console.log(this.state.idSurvey);
       var jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json');
-
-
       http.post('http://localhost:5000/api/fBuilder/createform', {
-        // TODO : Change id_survey
-        id_survey : this.state.idSurvey,
+        // TODO : fix this
+        id_survey : 12,
         status : true,
         details: jsonform
       })
       .then(res => {
         if(res.status === 200){
-            // TODO : redirect to dashoard
-            window.location.href="/"
+            window.location.href="/dashboard"
         }
       })
     }
     
     render() {
       return(
-        <div id="formBuilderMain">
-          <div id="fb-editor-form" ref={this.fbBuilderWrapper}>
-            <div id="fb-editor" ref={this.fbBuilder}>
+        <div id = "formBuilderContainer">
+          <div id = "formBuilderTitle">
+            <div className="form-group">
+              <input type="text" id="title-input" className="form-control" placeholder="Judul Survei"/>
+              <br/>
+              <textarea type="text" id="description-input" className="form-control" placeholder="Deskripsi Survei"/>
+            </div>
 
-            </div>
-            <div id="builder-button-container">
-              <button id="render" onClick={this.handleClearBuilder.bind(this)} className="btn btn-outline-secondary">Bersihkan</button>
-              <button id="clear" onClick={this.handlePreviewEdit.bind(this)} className="btn btn-outline-secondary">Tampilan</button>
-            </div>
           </div>
-          <div id="fb-rendered-form" ref={this.fbRenderWrapper}>
-            <div id="fb-rendered" ref={this.fbRender}>
 
+          <div id="formBuilderMain">
+            <div id="fb-editor-form" ref={this.fbBuilderWrapper}>
+              <div id="fb-editor" ref={this.fbBuilder}>
+
+              </div>
+              <div id="builder-button-container">
+                <button id="render" onClick={this.handleClearBuilder.bind(this)} className="btn btn-outline-secondary">Bersihkan</button>
+                <button id="clear" onClick={this.handlePreviewEdit.bind(this)} className="btn btn-outline-secondary">Tampilan</button>
+              </div>
             </div>
-            <div id="render-button-container clearfix">
-              <button id="render" onClick={this.handlePreviewEdit.bind(this)} className="btn btn-outline-secondary float-left">Edit kembali</button>
-              <button id="save" onClick={this.handleSaveForm.bind(this)} className="btn btn-outline-success float-right">Simpan</button>
+            <div id="fb-rendered-form" ref={this.fbRenderWrapper}>
+              <div id="fb-rendered" ref={this.fbRender}>
+
+              </div>
+              <div id="render-button-container clearfix">
+                <button id="render" onClick={this.handlePreviewEdit.bind(this)} className="btn btn-outline-secondary float-left">Edit kembali</button>
+                <button id="save" onClick={this.handleSaveForm.bind(this)} className="btn btn-outline-success float-right">Simpan</button>
+              </div>
+              
             </div>
             
           </div>
-          
         </div>
       );
     }
