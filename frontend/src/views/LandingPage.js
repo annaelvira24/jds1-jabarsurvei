@@ -80,22 +80,23 @@ class LandingPage extends Component {
     const total = this.state.pageCount
 
     var button = e.target.text
-    console.log(button)
+
     if (button == undefined) return // Error?
     if (button == '‹Previous') {
       button = current == 1 ? 1 : current-1
     } else if (button == '›Next') {
       button = current == total ? total : current+1
     }
+    const parsed = parseInt(button)
 
-    const offset = (parseInt(button)-1)*this.state.perPage
+    const offset = (parsed-1)*this.state.perPage
     http.get(`http://localhost:5000/api/listSurvey/findAll?offset=${offset}&limit=${this.state.perPage}`)
       .then((res) => {
         console.log("Inside http")
         const display = res.data
         this.setState({
           display: display,
-          currentPage: parseInt(button),
+          currentPage: parsed,
         })
       })
   }

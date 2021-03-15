@@ -82,9 +82,11 @@ class DashboardAdmin extends Component {
       } else if (button == '›Next') {
         button = current == total ? total : current+1
       }
+
+      const parsed = parseInt(button)
   
-      const offset = (parseInt(button)-1)*this.state.perPage
-      this.setState({currentPage: parseInt(button)})
+      const offset = (parsed-1)*this.state.perPage
+      this.setState({currentPage: parsed})
       
       const url = `http://localhost:5000/api/surveyAdmin/${this.state.id_admin}?offset=${offset}&limit=${this.state.perPage}`
       http.get(url)
