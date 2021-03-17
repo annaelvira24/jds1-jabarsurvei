@@ -51,7 +51,7 @@ class FormBuilder extends Component {
         formData: formDataTemp,
         disabledActionButtons: ['clear','save'], 
         disableFields: ['autocomplete','button', 'hidden'],
-        disabledAttrs: ['name', 'access', 'className', 'value', 'maxlength'],
+        disabledAttrs: ['name', 'access', 'className', 'value', 'maxlength', 'step', 'placeholder', 'subtype', 'selectedOption.value'],
         i18n: {
           override: {
             'en-US': {
@@ -89,11 +89,13 @@ class FormBuilder extends Component {
               hidden: 'Input Tersembunyi',
               inline: 'Inline',
               inlineDesc: 'Tampilkan {type} inline',
-              label: 'Label',
+              label: 'Pertanyaan',
               labelEmpty: 'Field Label cannot be empty',
               limitRole: 'Batasi akses ke satu atau lebih dari role berikut:',
               mandatory: 'Wajib',
               maxlength: 'Panjang Maksimum',
+              min : "Angka Minimum",
+              max : "Angka Maksimum",
               minOptionMessage: 'Dibutuhkan setidaknya 2 opsi',
               multipleFiles: 'File Jamak',
               name: 'Nama',
@@ -179,43 +181,54 @@ class FormBuilder extends Component {
       });
 
     }
+
     handleClearBuilder() {
       console.log('formData', $(this.fbBuilder.current).formBuilder('getData', 'json'));
       console.log('formData', formDataTemp);
 
      $(this.fbBuilder.current).formBuilder('clearFields')
     }
-    handleSaveForm() {
+
+    createNewSurvey(){
       const surveyTitle = document.getElementById('title-input').value;
       const surveyDescription = document.getElementById('description-input').value;
 
-
       http.post('http://localhost:5000/api/listSurvey/create', {
-        id_admin : this.state.idAdmin,
-        survey_title : surveyTitle,
-        decription : surveyDescription
-      })
-      .then(res=>{
-        console.log(res.data.data.id_survey);
-        if(res.status === 200){
-          this.setState ({idSurvey : res.data.data.id_survey
-          });
-        }
-      })
+          id_admin : this.state.idAdmin,
+          survey_title : surveyTitle,
+          decription : surveyDescription
+        })
+        .then(res=>{
+          if(res.status === 200){
+            let idSurvey = res.data.data.id_survey;
+            this.setState ({ idSurvey : idSurvey }, function() {
+              let jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json');
+                http.post('http://localhost:5000/api/fBuilder/createform', {
+                  id_survey : this.state.idSurvey,
+                  status : true,
+                  details: jsonform
+                })
+                .then(res => {
+                  if(res.status === 200){
+                    console.log("hei");
+                  }
+                })
+            });
+            window.location.href="/dashboard";
+          }
+        })
+    }
 
-      console.log(this.state.idSurvey);
-      var jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json');
-      http.post('http://localhost:5000/api/fBuilder/createform', {
-        // TODO : fix this
-        id_survey : 12,
-        status : true,
-        details: jsonform
-      })
-      .then(res => {
-        if(res.status === 200){
-            window.location.href="/dashboard"
-        }
-      })
+    handleSaveForm() {
+      // if this is a create mode
+      if(this.state.idSurvey === undefined){
+        this.createNewSurvey();
+      }
+      // window.location.href="/dashboard";
+
+
+      //TODO: edit mode
+     
     }
     
     render() {

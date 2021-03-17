@@ -8,7 +8,6 @@ var FBuilder = function(fBuilder){
     this.section = fBuilder.section;
     this.active_status = fBuilder.active_status;
     this.details = fBuilder.details;
-
 };
 
 FBuilder.create = function(newFBuilder, result){
