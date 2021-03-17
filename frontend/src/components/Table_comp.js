@@ -1,12 +1,11 @@
-import { Table, Row,FormControl,Button, Container, Form} from 'react-bootstrap';
-import { useState } from "react";
+import { Table, Row, FormControl, Button, Container, Form} from 'react-bootstrap';
+import { createRef, useState } from "react";
 import React from 'react';
 import '../assets/css/Table_comp.css';
-import { useHistory } from "react-router-dom";
+import { useHistory, useRef } from "react-router-dom";
 
 
-const Table_comp = ({ daftar_survey, daftar_coloumn }) => {
-
+const Table_comp = ({ daftar_survey, daftar_coloumn, onSearch }) => {
     const history = useHistory();
 
     const routeChange = () =>{ 
@@ -18,17 +17,13 @@ const Table_comp = ({ daftar_survey, daftar_coloumn }) => {
         <div className='Table-Container'>
             <Container className='Table2-Container'>
                 <Row className="SearchBar-Container">
-                    <Form inline>
-                        {/* <Form.Control size="sm" type="text" placeholder="Search" /> */}
-                        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                        <Button type="submit">Search</Button>
-                    </Form>
+                    <SearchBar on_search={ onSearch }/>
                 </Row>
                 <Table striped hover size="sm" className="List-Table">
                     <thead >
                         <tr >
                         {daftar_coloumn.map((coloumn) => (
-                                <th className = 'table-header'>{coloumn.text}</th>
+                                <th className = 'table-header' key={"table-header-"+coloumn}>{coloumn.text}</th>
                         ))}
                         </tr>
                     </thead>
@@ -47,5 +42,24 @@ const Table_comp = ({ daftar_survey, daftar_coloumn }) => {
         </div>
         );
   };
+
+const SearchBar = ({on_search}) => {
+    const searchRef = createRef();
+
+    const search = (e) => {
+        e.preventDefault()
+        const query = searchRef.current.value
+        console.log(query)
+        on_search(query)
+    }
+
+    return (
+        <Form inline onSubmit={ search }>
+            {/* <Form.Control size="sm" type="text" placeholder="Search" /> */}
+            <FormControl type="text" className="mr-sm-2" ref={ searchRef } />
+            <Button type="submit">Cari</Button>
+        </Form>
+    )
+}
 
 export default Table_comp;

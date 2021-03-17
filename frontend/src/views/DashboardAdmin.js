@@ -28,6 +28,7 @@ class DashboardAdmin extends Component {
     this.state.cookie = getUser();
     this.state.id_admin = JSON.parse(atob(this.state.cookie))[0].id_admin;
     this.handlePageClick = this.handlePageClick.bind(this)
+    this.handleSearch = this.handleSearch.bind(this)
   }
 
   static get coloumns() { 
@@ -62,7 +63,7 @@ class DashboardAdmin extends Component {
             </div>
           </header>
           <body>
-            <Table_comp daftar_survey={this.state.display} daftar_coloumn={this.constructor.coloumns}/>
+            <Table_comp daftar_survey={this.state.display} daftar_coloumn={this.constructor.coloumns} onSearch={this.handleSearch}/>
             <PaginationButton totalPage={this.state.pageCount} pageMargin={1} onPageClick={this.handlePageClick} currentPage={this.state.currentPage} className='mx-auto' />
           </body>
         </div>
@@ -97,6 +98,10 @@ class DashboardAdmin extends Component {
             currentPage: button
           })
         })
+    }
+
+    handleSearch(query) {
+      console.log("From dashboard: "+query)
     }
     
 
