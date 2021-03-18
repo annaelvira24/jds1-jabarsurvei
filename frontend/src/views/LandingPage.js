@@ -99,8 +99,8 @@ class LandingPage extends Component {
 
     const offset = (parsed-1)*this.state.perPage
     var url = `http://localhost:5000/api/listSurvey/findAll?offset=${offset}&limit=${this.state.perPage}`
-    if (this.state.query)
-      url += `&query=${this.state.query}`
+    if (this.state.search)
+      url += `&query=${this.state.search}`
     http.get(url)
       .then((res) => {
         const display = res.data

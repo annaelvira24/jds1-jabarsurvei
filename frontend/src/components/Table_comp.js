@@ -23,7 +23,7 @@ const Table_comp = ({ daftar_survey, daftar_coloumn, onSearch }) => {
                     <thead >
                         <tr >
                         {daftar_coloumn.map((coloumn) => (
-                                <th className = 'table-header' key={"table-header-"+coloumn}>{coloumn.text}</th>
+                                <th className = 'table-header'>{coloumn.text}</th>
                         ))}
                         </tr>
                     </thead>
