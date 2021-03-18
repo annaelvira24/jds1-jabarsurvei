@@ -20,8 +20,8 @@ const Table_comp = ({ daftar_survey, daftar_coloumn }) => {
                 <Row className="SearchBar-Container">
                     <Form inline>
                         {/* <Form.Control size="sm" type="text" placeholder="Search" /> */}
-                        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                        <Button type="submit">Search</Button>
+                        <FormControl type="text" placeholder="Pencarian" className="mr-sm-2" />
+                        <Button type="submit">Cari</Button>
                     </Form>
                 </Row>
                 <Table striped hover size="sm" className="List-Table">
