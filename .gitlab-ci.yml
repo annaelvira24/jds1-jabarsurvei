@@ -11,7 +11,6 @@ frontend-build:
     script:
         - cd frontend
         - echo "Building frontend"
-        - yarn install
 
 backend-build:
     stage: build
