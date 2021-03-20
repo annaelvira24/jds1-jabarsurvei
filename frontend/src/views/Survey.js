@@ -55,13 +55,12 @@ class Survey extends Component {
             console.log(res.data[i].details);
             formDataTemp.push(JSON.parse(res.data[i].details));
           }
-          console.log(formDataTemp);
+          $(this.fbRender.current).formRender({
+            formData : formDataTemp,
+            dataType: 'json'
+          });
         });
       }
-      $(this.fbRender.current).formRender({
-        dataType: 'json',
-        formData:  formDataTemp
-      });
     }
     render() {
         return(
