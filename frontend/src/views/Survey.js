@@ -66,22 +66,13 @@ class Survey extends Component {
         return(
           <div id = "surveyContainer">
             <div id = "surveyTitle">
-              <div className="form-group">
-                <h1>{this.state.title}</h1>
-                <br/>
-                <h5>{this.state.desc}</h5>
-              </div>
-  
+              <h1>{this.state.title}</h1>
+              <h5>{this.state.desc}</h5>
             </div>
   
             <div id="surveyMain">
-              <div id="fb-rendered-form">
-                <div id="fb-rendered" ref={this.fbRender}>
-  
-                </div>
-                
+              <div id="fb-rendered" ref={this.fbRender}>
               </div>
-              
             </div>
           </div>
         );
