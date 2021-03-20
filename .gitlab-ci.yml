@@ -1,0 +1,39 @@
+image: node
+
+stages:
+    - build
+    - test
+
+frontend-build:
+    stage: build
+    tags:
+        - test-run
+    before_script:
+        - npm install -g yarn
+    script:
+        - cd frontend
+        - echo "Building frontend"
+        - yarn install
+
+backend-build:
+    stage: build
+    tags:
+        - test-run
+    script:
+        - cd backend
+        - echo "Building backend"
+        - npm install
+
+frontend-test:
+    stage: test
+    tags:
+        - test-run
+    script:
+        - echo "Frontend testing not implemented yet"
+
+backend-test:
+    stage: test
+    tags:
+        - test-run
+    script:
+        - echo "Backend testing not implemented yet"
