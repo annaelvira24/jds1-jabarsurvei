@@ -1,25 +1,15 @@
-.frmb, #rendered-form {
+.frmb {
      > li {
         &:hover {
             border-color: #5AAB4E !important;
             box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1), 0 0 8px rgba(90, 171, 78, 0.6) !important;
         }
+    
+     >  input{
+            margin-bottom: 100px;
+         }
      }
      .prev-holder {
-        input[type='text'],
-        input[type='number'] {
-             border-radius: 0 !important;
-             border-top: 0 none !important;
-             border-right: 0 none !important;
-             border-left: 0 none !important;
-             border-bottom: 1px solid #999 !important;
-             box-shadow: none !important;
-         }
-
-         textarea {
-             border: 1px solid #999 !important;
-         }
-
          input[type='radio'] {
              &:checked {
                  &::after {

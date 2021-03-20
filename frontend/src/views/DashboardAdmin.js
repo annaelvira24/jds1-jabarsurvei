@@ -34,17 +34,25 @@ class DashboardAdmin extends Component {
     return (
       [{
         dataField: 'id_survey',
-        text: 'Nomor Survey'
+        text: 'Nomor'
       },{
         dataField: 'survey_title',
-        text: 'Judul Suvey'
-      }, {
-        dataField: 'username',
-        text: 'Pembuat Survey'
-      }, {
+        text: 'Judul'
+      },
+      {
         dataField: 'decription',
         text: 'Deskripsi'
-      }]
+      },
+      {
+        text: 'Link Survey'
+      },
+      {
+        text: 'Edit'
+      },
+      {
+        text: 'Hapus'
+      }
+    ]
     )
   } 
 
