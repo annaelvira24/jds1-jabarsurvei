@@ -8,8 +8,6 @@ frontend-build:
     stage: build
     tags:
         - test-run
-    before_script:
-        - npm install -g yarn
     script:
         - cd frontend
         - echo "Building frontend"
