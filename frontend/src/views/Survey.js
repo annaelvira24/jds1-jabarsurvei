@@ -21,7 +21,9 @@ class Survey extends Component {
     state = {
       cookie: undefined,
       idSurvey : undefined,
-      idAdmin : undefined
+      idAdmin : undefined,
+      title : '',
+      desc : ''
     }
 
     constructor(){
@@ -38,16 +40,22 @@ class Survey extends Component {
 
       // edit existing survey
       if(this.state.idSurvey !== undefined){
-        /* http.get('http://localhost:5000/api/surveyFill/getDescription/' + this.state.idSurvey)
+        http.get('http://localhost:5000/api/surveyFill/getDescription/' + this.state.idSurvey)
         .then(res => {
-            console.log(res.data.survey_title);
             
-        }); */
+            this.setState({
+              title: res.data[0].survey_title,
+              desc : res.data[0].decription
+            });
+        });
         http.get('http://localhost:5000/api/surveyFill/findById/' + this.state.idSurvey)
         .then(res => {
+          
           for (var i = 0; i<res.data.length; i++){
+            console.log(res.data[i].details);
             formDataTemp.push(JSON.parse(res.data[i].details));
           }
+          console.log(formDataTemp);
         });
       }
       $(this.fbRender.current).formRender({
@@ -60,9 +68,9 @@ class Survey extends Component {
           <div id = "surveyContainer">
             <div id = "surveyTitle">
               <div className="form-group">
-                <span type="text" id="title-input"/>
+                <h1>{this.state.title}</h1>
                 <br/>
-                <span type="text" id="description-input" />
+                <h5>{this.state.desc}</h5>
               </div>
   
             </div>
