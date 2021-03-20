@@ -22,8 +22,9 @@ exports.create = function(req, res) {
 exports.findAll = function(req,res) {
     const offset = req.query.offset
     const limit = req.query.limit
+    const query = req.query.query
     ListSurvey.findAll(
-        offset, limit,
+        offset, limit, query,
         function(err, listSurvey) {  
             if (err)  res.send(err);  
             res.json(listSurvey);

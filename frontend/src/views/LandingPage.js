@@ -15,9 +15,12 @@ class LandingPage extends Component {
       offset: 0,
       currentPage: 1,
       perPage: 5,
-      pageCount: 0
+      pageCount: 0,
+      search: ""
     };
     this.handlePageClick = this.handlePageClick.bind(this)
+    this.handleSearch = this.handleSearch.bind(this)
+    this.findAll = this.findAll.bind(this)
   }
 
   static get coloumns() { 
@@ -51,15 +54,19 @@ class LandingPage extends Component {
                 </Row>
             </Container>
         </header>
-        <body className="Survey-Container border">
-          <Table_comp daftar_survey={this.state.display}  daftar_coloumn={this.constructor.coloumns}/>
+        <div className="Survey-Container border">
+          <Table_comp daftar_survey={this.state.display}  daftar_coloumn={this.constructor.coloumns} onSearch={ this.handleSearch } />
           <PaginationButton totalPage={this.state.pageCount} pageMargin={1} onPageClick={this.handlePageClick} currentPage={this.state.currentPage} className='mx-auto' />
-        </body>
+        </div>
       </div>
     );
   }
 
   componentDidMount() {
+    this.findAll()
+  }
+
+  findAll() {
     http.get('http://localhost:5000/api/listSurvey/findAll')
       .then(res => {
         const listSurvey = res.data;
@@ -69,7 +76,8 @@ class LandingPage extends Component {
         this.setState({ 
           display: display,
           pageCount: count,
-          currentPage: 1
+          currentPage: 1,
+          query: ""
         });
       }) 
   }
@@ -90,13 +98,32 @@ class LandingPage extends Component {
     const parsed = parseInt(button)
 
     const offset = (parsed-1)*this.state.perPage
-    http.get(`http://localhost:5000/api/listSurvey/findAll?offset=${offset}&limit=${this.state.perPage}`)
+    var url = `http://localhost:5000/api/listSurvey/findAll?offset=${offset}&limit=${this.state.perPage}`
+    if (this.state.search)
+      url += `&query=${this.state.search}`
+    http.get(url)
       .then((res) => {
-        console.log("Inside http")
         const display = res.data
         this.setState({
           display: display,
           currentPage: parsed,
+        })
+      })
+  }
+
+  handleSearch(query) {
+    if (!query) this.findAll();
+    var url = `http://localhost:5000/api/listSurvey/findAll?query=${query}`
+    http.get(url)
+      .then((res) => {
+        const listSurvey = res.data
+        const count = Math.ceil(listSurvey.length/this.state.perPage)
+        const display = listSurvey.slice(0, this.state.perPage)
+        this.setState({
+          display: display,
+          currentPage: 1,
+          search: query,
+          pageCount: count
         })
       })
   }

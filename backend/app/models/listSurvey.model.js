@@ -26,8 +26,11 @@ ListSurvey.create = function(newSurvey, result){
     });
 };
 
-ListSurvey.findAll = function (offset,limit,result) {
-    var q = "SELECT survey.id_survey, survey.id_admin, survey.survey_title, survey.decription, admin.username FROM survey LEFT JOIN admin ON survey.id_admin = admin.id_admin ORDER BY survey.id_survey"
+ListSurvey.findAll = function (offset,limit,query,result) {
+    var q = "SELECT survey.id_survey, survey.id_admin, survey.survey_title, survey.decription, admin.username FROM survey LEFT JOIN admin ON survey.id_admin = admin.id_admin"
+    if (query) 
+        q += ` WHERE survey.survey_title LIKE "%${query}%"`
+    q += " ORDER BY survey.id_survey"
     if (offset && limit) 
         q += ` LIMIT ${limit} OFFSET ${offset}` 
     dbConn.query(

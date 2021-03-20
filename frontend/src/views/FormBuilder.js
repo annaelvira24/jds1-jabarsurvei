@@ -235,9 +235,9 @@ class FormBuilder extends Component {
               <div id="fb-editor" ref={this.fbBuilder}>
 
               </div>
-              <div id="builder-button-container">
-                <button id="render" onClick={this.handleClearBuilder.bind(this)} className="btn btn-outline-secondary">Bersihkan</button>
-                <button id="clear" onClick={this.handlePreviewEdit.bind(this)} className="btn btn-outline-secondary">Tampilan</button>
+              <div id="builder-button-container clearfix">
+                <button id="render" onClick={this.handleClearBuilder.bind(this)} className="btn btn-outline-secondary float-left">Bersihkan</button>
+                <button id="clear" onClick={this.handlePreviewEdit.bind(this)} className="btn btn-outline-success float-right">Tampilan</button>
               </div>
             </div>
             <div id="fb-rendered-form" ref={this.fbRenderWrapper}>
