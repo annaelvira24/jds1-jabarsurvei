@@ -40,3 +40,6 @@ const surveyLinkRoutes = require('./app/routes/surveyLink.routes')
 app.use('/api/surveyLink', surveyLinkRoutes);
 const fBuilderRoutes = require('./app/routes/fBuilder.routes')
 app.use('/api/fBuilder', fBuilderRoutes);
+
+const surveyFillRoutes = require('./app/routes/surveyFill.routes')
+app.use('/api/surveyFill', surveyFillRoutes);
