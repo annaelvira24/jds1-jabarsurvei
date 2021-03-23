@@ -34,7 +34,7 @@ backend-build:
         - mysql -u root
         - CREATE DATABASE crowdsource
         - \q
-        - mysql -u root crowdsource < database/crowdsource.sql
+        - Get-Content database/crowdsource.sql | mysql -u root crowdsource
         - cd backend
         - echo "Building backend"
         - npm install
