@@ -32,7 +32,7 @@ backend-build:
 
     before_script:
         - echo "Building database"
-        - mysql --user=root --host=localhost -p -e 'CREATE DATABASE IF NOT EXISTS crowdsource;'
+        - mysql --user=root --host=localhost -password="" -e 'CREATE DATABASE IF NOT EXISTS crowdsource;'
         - \n
         # - Get-Content database/crowdsource.sql | mysql -u root crowdsource
 
