@@ -1,4 +1,4 @@
-image: node
+image: haverzard/node-mysql-ci:latest
 
 stages:
     - build
@@ -32,7 +32,7 @@ backend-build:
 
     before_script:
         - echo "Building database"
-        - mysql --user=root --host=localhost -e 'CREATE DATABASE IF NOT EXISTS crowdsource;'
+        - sudo mysql --user=root --host=localhost -e 'CREATE DATABASE IF NOT EXISTS crowdsource;'
         # - Get-Content database/crowdsource.sql | mysql -u root crowdsource
 
     script:
