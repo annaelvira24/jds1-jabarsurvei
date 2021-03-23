@@ -35,7 +35,7 @@ frontend-test:
         - test-run
     script:
         - echo "Frontend testing not implemented yet"
-        - ls frontend/node_modules/
+        - ls frontend/
 
 backend-test:
     stage: test
@@ -43,4 +43,4 @@ backend-test:
         - test-run
     script:
         - echo "Backend testing not implemented yet"
-        - ls backend/node_modules
+        - ls backend/
