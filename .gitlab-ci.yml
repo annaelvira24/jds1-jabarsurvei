@@ -30,6 +30,11 @@ backend-build:
     tags:
         - test-run
     script:
+        - echo "Building database"
+        - mysql -u root
+        - CREATE DATABASE crowdsource
+        - \q
+        - mysql -u root crowdsource < database/crowdsource.sql
         - cd backend
         - echo "Building backend"
         - npm install
