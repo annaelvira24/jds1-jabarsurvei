@@ -29,10 +29,13 @@ backend-build:
     stage: build
     tags:
         - test-run
-    script:
+
+    before_scripts:
         - echo "Building database"
-        - mysql -h 127.0.0.1 -u root -e 'CREATE DATABASE IF NOT EXISTS crowdsource;'
-        - Get-Content database/crowdsource.sql | mysql -u root crowdsource
+        -  mysql --user=root --host=mysql -e 'CREATE DATABASE IF NOT EXISTS crowdsource;'
+        # - Get-Content database/crowdsource.sql | mysql -u root crowdsource
+
+    script:
         - cd backend
         - echo "Building backend"
         - npm install
