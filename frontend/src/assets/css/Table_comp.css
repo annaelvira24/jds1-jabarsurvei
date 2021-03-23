@@ -1,16 +1,20 @@
-.Table-Container{
-        
-}
 .table-header{
         text-align: center;
         vertical-align: middle;
+        width: 1px;
 }
 .List-Table{
         max-width: 92%;
         margin-left: auto;
-margin-right: auto;
+        margin-right: auto;
 }
-.Table2-Container{
-justify-content: center;
 
+.Table2-Container{
+        justify-content: center;
+        /* font-size: 10px !important; */
+}
+
+td{
+        text-align: center !important;
+        font-size: 14px !important;
 }

@@ -13,7 +13,7 @@ var SurveyAdmin = function(survey){
 };
 
 SurveyAdmin.findById = function (id, offset, limit, result) {
-    var q = "Select  * FROM (SELECT survey.id_survey, survey.id_admin, survey.survey_title, survey.decription, admin.username FROM survey LEFT JOIN admin ON survey.id_admin = admin.id_admin ORDER BY survey.id_survey) t where id_admin = ?"
+    var q = "Select  * FROM (SELECT survey.id_survey, survey.id_admin, survey.survey_title, survey.decription, link.randomLink FROM survey LEFT JOIN link ON survey.id_survey = link.id_survey ORDER BY survey.id_survey DESC) t where id_admin = ?"
     if (offset&&limit)
         q += ` LIMIT ${limit} OFFSET ${offset}` 
     dbConn.query(q, id, function (err, res) {

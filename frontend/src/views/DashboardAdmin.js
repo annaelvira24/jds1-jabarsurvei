@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { getUser} from './../util/Common.js';
-import Table_comp from '../components/Table_comp.js';
+import Table_admin from '../components/Table_admin.js';
 import '../assets/scss/Custom.scss';
 import '../assets/css/DashboardAdmin.css';
 import http from "../http-common";
@@ -28,29 +28,37 @@ class DashboardAdmin extends Component {
     this.state.cookie = getUser();
     this.state.id_admin = JSON.parse(atob(this.state.cookie))[0].id_admin;
     this.handlePageClick = this.handlePageClick.bind(this)
+    this.handleSearch = this.handleSearch.bind(this)
+    this.findAll = this.findAll.bind(this)
   }
 
   static get coloumns() { 
     return (
       [{
-        dataField: 'id_survey',
-        text: 'Nomor'
+        text: 'No.',
+        width: '100px'
       },{
         dataField: 'survey_title',
-        text: 'Judul'
+        text: 'Judul',
+        width: '50px'
       },
       {
         dataField: 'decription',
-        text: 'Deskripsi'
+        text: 'Deskripsi Survei',
+        width: '100em'
       },
       {
-        text: 'Link Survey'
+        dataField: 'randomLink',
+        text: 'Link',
+        width: '100em'
       },
       {
-        text: 'Edit'
+        text: 'Edit',
+        width: '100em'
       },
       {
-        text: 'Hapus'
+        text: 'Hapus',
+        width: '100em'
       }
     ]
     )
@@ -69,10 +77,10 @@ class DashboardAdmin extends Component {
               </button>
             </div>
           </header>
-          <body>
-            <Table_comp daftar_survey={this.state.display} daftar_coloumn={this.constructor.coloumns}/>
+          <div className="Survey-Container border">
+            <Table_admin daftar_survey={this.state.display}  daftar_coloumn={this.constructor.coloumns} onSearch={ this.handleSearch } />
             <PaginationButton totalPage={this.state.pageCount} pageMargin={1} onPageClick={this.handlePageClick} currentPage={this.state.currentPage} className='mx-auto' />
-          </body>
+          </div>
         </div>
       );
     }
@@ -96,13 +104,33 @@ class DashboardAdmin extends Component {
       const offset = (parsed-1)*this.state.perPage
       this.setState({currentPage: parsed})
       
-      const url = `http://localhost:5000/api/surveyAdmin/${this.state.id_admin}?offset=${offset}&limit=${this.state.perPage}`
+      var url = `http://localhost:5000/api/surveyAdmin/${this.state.id_admin}?offset=${offset}&limit=${this.state.perPage}`
+      if (this.state.search)
+        url += `&query=${this.state.search}`
       http.get(url)
         .then((res) => {
           const display = res.data
           this.setState({
             display: display,
             currentPage: button
+          })
+        })
+    }
+
+    handleSearch(query) {
+      if (!query) this.findAll();
+      var url = `http://localhost:5000/api/surveyAdmin/${this.state.id_admin}?query=${query}`
+      http.get(url)
+        .then((res) => {
+          console.log(res.data)
+          const listSurvey = res.data
+          const count = Math.ceil(listSurvey.length/this.state.perPage)
+          const display = listSurvey.slice(0, this.state.perPage)
+          this.setState({
+            display: display,
+            currentPage: 1,
+            search: query,
+            pageCount: count
           })
         })
     }
@@ -116,8 +144,10 @@ class DashboardAdmin extends Component {
           this.setState({ username : res.data[0].username });
         })
       }
+      this.findAll()
+    }
 
-
+    findAll() {
       let url = 'http://localhost:5000/api/surveyAdmin/' + this.state.id_admin
       http.get(url)
         .then(res => {
@@ -127,11 +157,12 @@ class DashboardAdmin extends Component {
           const display = listSurveyAdmin.slice(0,this.state.perPage)
           this.setState({
             display: display,
-            pageCount: count
+            pageCount: count,
+            search: ""
           });
           console.log(listSurveyAdmin);
         })
-       
     }
+
 };
   export default DashboardAdmin;
