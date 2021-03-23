@@ -32,7 +32,7 @@ backend-build:
 
     before_script:
         - echo "Building database"
-        - sudo mysql --user=root --host=localhost -e 'CREATE DATABASE IF NOT EXISTS crowdsource;'
+        - mysql --user=root --host=localhost -p -e 'CREATE DATABASE IF NOT EXISTS crowdsource;'
         # - Get-Content database/crowdsource.sql | mysql -u root crowdsource
 
     script:
