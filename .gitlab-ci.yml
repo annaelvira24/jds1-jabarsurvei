@@ -12,10 +12,10 @@ cache:
         - backend/node_modules/
         - frontend/node_modules/
 
-before_script:
-    - apt --assume-yes update
-    - apt --assume-yes install mysql-client
-    - mysql --version
+# before_script:
+#    - apt --assume-yes update
+#    - apt --assume-yes install mysql-client
+#    - mysql --version
 
 frontend-build:
     stage: build
