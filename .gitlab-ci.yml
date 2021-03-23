@@ -43,4 +43,4 @@ backend-test:
         - test-run
     script:
         - echo "Backend testing not implemented yet"
-        - ls backend/
+        - ls backend/node_modules/
