@@ -1,4 +1,4 @@
-image: haverzard/node-mysql-ci:latest
+image: node
 
 stages:
     - build
@@ -32,8 +32,8 @@ backend-build:
 
     before_script:
         - echo "Building database"
-        - mysql --user=root --host=localhost --password="" -e 'CREATE DATABASE IF NOT EXISTS crowdsource;'
-        - \n
+        # - mysql --user=root --host=localhost --password="" -e 'CREATE DATABASE IF NOT EXISTS crowdsource;'
+        # - \n
         # - Get-Content database/crowdsource.sql | mysql -u root crowdsource
 
     script:
@@ -54,5 +54,6 @@ backend-test:
     tags:
         - test-run
     script:
-        - echo "Backend testing not implemented yet"
+        - echo "Backend testing"
+        # - npm run test
         - ls backend/node_modules/
