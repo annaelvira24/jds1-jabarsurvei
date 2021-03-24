@@ -11,6 +11,7 @@ import Navbar from './components/Navigation';
 import CreateSurvey from './components/CreateSurvey';
 import { getUser } from './util/Common';
 
+import FormBuilder from './views/FormBuilder';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
       <Navbar/>
       <Switch>
           <Route exact path="/" component={LandingPage}/>
-          <Route path="/survey/id=:id" component={Survey}/>
+          <Route exact path="/survey/id=:id" component={Survey}/>
           <Route exact path="/login" component={LoginPage}>
             { (getUser()) && (<Redirect to="/" />) }
           </Route>
@@ -32,7 +33,8 @@ function App() {
           <Route exact path="/create-survey" component={CreateSurvey}>
             { (!getUser()) && (<Redirect to="/" />) }
           </Route>
-
+          <Route exact path="/FormBuilder/create" component={FormBuilder}/>
+          <Route path="/FormBuilder/edit/id=:id" component={FormBuilder}/>
       </Switch>
       </div>
     </Router>

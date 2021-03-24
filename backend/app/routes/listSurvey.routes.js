@@ -5,6 +5,7 @@ const router = express.Router();
 const listSurveyController = require('../controllers/listSurvey.controller');
 
 // Retrieve a single admin with id
+router.post('/create', listSurveyController.create);
 router.get('/findAll', listSurveyController.findAll);
 router.get('/id/:id', listSurveyController.findById);
 router.get('/link/:link', listSurveyController.findByLink);

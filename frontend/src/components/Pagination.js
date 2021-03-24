@@ -43,7 +43,7 @@ class PaginationButton extends Component {
                 }
             }                        
         }
-        return {items}
+        return {...next, items}
     }
 
     render() {

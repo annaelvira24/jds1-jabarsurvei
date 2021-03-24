@@ -1,0 +1,79 @@
+.input-control span {
+    color: gray !important;
+}
+
+.frmb {
+     > li {
+        &:hover {
+            border-color: #5AAB4E !important;
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1), 0 0 8px rgba(90, 171, 78, 0.6) !important;
+        }
+     }
+     .prev-holder {
+        input[type='text'],
+        input[type='number'] {
+             border-top: 0 none !important;
+             border-right: 0 none !important;
+             border-left: 0 none !important;
+             border-bottom: 1px solid #999 !important;
+             box-shadow: none !important;
+         }
+
+         textarea {
+             border: 1px solid #999 !important;
+         }
+
+         input[type='radio'] {
+             &:checked {
+                 &::after {
+                    width: 15px;
+                    height: 15px;
+                    border-radius: 15px;
+                    top: -2px;
+                    left: -1px;
+                    position: relative;
+                    background-color: #5AAB4E !important;
+                    content: '';
+                    display: inline-block;
+                    visibility: visible;
+                    border: 2px solid white;
+                 }
+             }
+
+             &:after {
+                width: 15px;
+                height: 15px;
+                border-radius: 15px;
+                top: -2px;
+                left: -1px;
+                position: relative;
+                background-color: #d1d3d1 !important;
+                content: '';
+                display: inline-block;
+                visibility: visible;
+                border: 2px solid white;
+             }
+         }
+
+         input[type='checkbox']{
+            filter: hue-rotate(270deg) brightness(1.0);
+         }
+     }
+}
+
+.formbuilder-checkbox-group,
+.formbuilder-radio-group {
+  input[type='checkbox'],
+  input[type='radio'] {
+    filter: hue-rotate(270deg) brightness(1.0);
+  }
+}
+
+#formBuilderContainer{
+    margin-top: 50px;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 100px;
+}
+// 	hsl(112, 37%, 49%)
+// 	hsl(212, 100%, 49%)
