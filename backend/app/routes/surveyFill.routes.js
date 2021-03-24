@@ -4,7 +4,6 @@ const router = express.Router();
 
 const surveyFillController = require('../controllers/surveyFill.controller');
 
-router.get('/getDescription/:id', surveyFillController.getDescription);
-router.get('/findById/:id', surveyFillController.findById);
+router.get('/getSurvey/:id', surveyFillController.getSurvey);
 
 module.exports = router;
