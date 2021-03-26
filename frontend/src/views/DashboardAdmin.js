@@ -2,17 +2,16 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { getUser} from './../util/Common.js';
-import Table_admin from '../components/Table_admin.js';
+import TableAdmin from '../components/TableAdmin.js';
+import PaginationButton from '../components/Pagination.js';
+import http from "../http-common";
 import '../assets/scss/Custom.scss';
 import '../assets/css/DashboardAdmin.css';
-import http from "../http-common";
-import PaginationButton from '../components/Pagination.js';
 
 
 class DashboardAdmin extends Component {
   
   state = {
-    // listSurveyAdmin: [],
     id_admin: undefined,
     username: undefined,
     cookie: undefined,
@@ -78,7 +77,7 @@ class DashboardAdmin extends Component {
             </div>
           </header>
           <div className="Survey-Container border">
-            <Table_admin daftar_survey={this.state.display}  daftar_coloumn={this.constructor.coloumns} onSearch={ this.handleSearch } />
+            <TableAdmin daftar_survey={this.state.display}  daftar_coloumn={this.constructor.coloumns} onSearch={ this.handleSearch } />
             <PaginationButton totalPage={this.state.pageCount} pageMargin={1} onPageClick={this.handlePageClick} currentPage={this.state.currentPage} className='mx-auto' />
           </div>
         </div>
