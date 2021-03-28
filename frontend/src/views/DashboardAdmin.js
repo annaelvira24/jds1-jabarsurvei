@@ -76,7 +76,7 @@ class DashboardAdmin extends Component {
               </button>
             </div>
           </header>
-          <div className="Survey-Container border">
+          <div className="Survey-Container">
             <TableAdmin daftar_survey={this.state.display}  daftar_coloumn={this.constructor.coloumns} onSearch={ this.handleSearch } />
             <PaginationButton totalPage={this.state.pageCount} pageMargin={1} onPageClick={this.handlePageClick} currentPage={this.state.currentPage} className='mx-auto' />
           </div>

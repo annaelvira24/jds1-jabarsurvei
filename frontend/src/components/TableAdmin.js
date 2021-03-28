@@ -1,5 +1,6 @@
 import React from 'react';
-import { Table, Row, FormControl, Button, Container, Form, Modal} from 'react-bootstrap';
+import {Row, FormControl, Button, Container, Form, Modal} from 'react-bootstrap';
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import { Component, createRef, useState } from "react";
 import { useHistory, useRef } from "react-router-dom";
 import ModalPopUp from './ModalPopUp.js'
@@ -8,12 +9,16 @@ import '../assets/css/Table_comp.css';
 
 class TableAdmin extends Component {
     state = {
-        headingText : '',
-        surveyLink : ''
-    }
+        status : undefined,
+        headingText : undefined,
+        surveyLink : undefined
+    };
 
     constructor(props){
         super(props);
+        this.state.status = '';
+        this.state.headingText = '';
+        this.state.surveyLink = '';
     };
 
     ModalRef = ({handleShow}) => {
@@ -37,6 +42,7 @@ class TableAdmin extends Component {
         .then((res) => {
           console.log(res.data);
           this.setState({
+            status : 'create',
             headingText : 'Link survei Anda berhasil dibuat!',
             surveyLink : res.data
           })
@@ -52,8 +58,9 @@ class TableAdmin extends Component {
         .then((res) => {
           console.log(res.data[0].randomlink);
           this.setState({
-              headingText : 'Berikut link survei Anda',
-              surveyLink : res.data[0].randomlink
+            status : 'view',
+            headingText : 'Berikut link survei Anda',
+            surveyLink : res.data[0].randomlink
           })
           this.onSurveyClick();
         })
@@ -64,6 +71,7 @@ class TableAdmin extends Component {
             <div className='Table-Container'>
                 <ModalPopUp 
                     ref={this.ModalRef}
+                    status={this.state.status}
                     modalHeading={this.state.headingText}
                     link = {this.state.surveyLink}
                 />
@@ -71,7 +79,7 @@ class TableAdmin extends Component {
                     <Row className="SearchBar-Container">
                         <SearchBar on_search={ this.props.onSearch }/>
                     </Row>
-                    <Table striped responsive="sm" hover size="sm" className="List-Table">
+                    <BootstrapTable striped responsive="sm" hover size="sm" className="List-Table">
                             <thead>
                                 <tr style = {{width: '100px'}}>
                                 {this.props.daftar_coloumn.map((coloumn) => (
@@ -86,17 +94,17 @@ class TableAdmin extends Component {
                                         <td>{survey.survey_title}</td>
                                         <td>{survey.decription}</td>
                                         {(survey.randomLink !== null)
-                                            && (<td><button className = "btn btn-primary btn-sm" onClick = {(e) => this.handleShowLink(e,survey.id_survey)} >Lihat Link</button></td>
+                                            && (<td><Button variant = "default" className = "t-blue btn-sm" onClick = {(e) => this.handleShowLink(e,survey.id_survey)} >Lihat Link</Button></td>
                                         )}
                                         {(survey.randomLink == null)
-                                            && (<td><button className = "btn btn-primary btn-sm" onClick = {(e) => this.handleGenLink(e,survey.id_survey,survey.id_admin)}>Buat Link</button></td>
+                                            && (<td><button className = "t-blue btn-sm" onClick = {(e) => this.handleGenLink(e,survey.id_survey,survey.id_admin)}>Buat Link</button></td>
                                         )}
-                                        <td><button className = "btn btn-primary btn-sm" onClick = "handleGenLink">Edit</button></td>
-                                        <td><button className = "btn btn-danger btn-sm">Hapus</button></td>
+                                        <td><Button variant="default" className = "btn t-yellow btn-sm" onClick = "handleGenLink">Edit</Button></td>
+                                        <td><Button variant="danger" className = "btn-sm">Hapus</Button></td>
                                     </tr>
                                 ))}
                             </tbody>
-                    </Table>      
+                    </BootstrapTable>      
                 </Container>
             </div>
         );

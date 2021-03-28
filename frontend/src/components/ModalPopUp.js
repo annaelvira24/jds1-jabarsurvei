@@ -1,5 +1,5 @@
 import { React, useState, Component } from 'react';
-import { Modal } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import '../assets/css/Table_comp.css';
 
 class ModalPopUp extends Component{
@@ -22,8 +22,10 @@ class ModalPopUp extends Component{
     };
 
     handleClose(){
-        this.setState({ show: false })
-        // window.location.reload(false);
+        this.setState({ show: false });
+        if(this.props.status == 'create'){
+            window.location.reload();
+        }
     };
 
     render(){
@@ -34,12 +36,12 @@ class ModalPopUp extends Component{
                 </Modal.Header>
                 <Modal.Body>{this.props.link}</Modal.Body>
                 <Modal.Footer>
-                    <button variant="success" onClick={(e) => this.handleCopy(e, this.props.link)}>
+                    <Button variant="default" className="t-blue" onClick={(e) => this.handleCopy(e, this.props.link)}>
                         Salin Link
-                    </button>
-                    <button variant="success" onClick={this.handleClose}>
+                    </Button>
+                    <Button variant="secondary" onClick={this.handleClose}>
                         Tutup
-                    </button>
+                    </Button>
                 </Modal.Footer>
             </Modal>
         );
