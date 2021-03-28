@@ -43,3 +43,5 @@ app.use('/api/fBuilder', fBuilderRoutes);
 
 const submitRoutes = require('./app/routes/submit.routes')
 app.use('/api/submit', submitRoutes);
+const surveyFillRoutes = require('./app/routes/surveyFill.routes')
+app.use('/api/surveyFill', surveyFillRoutes);
