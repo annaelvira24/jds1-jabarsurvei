@@ -1,5 +1,6 @@
 import $ from "jquery";
 import React, { Component, createRef } from "react";
+import { Button } from "react-bootstrap";
 import http from "../http-common";
 import { getUser } from './../util/Common.js';
 import 'jquery-ui-sortable';
@@ -101,7 +102,7 @@ class Survey extends Component {
             <div id="survey-main">
               <div id="fb-rendered" ref={this.fbRender}>
               </div>
-              <button type="button" id="button-submit" onClick={this.handleSubmit} ref={this.hideButton}>Submit</button>
+              <Button type="button" variant = "default" className="t-green" id="button-submit" onClick={this.handleSubmit} ref={this.hideButton}>Submit</Button>
             </div>
           </div>
         );
