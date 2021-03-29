@@ -201,20 +201,20 @@ class FormBuilder extends Component {
           this.setState ({idSurvey : res.data.data.id_survey
           });
         }
-      })
 
-      console.log(this.state.idSurvey);
-      var jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json');
-      http.post('http://localhost:5000/api/fBuilder/createform', {
-        // TODO : fix this
-        id_survey : 12,
-        status : true,
-        details: jsonform
-      })
-      .then(res => {
-        if(res.status === 200){
-            window.location.href="/dashboard"
-        }
+        console.log("Test id: "+this.state.idSurvey);
+        var jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json');
+        http.post('http://localhost:5000/api/fBuilder/createform', {
+          // TODO : fix this
+          id_survey : this.state.idSurvey,
+          status : true,
+          details: jsonform
+        })
+        .then(res => {
+          if(res.status === 200){
+              window.location.href="/dashboard"
+          }
+        })
       })
     }
     

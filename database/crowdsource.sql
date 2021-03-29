@@ -58,12 +58,13 @@ CREATE TABLE `answer` (
   `id_question` int NOT NULL,
   `id_survey` int NOT NULL,
   `answer` text NOT NULL,
+  `submit_time` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_answer`),
   KEY `id_survey` (`id_survey`),
   KEY `id_question` (`id_question`),
   CONSTRAINT `answer_ibfk_2` FOREIGN KEY (`id_question`) REFERENCES `question` (`id_question`),
   CONSTRAINT `FK_SurveyAnswer` FOREIGN KEY (`id_survey`) REFERENCES `survey` (`id_survey`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +73,7 @@ CREATE TABLE `answer` (
 
 LOCK TABLES `answer` WRITE;
 /*!40000 ALTER TABLE `answer` DISABLE KEYS */;
-INSERT INTO `answer` VALUES (15,1,13,'option-1'),(16,2,13,'2021-03-02'),(17,3,13,'123'),(18,4,13,'option-2'),(19,5,13,'option-3'),(20,6,13,'Isian singkat'),(21,7,13,' Text areaText areaText areaText areaText areaText areaText areaText areaText areaText areaText area');
+INSERT INTO `answer` VALUES (15,1,13,'option-1','2021-03-29 17:45:00'),(16,2,13,'2021-03-02','2021-03-29 17:45:00'),(17,3,13,'123','2021-03-29 17:45:00'),(18,4,13,'option-2','2021-03-29 17:45:00'),(19,5,13,'option-3','2021-03-29 17:45:00'),(20,6,13,'Isian singkat','2021-03-29 17:45:00'),(21,7,13,' Text areaText areaText areaText areaText areaText areaText areaText areaText areaText areaText area','2021-03-29 17:45:00'),(22,1,13,'[\"option-1\"]','2021-03-29 17:45:00'),(23,2,13,'[\"2021-03-10\"]','2021-03-29 17:45:00'),(24,3,13,'[\"1234\"]','2021-03-29 17:45:00'),(25,4,13,'[\"option-3\"]','2021-03-29 17:45:00'),(26,5,13,'[\"option-2\"]','2021-03-29 17:45:00'),(27,6,13,'[\"Isian singkat2\"]','2021-03-29 17:45:00'),(28,7,13,'[\"Text area\"]','2021-03-29 17:45:00'),(29,1,13,'[\"option-1\"]','2021-03-29 17:45:00'),(30,2,13,'[\"2021-03-10\"]','2021-03-29 17:45:00'),(31,3,13,'[\"1234\"]','2021-03-29 17:45:00'),(32,4,13,'[\"option-3\"]','2021-03-29 17:45:00'),(33,5,13,'[\"option-1\"]','2021-03-29 17:45:00'),(34,6,13,'[\"Isian singkat3\"]','2021-03-29 17:45:00'),(35,7,13,'[\"Text area\"]','2021-03-29 17:45:00'),(36,1,13,'[\"option-1\"]','2021-03-29 17:45:43'),(37,2,13,'[\"2021-03-29\"]','2021-03-29 17:45:43'),(38,3,13,'[\"9998\"]','2021-03-29 17:45:43'),(39,4,13,'[\"option-3\"]','2021-03-29 17:45:43'),(40,5,13,'[\"option-2\"]','2021-03-29 17:45:43'),(41,6,13,'[\"singkat\"]','2021-03-29 17:45:43'),(42,7,13,'[\"text\"]','2021-03-29 17:45:43');
 /*!40000 ALTER TABLE `answer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,4 +173,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-28 15:52:37
+-- Dump completed on 2021-03-29 17:47:57

@@ -23,39 +23,8 @@
              border: 1px solid #999 !important;
          }
 
-         input[type='radio'] {
-             &:checked {
-                 &::after {
-                    width: 15px;
-                    height: 15px;
-                    border-radius: 15px;
-                    top: -2px;
-                    left: -1px;
-                    position: relative;
-                    background-color: #5AAB4E !important;
-                    content: '';
-                    display: inline-block;
-                    visibility: visible;
-                    border: 2px solid white;
-                 }
-             }
-
-             &:after {
-                width: 15px;
-                height: 15px;
-                border-radius: 15px;
-                top: -2px;
-                left: -1px;
-                position: relative;
-                background-color: #d1d3d1 !important;
-                content: '';
-                display: inline-block;
-                visibility: visible;
-                border: 2px solid white;
-             }
-         }
-
-         input[type='checkbox']{
+         input[type='checkbox'],
+         input[type='radio']{
             filter: hue-rotate(270deg) brightness(1.0);
          }
      }
