@@ -15,11 +15,10 @@ FBuilder.create = function(newFBuilder, result){
     dbConn.query("INSERT INTO question set ?", 
     newFBuilder, function (err, res) {
         if(err) {  
-            console.log("error: ", err);  
-            result(err, null);
+            result(err, null);  
         }
         else{ 
-            result(null, res.insertID);
+            result(null, res.insertId);
         }
     });
 };
