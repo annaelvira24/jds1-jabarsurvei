@@ -1,9 +1,10 @@
 import $ from "jquery";
 import React, { Component, createRef } from "react";
+import { Button } from "react-bootstrap";
 import http from "../http-common";
 import { getUser } from './../util/Common.js';
 import 'jquery-ui-sortable';
-import './../assets/scss/FormBuilder.scss'
+import './../assets/scss/Survey.scss'
 
 window.jQuery = $;
 window.$ = $;
@@ -92,17 +93,17 @@ class Survey extends Component {
 
     render() {
         return(
-          <div id = "surveyContainer">
-            <div id = "surveyTitle">
-              <h1>{this.state.title}</h1>
-              <h5>{this.state.desc}</h5>
+          <div id = "survey-container">
+            <div id = "survey-title-container">
+              <p id="survey-title">{this.state.title}</p>
+              <p id="survey-description">{this.state.desc}</p>
             </div>
   
-            <div id="surveyMain">
+            <div id="survey-main">
               <div id="fb-rendered" ref={this.fbRender}>
               </div>
+              <Button type="button" variant = "default" className="t-green" id="button-submit" onClick={this.handleSubmit} ref={this.hideButton}>Submit</Button>
             </div>
-            <button type="button" id="button" onClick={this.handleSubmit} ref={this.hideButton}>Submit</button>
           </div>
         );
       }

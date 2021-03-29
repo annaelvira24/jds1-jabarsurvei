@@ -45,7 +45,7 @@ class TableAdmin extends Component {
           this.setState({
             status : 'create',
             headingText : 'Link survei Anda berhasil dibuat!',
-            surveyLink : res.data
+            surveyLink : 'http://localhost:3000/survey/' + res.data
           })
           this.onSurveyClick();
         })
@@ -59,7 +59,7 @@ class TableAdmin extends Component {
           this.setState({
             status : 'view',
             headingText : 'Berikut link survei Anda',
-            surveyLink : res.data[0].randomlink
+            surveyLink : 'http://localhost:3000/survey/' + res.data[0].randomlink
           })
           this.onSurveyClick();
         })
