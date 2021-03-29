@@ -69,6 +69,41 @@ class FormBuilder extends Component {
         disabledActionButtons: ['clear','save'], 
         disableFields: ['autocomplete','button', 'hidden'],
         disabledAttrs: ['name', 'access', 'className', 'value', 'maxlength', 'step', 'placeholder', 'subtype', 'rows'],
+        inputSets: [
+            {
+              label: 'Alamat',
+              name: 'alamat',
+              showHeader: true, 
+              fields: [
+                  {
+                    type: 'text',
+                    label: 'Provinsi',
+                    className: 'form-control'
+                  },
+                  {
+                    type: 'text',
+                    label: 'Kota/Kabupaten',
+                    className: 'form-control'
+                  },
+                  {
+                    type: 'text',
+                    label: 'Kecamatan',
+                    className: 'form-control'
+                  },
+                  {
+                    type: 'text',
+                    label: 'Kelurahan',
+                    className: 'form-control'
+                  },
+                  {
+                    type: 'text',
+                    label: 'Alamat Lengkap',
+                    className: 'form-control'
+                  }
+                ]
+            }
+        ],
+            
         i18n: {
           override: {
             'en-US': {
