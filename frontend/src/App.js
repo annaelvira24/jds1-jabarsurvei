@@ -21,7 +21,7 @@ function App() {
       <Navbar/>
       <Switch>
           <Route exact path="/" component={LandingPage}/>
-          <Route exact path="/survey/:id" component={Survey}/>
+          <Route exact path="/survey/:link" component={Survey}/>
           <Route exact path="/login" component={LoginPage}>
             { (getUser()) && (<Redirect to="/" />) }
           </Route>

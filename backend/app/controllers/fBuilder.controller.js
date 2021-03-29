@@ -7,7 +7,7 @@ exports.create = function(req, res) {
     const active_status = req.body.status;
     const details = JSON.parse(req.body.details);
     
-    for(var i = 0; i<details.length; i++){
+    for(var i = 0; i < details.length; i++){
         const question = new FBuilder({
             id_survey : id_survey,
             order_number : i,
@@ -18,13 +18,12 @@ exports.create = function(req, res) {
         FBuilder.create(question, function(err, result) {
             if (err) {
                 res.send(err);  
+                return;
             } 
-            else{
-                res.status(200).send('OK');
-            }
-            return;
         });
     }
+    console.log(`Survey ${id_survey} successfully created!`)
+    res.status(200).send('OK');
 };
 
 exports.findById = function(req, res) {
