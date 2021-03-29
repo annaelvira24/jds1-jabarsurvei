@@ -1,5 +1,6 @@
 import React from 'react';
 import './assets/scss/App.scss';
+import './assets/css/Theme.css';
 import './App.css';
 import {BrowserRouter as Router, Redirect, Switch, Route} from 'react-router-dom';
 import LandingPage from './views/LandingPage';

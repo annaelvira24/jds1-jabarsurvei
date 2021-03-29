@@ -28,9 +28,9 @@ const Table_comp = ({ daftar_survey, daftar_coloumn, onSearch }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {daftar_survey.map((survey) => (
+                        {daftar_survey.map((survey, index) => (
                             <tr onClick={routeChange}>
-                                <td>{survey.id_survey}</td>
+                                <td>{index+1}</td>
                                 <td>{survey.survey_title}</td>
                                 <td>{survey.username}</td>
                                 <td>{survey.decription}</td>
