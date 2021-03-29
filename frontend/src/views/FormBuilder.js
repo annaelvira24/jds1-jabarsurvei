@@ -244,7 +244,7 @@ class FormBuilder extends Component {
     createNewSurvey(){
       const surveyTitle = document.getElementById('title-input').value;
       const surveyDescription = document.getElementById('description-input').value;
-      if(surveyTitle = ""){
+      if(surveyTitle == ""){
         surveyTitle = "Survey tanpa judul";
       }
 

@@ -66,8 +66,9 @@ class TableAdmin extends Component {
     }
 
     cellButtonLink (cell, row, enumObject, rowIndex){
+        console.log(row);
         let theButton;
-        if(row.randomlink == null){
+        if(row.randomlink != null){
             theButton = <Button variant = "default" className = "t-blue btn-sm" onClick = {(e) => this.handleShowLink(e,row.id_survey)}>
                             Lihat Link
                         </Button>
