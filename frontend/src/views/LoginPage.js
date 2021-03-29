@@ -61,8 +61,14 @@ class Login extends Component{
                             <input type="password" id="password-input" className="form-control" placeholder="Password" onClick={this.clearSpan}/>
                             <span id="false-msg" className="input-message"></span>
                         </div>
-                        <Button type="submit" id="btn-login" className="btn btn-t-blue btn-block" onClick={(e) => this.handleLogin(e)}>Log in</Button>
+                        <Button type="submit" id="btn-login" className="btn btn-t-blue btn-block" onClick={(e) => this.handleLogin(e)}>Masuk</Button>
+                        
+                        <div id = "register">
+                            <span id = "register-to">Belum punya akun? </span>
+                            <a href={'/register'}>Daftar</a>
+                        </div>
                     </form>
+
                 </div>
             </div>
             

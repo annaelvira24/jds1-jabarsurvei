@@ -16,15 +16,6 @@ app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// var session = require('express-session');
-// app.use(session({
-//   secret: 'keyboard cat',
-//   resave: false,
-//   saveUninitialized: true,
-//   cookie: { maxAge: 60000 }
-// }));
-
-// simple route
 app.get("/", (req, res) => {
   res.json({ message: "testing" });
 });
@@ -44,3 +35,13 @@ app.use('/api/listSurvey', listSurveyRoutes);
 
 const surveyAdminRoutes = require('./app/routes/surveyAdmin.routes')
 app.use('/api/surveyAdmin', surveyAdminRoutes);
+
+const surveyLinkRoutes = require('./app/routes/surveyLink.routes')
+app.use('/api/surveyLink', surveyLinkRoutes);
+const fBuilderRoutes = require('./app/routes/fBuilder.routes')
+app.use('/api/fBuilder', fBuilderRoutes);
+
+const submitRoutes = require('./app/routes/submit.routes')
+app.use('/api/submit', submitRoutes);
+const surveyFillRoutes = require('./app/routes/surveyFill.routes')
+app.use('/api/surveyFill', surveyFillRoutes);

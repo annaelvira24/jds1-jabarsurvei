@@ -12,8 +12,13 @@ var SurveyAdmin = function(survey){
 
 };
 
-SurveyAdmin.findById = function (id, result) {
-    dbConn.query("Select  * FROM (SELECT survey.id_survey, survey.id_admin, survey.survey_title, survey.decription, admin.username FROM survey LEFT JOIN admin ON survey.id_admin = admin.id_admin ORDER BY survey.id_survey) t where id_admin = ?", id, function (err, res) {
+SurveyAdmin.findById = function (id, offset, limit, query, result) {
+    var q = "Select * FROM (SELECT survey.id_survey, survey.id_admin, survey.survey_title, survey.decription, link.randomlink FROM survey LEFT JOIN link ON survey.id_survey = link.id_survey ORDER BY survey.id_survey DESC) t where id_admin = ?"
+    if (query)
+        q += ` and survey_title LIKE "%${query}%"`
+    if (offset&&limit)
+        q += ` LIMIT ${limit} OFFSET ${offset}`
+    dbConn.query(q, id, function (err, res) {
         if(err) {
             console.log("error: ", err);
             result(err, null);
@@ -23,5 +28,6 @@ SurveyAdmin.findById = function (id, result) {
         }
     });
 };
+
 
 module.exports = SurveyAdmin;

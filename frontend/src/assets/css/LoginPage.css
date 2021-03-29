@@ -22,6 +22,16 @@
     font-size: 0.9rem;
 }
 
+#register{
+    text-align: left;
+    font-size: 11pt;
+    margin-top: 10px;
+}
+
+a{
+    text-decoration: none;
+}
+
 #btn-login{
     background-color: #00A5E1;
 }

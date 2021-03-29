@@ -1,0 +1,26 @@
+.t-green{
+    background-color: #5AAB4E !important;
+    color: white !important;
+}
+
+.t-yellow{
+    background-color: #FEC32B !important;
+    color: white !important;
+}
+
+.t-blue{
+    background-color: #00a5e1 !important;
+    color: white !important;
+}
+
+.t-green:hover{
+    background-color: rgb(58, 122, 48) !important;
+}
+
+.t-yellow:hover{
+    background-color: rgb(212, 161, 30) !important;
+}
+
+.t-blue:hover{
+    background-color: #0296cc !important;
+}

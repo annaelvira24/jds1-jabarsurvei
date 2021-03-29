@@ -16,12 +16,6 @@ class Navigation extends Component{
         this.state.cookie = getUser();
     }
 
-    componentDidMount() {
-        if (this.state.cookie && !this.state.username) {
-            this.setState({ username: JSON.parse(atob(this.state.cookie))["username"] });
-        }
-    }
-
     handleLogout = async e => {
         e.preventDefault();
         removeUserCookie();
@@ -42,13 +36,13 @@ class Navigation extends Component{
                     </Nav.Item>
                     <Navbar.Collapse className="justify-content-end">
                         {(this.state.cookie)
-                            && (<Nav.Link href="/dashboard">Dashboard</Nav.Link>
+                            && (<Nav.Link href="/dashboard">Beranda</Nav.Link>
                         )}
                         {(!this.state.cookie)
-                            && (<Nav.Link href="/login">Login</Nav.Link>
+                            && (<Nav.Link href="/login">Masuk</Nav.Link>
                         )}
                         {(this.state.cookie)
-                            && (<Nav.Link onClick= {(e)=> this.handleLogout(e)}>Logout</Nav.Link>
+                            && (<Nav.Link onClick= {(e)=> this.handleLogout(e)}>Keluar</Nav.Link>
                         )}
                     </Navbar.Collapse>
                 </Nav>

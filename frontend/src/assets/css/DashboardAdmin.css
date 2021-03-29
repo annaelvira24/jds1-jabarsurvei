@@ -1,3 +1,34 @@
 .Title-h1-Dashboard{
     text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.Title-h2-Dashboard{
+    text-align: center;
+    font-size: 24px;
+    color: rgb(94, 94, 94);
+}
+
+#dashboard-admin{
+    margin-top: 50px;
+}
+
+#empty-survey{
+    text-align: center;
+}
+
+.wrapper-button-create{
+    justify-content: right;
+    position: absolute;
+    right: 12%;
+}
+
+#button-create{
+    background-color: #5AAB4E;
+    color: white;
+}
+
+#button-create:hover{
+    background-color: rgb(54, 129, 43);
 }

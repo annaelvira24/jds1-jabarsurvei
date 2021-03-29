@@ -1,0 +1,50 @@
+.wrapper-register {
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 80px;
+
+}
+
+.container-register {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.register-form{
+    width: 28%;
+    min-width: 300px;
+    text-align: left;
+}
+
+.input-message {
+    font-size: 0.9rem;
+    color: red;
+}
+
+#login{
+    text-align: left;
+    font-size: 10pt;
+    margin-top: 10px;
+}
+
+a{
+    text-decoration: none;
+}
+
+
+
+#btn-login{
+    background-color: #00A5E1;
+}
+
+#btn-login:hover{
+    background-color: rgb(2, 135, 184);
+}
+
+.logo{
+    width: 250px;
+}
