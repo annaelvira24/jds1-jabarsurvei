@@ -20,7 +20,7 @@ class Survey extends Component {
 
     state = {
       cookie: undefined,
-      idSurvey : undefined,
+      id : undefined,
       idAdmin : undefined,
       title : '',
       desc : ''
@@ -36,29 +36,24 @@ class Survey extends Component {
     
     componentDidMount() {
       if (this.props.match)
-        this.state.idSurvey = this.props.match.params.id;
+        this.state.id = this.props.match.params.id;
 
       // edit existing survey
-      if(this.state.idSurvey !== undefined){
-        http.get('http://localhost:5000/api/surveyFill/getDescription/' + this.state.idSurvey)
-        .then(res => {
-            
+      if(this.state.id !== undefined){
+        http.get('http://localhost:5000/api/surveyFill/getSurvey/' + this.state.id)
+        .then(res => {          
             this.setState({
               title: res.data[0].survey_title,
               desc : res.data[0].decription
             });
-        });
-        http.get('http://localhost:5000/api/surveyFill/findById/' + this.state.idSurvey)
-        .then(res => {
-          
-          for (var i = 0; i<res.data.length; i++){
-            console.log(res.data[i].details);
-            formDataTemp.push(JSON.parse(res.data[i].details));
-          }
-          $(this.fbRender.current).formRender({
-            formData : formDataTemp,
-            dataType: 'json'
-          });
+            for (var i = 0; i<res.data.length; i++){
+              console.log(res.data[i].details);
+              formDataTemp.push(JSON.parse(res.data[i].details));
+            }
+            $(this.fbRender.current).formRender({
+              formData : formDataTemp,
+              dataType: 'json'
+            });
         });
       }
     }

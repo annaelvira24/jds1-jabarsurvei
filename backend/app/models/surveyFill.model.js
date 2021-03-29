@@ -13,8 +13,20 @@ var SurveyFill = function(SurveyFill){
 
 };
 
-SurveyFill.getDescription = function(id, result){
-    dbConn.query("Select survey_title, decription from survey where id_survey = ? ", id, function (err, res) {
+SurveyFill.getSurvey = function(id, result){
+    dbConn.query("Select survey_title, decription, details from survey,question,link where randomlink = ? and survey.id_survey = question.id_survey and survey.id_survey = link.id_survey  ", id, function (err, res) {
+        if(err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else{
+            console.log(res);
+            result(null, res);
+        }
+    });
+};
+SurveyFill.getResult = function(id, result){
+    dbConn.query("Select * from answer where id_survey = ?", id, function (err, res) {
         if(err) {
             console.log("error: ", err);
             result(err, null);
@@ -24,17 +36,4 @@ SurveyFill.getDescription = function(id, result){
         }
     });
 };
-
-SurveyFill.findById = function(id, result) {
-    dbConn.query("Select details from question where id_survey = ? ", id, function (err, res) {
-        if(err) {
-            console.log("error: ", err);
-            result(err, null);
-        }
-        else{
-            result(null, res);
-        }
-    });
-};
-
 module.exports = SurveyFill;
