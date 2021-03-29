@@ -2,7 +2,6 @@ import $ from "jquery";
 import React, { Component, createRef } from "react";
 import { Button } from "react-bootstrap";
 import http from "../http-common";
-import { getUser } from './../util/Common.js';
 import 'jquery-ui-sortable';
 import './../assets/scss/Survey.scss'
 
@@ -21,9 +20,7 @@ class Survey extends Component {
     hideButton = createRef();
 
     state = {
-      cookie: undefined,
       link : undefined,
-      idAdmin : undefined,
       id : '',
       title : '',
       desc : ''
@@ -31,8 +28,6 @@ class Survey extends Component {
 
     constructor(){
       super();
-      this.state.cookie = getUser();
-      this.state.idAdmin = JSON.parse(atob(this.state.cookie))[0].id_admin;
 
       //this.handleSaveForm = this.handleSaveForm.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
