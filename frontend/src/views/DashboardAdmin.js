@@ -2,17 +2,16 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { getUser} from './../util/Common.js';
-import Table_comp from '../components/Table_comp.js';
+import TableAdmin from '../components/TableAdmin.js';
+import PaginationButton from '../components/Pagination.js';
+import http from "../http-common";
 import '../assets/scss/Custom.scss';
 import '../assets/css/DashboardAdmin.css';
-import http from "../http-common";
-import PaginationButton from '../components/Pagination.js';
 
 
 class DashboardAdmin extends Component {
   
   state = {
-    // listSurveyAdmin: [],
     id_admin: undefined,
     username: undefined,
     cookie: undefined,
@@ -36,18 +35,32 @@ class DashboardAdmin extends Component {
   static get coloumns() { 
     return (
       [{
-        dataField: 'id_survey',
-        text: 'Nomor Survey'
+        text: 'No.',
+        width: '100px'
       },{
         dataField: 'survey_title',
-        text: 'Judul Suvey'
-      }, {
-        dataField: 'username',
-        text: 'Pembuat Survey'
-      }, {
+        text: 'Judul',
+        width: '50px'
+      },
+      {
         dataField: 'decription',
-        text: 'Deskripsi'
-      }]
+        text: 'Deskripsi Survei',
+        width: '100em'
+      },
+      {
+        dataField: 'randomLink',
+        text: 'Link',
+        width: '100em'
+      },
+      {
+        text: 'Edit',
+        width: '100em'
+      },
+      {
+        text: 'Hapus',
+        width: '100em'
+      }
+    ]
     )
   } 
 
@@ -64,10 +77,10 @@ class DashboardAdmin extends Component {
               </button>
             </div>
           </header>
-          <body>
-            <Table_comp daftar_survey={this.state.display} daftar_coloumn={this.constructor.coloumns} onSearch={this.handleSearch}/>
+          <div className="Survey-Container">
+            <TableAdmin daftar_survey={this.state.display}  daftar_coloumn={this.constructor.coloumns} onSearch={ this.handleSearch } />
             <PaginationButton totalPage={this.state.pageCount} pageMargin={1} onPageClick={this.handlePageClick} currentPage={this.state.currentPage} className='mx-auto' />
-          </body>
+          </div>
         </div>
       );
     }
@@ -150,5 +163,6 @@ class DashboardAdmin extends Component {
           console.log(listSurveyAdmin);
         })
     }
+
 };
   export default DashboardAdmin;

@@ -1,4 +1,5 @@
 import $ from "jquery";
+import autosize from 'autosize';
 import React, { Component, createRef } from "react";
 import http from "../http-common";
 import { getUser } from './../util/Common.js';
@@ -22,18 +23,33 @@ class FormBuilder extends Component {
     state = {
       cookie: undefined,
       idSurvey : undefined,
-      idAdmin : undefined
+      idAdmin : undefined,
+      surveyTitle : undefined,
+      description : undefined
     }
 
     constructor(){
       super();
       this.state.cookie = getUser();
       this.state.idAdmin = JSON.parse(atob(this.state.cookie))[0].id_admin;
-
       this.handleSaveForm = this.handleSaveForm.bind(this);
+      this.getSurveyTitle = this.getSurveyTitle.bind(this);
+    }
+
+    getSurveyTitle(){
+      http.get('http://localhost:5000/api/fBuilder/getTitleById/' + this.state.idSurvey)
+      .then(res =>
+        this.setState({
+          surveyTitle : res.data[0].survey_title,
+          description : res.data[0].decription
+        })
+      );
     }
     
     componentDidMount() {
+      const textArea = document.getElementsByTagName('textarea');
+      autosize(textArea);
+
       if (this.props.match)
         this.state.idSurvey = this.props.match.params.id;
 
@@ -45,13 +61,49 @@ class FormBuilder extends Component {
             formDataTemp.push(JSON.parse(res.data[i].details));
           }
         });
+        this.getSurveyTitle();
       }
  
       $(this.fbBuilder.current).formBuilder({
         formData: formDataTemp,
         disabledActionButtons: ['clear','save'], 
         disableFields: ['autocomplete','button', 'hidden'],
-        disabledAttrs: ['name', 'access', 'className', 'value', 'maxlength'],
+        disabledAttrs: ['name', 'access', 'className', 'value', 'maxlength', 'step', 'placeholder', 'subtype', 'rows'],
+        inputSets: [
+            {
+              label: 'Alamat',
+              name: 'alamat',
+              showHeader: true, 
+              fields: [
+                  {
+                    type: 'text',
+                    label: 'Provinsi',
+                    className: 'form-control'
+                  },
+                  {
+                    type: 'text',
+                    label: 'Kota/Kabupaten',
+                    className: 'form-control'
+                  },
+                  {
+                    type: 'text',
+                    label: 'Kecamatan',
+                    className: 'form-control'
+                  },
+                  {
+                    type: 'text',
+                    label: 'Kelurahan',
+                    className: 'form-control'
+                  },
+                  {
+                    type: 'text',
+                    label: 'Alamat Lengkap',
+                    className: 'form-control'
+                  }
+                ]
+            }
+        ],
+            
         i18n: {
           override: {
             'en-US': {
@@ -67,10 +119,10 @@ class FormBuilder extends Component {
               clear: 'Hapus semua',
               close: 'Tutup',
               content: 'Konten',
-              copy: 'Salin Ke Clipboard',
+              copy: 'Salin',
               copyButton: '&#43;',
               copyButtonTooltip: 'Salin',
-              dateField: 'Pilih Tanggal',
+              dateField: 'Tanggal',
               description: 'Teks Bantuan',
               descriptionField: 'Deskripsi',
               devMode: 'Mode Pengembang',
@@ -89,11 +141,13 @@ class FormBuilder extends Component {
               hidden: 'Input Tersembunyi',
               inline: 'Inline',
               inlineDesc: 'Tampilkan {type} inline',
-              label: 'Label',
+              label: 'Pertanyaan',
               labelEmpty: 'Field Label cannot be empty',
               limitRole: 'Batasi akses ke satu atau lebih dari role berikut:',
               mandatory: 'Wajib',
               maxlength: 'Panjang Maksimum',
+              min : "Angka Minimum",
+              max : "Angka Maksimum",
               minOptionMessage: 'Dibutuhkan setidaknya 2 opsi',
               multipleFiles: 'File Jamak',
               name: 'Nama',
@@ -152,7 +206,7 @@ class FormBuilder extends Component {
               },
               subtype: 'Tipe',
               text: 'Isian Singkat',
-              textArea: 'Text Area',
+              textArea: 'Isian Panjang',
               toggle: 'Toggle',
               warning: 'Peringatan!',
               value: 'Value',
@@ -179,76 +233,90 @@ class FormBuilder extends Component {
       });
 
     }
+
     handleClearBuilder() {
       console.log('formData', $(this.fbBuilder.current).formBuilder('getData', 'json'));
       console.log('formData', formDataTemp);
 
      $(this.fbBuilder.current).formBuilder('clearFields')
     }
-    handleSaveForm() {
+
+    createNewSurvey(){
       const surveyTitle = document.getElementById('title-input').value;
       const surveyDescription = document.getElementById('description-input').value;
-
+      if(surveyTitle = ""){
+        surveyTitle = "Survey tanpa judul";
+      }
 
       http.post('http://localhost:5000/api/listSurvey/create', {
-        id_admin : this.state.idAdmin,
-        survey_title : surveyTitle,
-        decription : surveyDescription
-      })
-      .then(res=>{
-        console.log(res.data.data.id_survey);
-        if(res.status === 200){
-          this.setState ({idSurvey : res.data.data.id_survey
-          });
-        }
-
-        console.log("Test id: "+this.state.idSurvey);
-        var jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json');
-        http.post('http://localhost:5000/api/fBuilder/createform', {
-          // TODO : fix this
-          id_survey : this.state.idSurvey,
-          status : true,
-          details: jsonform
+          id_admin : this.state.idAdmin,
+          survey_title : surveyTitle,
+          decription : surveyDescription
         })
-        .then(res => {
+        .then(res=>{
           if(res.status === 200){
-              window.location.href="/dashboard"
+            let idSurvey = res.data.data.id_survey;
+            this.setState ({ idSurvey : idSurvey }, function() {
+              let jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json');
+                http.post('http://localhost:5000/api/fBuilder/createform', {
+                  id_survey : this.state.idSurvey,
+                  status : true,
+                  details: jsonform
+                })
+                .then(res => {
+                  if(res.status === 200){
+                    // pass
+                  }
+                })
+            });
+            window.location.href="/dashboard";
           }
         })
-      })
+    }
+
+    handleSaveForm() {
+      // if this is a create mode
+      if(this.state.idSurvey === undefined){
+        this.createNewSurvey();
+      }
+      //TODO: edit mode
+     
+    }
+
+    onInputChangeTitle(event){
+      this.setState({surveyTitle: event.target.value});
+    }
+
+    onInputChangeDesc(event){
+      this.setState({description: event.target.value});
     }
     
     render() {
       return(
-        <div id = "formBuilderContainer">
-          <div id = "formBuilderTitle">
+        <div id = "form-builder-container">
+          <div id = "form-builder-title">
             <div className="form-group">
-              <input type="text" id="title-input" className="form-control" placeholder="Judul Survei"/>
+              <input type="text" id="title-input" className="form-control" placeholder="Judul Survei" value={this.state.surveyTitle} onChange={(e) => this.onInputChangeTitle(e)}/>
               <br/>
-              <textarea type="text" id="description-input" className="form-control" placeholder="Deskripsi Survei"/>
+              <textarea type="text" rows={1} id="description-input" className="form-control" placeholder="Deskripsi Survei" value={this.state.description} onChange={(e) => this.onInputChangeDesc(e)}/>
             </div>
-
           </div>
 
-          <div id="formBuilderMain">
+          <div id="form-builder-main">
             <div id="fb-editor-form" ref={this.fbBuilderWrapper}>
-              <div id="fb-editor" ref={this.fbBuilder}>
-
-              </div>
-              <div id="builder-button-container clearfix">
-                <button id="render" onClick={this.handleClearBuilder.bind(this)} className="btn btn-outline-secondary float-left">Bersihkan</button>
-                <button id="clear" onClick={this.handlePreviewEdit.bind(this)} className="btn btn-outline-success float-right">Tampilan</button>
+              <div id="fb-editor" ref={this.fbBuilder}/>
+              <div id="builder-button-container">
+                <button id="button-clear" onClick={this.handleClearBuilder.bind(this)} className="btn btn-outline-secondary">Bersihkan</button>
+                <button id="button-render" onClick={this.handlePreviewEdit.bind(this)} className="btn">Tampilan</button>
               </div>
             </div>
-            <div id="fb-rendered-form" ref={this.fbRenderWrapper}>
-              <div id="fb-rendered" ref={this.fbRender}>
 
+            <div id="fb-rendered-form" ref={this.fbRenderWrapper}>
+              <div id="fb-rendered" ref={this.fbRender}/>
+              <div id="builder-button-container">
+                <button id="button-edit" onClick={this.handlePreviewEdit.bind(this)} className="btn btn-outline-secondary">Edit kembali</button>
+                <button id="button-save" onClick={this.handleSaveForm.bind(this)} className="btn btn-outline-success">Simpan sebagai draft</button>
               </div>
-              <div id="render-button-container clearfix">
-                <button id="render" onClick={this.handlePreviewEdit.bind(this)} className="btn btn-outline-secondary float-left">Edit kembali</button>
-                <button id="save" onClick={this.handleSaveForm.bind(this)} className="btn btn-outline-success float-right">Simpan</button>
-              </div>
-              
             </div>
             
           </div>

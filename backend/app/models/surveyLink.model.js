@@ -14,8 +14,6 @@ var SurveyLink = function(surveyL){
 
 SurveyLink.findLinkById = function (id, result) {
     dbConn.query("Select randomlink from link where id_survey = ? ", id, function (err, res) {
-        // let randomlink = nanoid();
-        // console.log(randomlink);
         if(err) {
             console.log("error: ", err);
             result(err, null);

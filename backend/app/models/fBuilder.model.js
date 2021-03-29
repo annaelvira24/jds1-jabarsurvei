@@ -8,7 +8,6 @@ var FBuilder = function(fBuilder){
     this.section = fBuilder.section;
     this.active_status = fBuilder.active_status;
     this.details = fBuilder.details;
-
 };
 
 FBuilder.create = function(newFBuilder, result){
@@ -25,6 +24,18 @@ FBuilder.create = function(newFBuilder, result){
 
 FBuilder.findById = function(id, result) {
     dbConn.query("Select details from question where id_survey = ? ", id, function (err, res) {
+        if(err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else{
+            result(null, res);
+        }
+    });
+};
+
+FBuilder.getTitleById = function(id, result) {
+    dbConn.query("Select survey_title, decription from survey where id_survey = ? ", id, function (err, res) {
         if(err) {
             console.log("error: ", err);
             result(err, null);
