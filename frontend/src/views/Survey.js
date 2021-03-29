@@ -74,7 +74,8 @@ class Survey extends Component {
       console.log(new Date(time));
 
       const body = { 
-        id: this.state.idSurvey,
+        id: this.state.id,
+        link: this.state.link,
         timestamp: time,
         data: answer
       }

@@ -27,12 +27,13 @@ Answer.getLastIdAnswer = function (result) {
 
 Answer.submitAnswer = function (answers, result){
     const idSurvey = answers.id;
+    const link = answers.link;
     const timestamp = answers.timestamp;
     const data = JSON.parse(answers.data);
     
     var ids;
 
-    dbConn.query("Select id_question from question where id_survey = "+idSurvey, function(err,res,fields){
+    dbConn.query("Select id_question from question join link using (id_survey) where randomlink = ?",link, function(err,res,fields){
         if (err) result(err, null)
         else {
             ids = res;
@@ -51,12 +52,14 @@ Answer.submitAnswer = function (answers, result){
                 dbConn.query("INSERT INTO answer SET ?", test, function(err, res){
                     if (err) {
                         result(err, null);
+                        return;
                     }
                 })
                 q_index += 1;
             }
             console.log("Submit successful!");
             result(null, res);
+            return;
         }
     })
     
