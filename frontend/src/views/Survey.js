@@ -17,11 +17,13 @@ var formDataTemp = [];
 
 class Survey extends Component {
     fbRender = createRef();
+    hideButton = createRef();
 
     state = {
       cookie: undefined,
-      idSurvey : undefined,
+      link : undefined,
       idAdmin : undefined,
+      id : '',
       title : '',
       desc : ''
     }
@@ -37,29 +39,31 @@ class Survey extends Component {
     
     componentDidMount() {
       if (this.props.match)
-        this.state.idSurvey = this.props.match.params.id;
+        this.state.link = this.props.match.params.link;
 
       // edit existing survey
-      if(this.state.idSurvey !== undefined){
-        http.get('http://localhost:5000/api/surveyFill/getDescription/' + this.state.idSurvey)
-        .then(res => {
-            
-            this.setState({
-              title: res.data[0].survey_title,
-              desc : res.data[0].decription
-            });
-        });
-        http.get('http://localhost:5000/api/surveyFill/findById/' + this.state.idSurvey)
-        .then(res => {
-          
-          for (var i = 0; i<res.data.length; i++){
-            //console.log(res.data[i].details);
-            formDataTemp.push(JSON.parse(res.data[i].details));
-          }
-          $(this.fbRender.current).formRender({
-            formData : formDataTemp,
-            dataType: 'json'
-          });
+      if(this.state.link !== undefined){
+        http.get('http://localhost:5000/api/surveyFill/getSurvey/' + this.state.link)
+        .then(res => {          
+            if(res.data[0] !== undefined){
+              this.setState({
+                id: res.data[0].id_survey,
+                title: res.data[0].survey_title,
+                desc : res.data[0].decription
+              });
+              for (var i = 0; i<res.data.length; i++){
+                console.log(res.data[i].details);
+                formDataTemp.push(JSON.parse(res.data[i].details));
+              }
+              $(this.fbRender.current).formRender({
+                formData : formDataTemp,
+                dataType: 'json'
+              });
+            }
+            else{
+              this.setState({title: "Survey Tidak Ditemukan"});
+              $(this.hideButton.current).toggle();
+            }
         });
       }
     }
@@ -97,7 +101,7 @@ class Survey extends Component {
               <div id="fb-rendered" ref={this.fbRender}>
               </div>
             </div>
-            <button type="button" onClick={this.handleSubmit}>Submit</button>
+            <button type="button" id="button" onClick={this.handleSubmit} ref={this.hideButton}>Submit</button>
           </div>
         );
       }
