@@ -23,7 +23,9 @@ class FormBuilder extends Component {
     state = {
       cookie: undefined,
       idSurvey : undefined,
-      idAdmin : undefined
+      idAdmin : undefined,
+      surveyTitle : undefined,
+      description : undefined
     }
 
     constructor(){
@@ -31,6 +33,17 @@ class FormBuilder extends Component {
       this.state.cookie = getUser();
       this.state.idAdmin = JSON.parse(atob(this.state.cookie))[0].id_admin;
       this.handleSaveForm = this.handleSaveForm.bind(this);
+      this.getSurveyTitle = this.getSurveyTitle.bind(this);
+    }
+
+    getSurveyTitle(){
+      http.get('http://localhost:5000/api/fBuilder/getTitleById/' + this.state.idSurvey)
+      .then(res =>
+        this.setState({
+          surveyTitle : res.data[0].survey_title,
+          description : res.data[0].decription
+        })
+      );
     }
     
     componentDidMount() {
@@ -48,6 +61,7 @@ class FormBuilder extends Component {
             formDataTemp.push(JSON.parse(res.data[i].details));
           }
         });
+        this.getSurveyTitle();
       }
  
       $(this.fbBuilder.current).formBuilder({
@@ -233,15 +247,23 @@ class FormBuilder extends Component {
       //TODO: edit mode
      
     }
+
+    onInputChangeTitle(event){
+      this.setState({surveyTitle: event.target.value});
+    }
+
+    onInputChangeDesc(event){
+      this.setState({description: event.target.value});
+    }
     
     render() {
       return(
         <div id = "form-builder-container">
           <div id = "form-builder-title">
             <div className="form-group">
-              <input type="text" id="title-input" className="form-control" placeholder="Judul Survei"/>
+              <input type="text" id="title-input" className="form-control" placeholder="Judul Survei" value={this.state.surveyTitle} onChange={(e) => this.onInputChangeTitle(e)}/>
               <br/>
-              <textarea type="text" rows={1} id="description-input" className="form-control" placeholder="Deskripsi Survei"/>
+              <textarea type="text" rows={1} id="description-input" className="form-control" placeholder="Deskripsi Survei" value={this.state.description} onChange={(e) => this.onInputChangeDesc(e)}/>
             </div>
           </div>
 

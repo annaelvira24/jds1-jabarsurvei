@@ -35,4 +35,16 @@ FBuilder.findById = function(id, result) {
     });
 };
 
+FBuilder.getTitleById = function(id, result) {
+    dbConn.query("Select survey_title, decription from survey where id_survey = ? ", id, function (err, res) {
+        if(err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else{
+            result(null, res);
+        }
+    });
+};
+
 module.exports = FBuilder;

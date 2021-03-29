@@ -35,3 +35,11 @@ exports.findById = function(req, res) {
     });
 };
 
+exports.getTitleById = function(req, res) {
+    FBuilder.getTitleById(req.params.id, 
+    function(err, form) {  
+        if (err)  res.send(err);
+        res.json(form);
+    });
+};
+

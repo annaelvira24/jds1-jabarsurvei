@@ -1,8 +1,9 @@
 import React from 'react';
-import {Row, FormControl, Button, Container, Form, Modal} from 'react-bootstrap';
+import {Row, FormControl, Button, Container, Form} from 'react-bootstrap';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-import { Component, createRef, useState } from "react";
-import { useHistory, useRef } from "react-router-dom";
+import { Component, createRef} from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import ModalPopUp from './ModalPopUp.js'
 import http from "../http-common";
 import '../assets/css/Table_comp.css';
@@ -11,30 +12,30 @@ class TableAdmin extends Component {
     state = {
         status : undefined,
         headingText : undefined,
-        surveyLink : undefined
+        surveyLink : undefined,
     };
 
     constructor(props){
         super(props);
-        this.state.status = '';
-        this.state.headingText = '';
-        this.state.surveyLink = '';
+        this.state = {
+            status : '',
+            headingText : '',
+            surveyLink : '',
+        };
+
+        this.cellButtonLink = this.cellButtonLink.bind(this);
     };
 
-    ModalRef = ({handleShow}) => {
-        this.showModal = handleShow;
-    }
+    ModalRef = (obj) => { 
+        this.showModal = obj && obj.handleShow 
+     }
      
     onSurveyClick = () => {
        this.showModal();
     }
-     
 
     handleGenLink(e, idSurvey, idAdmin){
         e.preventDefault();
-        console.log(idSurvey);
-        console.log(idAdmin);
-
         http.post(`http://localhost:5000/api/surveyLink/createLink`, {
             id_survey : idSurvey,
             id_admin : idAdmin
@@ -52,8 +53,6 @@ class TableAdmin extends Component {
 
     handleShowLink(e, idSurvey){
         e.preventDefault();
-        console.log(idSurvey);
-
         http.get(`http://localhost:5000/api/surveyLink/`+ idSurvey)
         .then((res) => {
           console.log(res.data[0].randomlink);
@@ -64,6 +63,37 @@ class TableAdmin extends Component {
           })
           this.onSurveyClick();
         })
+    }
+
+    cellButtonLink (cell, row, enumObject, rowIndex){
+        let theButton;
+        if(row.randomlink == null){
+            theButton = <Button variant = "default" className = "t-blue btn-sm" onClick = {(e) => this.handleShowLink(e,row.id_survey)}>
+                            Lihat Link
+                        </Button>
+        } 
+        else {
+            theButton = <Button variant="default" className = "t-blue btn-sm" onClick = {(e) => this.handleGenLink(e, row.id_survey, row.id_admin)}>
+                            Buat Link
+                        </Button>
+        }
+        return theButton;
+    }
+
+    cellButtonEdit (cell, row, enumObject, rowIndex){
+        return(
+            <Button variant = "default" className = "t-yellow btn-sm" onClick = {(e) =>  window.location.href='/formbuilder/edit/id='+row.id_survey}>
+                <FontAwesomeIcon icon={faEdit}/> Edit
+            </Button>
+        );
+    }
+
+    cellButtonDelete (cell, row, enumObject, rowIndex){
+        return(
+            <Button variant = "danger" className = "btn-sm" onClick = {(e) =>  window.location.href='/formbuilder/edit/id='+row.id_survey}>
+                <FontAwesomeIcon icon={faTrash}/> Hapus
+            </Button>
+        );
     }
 
     render(){
@@ -79,32 +109,14 @@ class TableAdmin extends Component {
                     <Row className="SearchBar-Container">
                         <SearchBar on_search={ this.props.onSearch }/>
                     </Row>
-                    <BootstrapTable striped responsive="sm" hover size="sm" className="List-Table">
-                            <thead>
-                                <tr style = {{width: '100px'}}>
-                                {this.props.daftar_coloumn.map((coloumn) => (
-                                    <th className = 'table-header'>{coloumn.text}</th>
-                                ))}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {this.props.daftar_survey.map((survey, index) => (
-                                    <tr>
-                                        <td>{index+1}</td>
-                                        <td>{survey.survey_title}</td>
-                                        <td>{survey.decription}</td>
-                                        {(survey.randomLink !== null)
-                                            && (<td><Button variant = "default" className = "t-blue btn-sm" onClick = {(e) => this.handleShowLink(e,survey.id_survey)} >Lihat Link</Button></td>
-                                        )}
-                                        {(survey.randomLink == null)
-                                            && (<td><button className = "t-blue btn-sm" onClick = {(e) => this.handleGenLink(e,survey.id_survey,survey.id_admin)}>Buat Link</button></td>
-                                        )}
-                                        <td><Button variant="default" className = "btn t-yellow btn-sm" onClick = "handleGenLink">Edit</Button></td>
-                                        <td><Button variant="danger" className = "btn-sm">Hapus</Button></td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                    </BootstrapTable>      
+                    <BootstrapTable data={this.props.daftar_survey} striped hover>
+                        <TableHeaderColumn isKey dataField="id_survey" width="5%">Id</TableHeaderColumn>
+                        <TableHeaderColumn dataField='survey_title' width="25%">Judul Survei</TableHeaderColumn>
+                        <TableHeaderColumn dataField='decription' width="40%">Deskripsi Survei</TableHeaderColumn>
+                        <TableHeaderColumn dataField='button' width="10%" dataFormat={this.cellButtonLink}>Link</TableHeaderColumn>
+                        <TableHeaderColumn dataField='button' width="9%" dataFormat={this.cellButtonEdit}>Edit</TableHeaderColumn>
+                        <TableHeaderColumn dataField='button' width="11%" dataFormat={this.cellButtonDelete}>Hapus</TableHeaderColumn>
+                    </BootstrapTable>
                 </Container>
             </div>
         );
