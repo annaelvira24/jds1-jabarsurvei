@@ -177,7 +177,7 @@ class Register extends Component{
                         
                         <div id = "login">
                             <span>Sudah punya akun? </span>
-                            <a href={'/login'}>Login</a>
+                            <a href={'/login'}>Masuk</a>
                         </div>
                     
                     </form>

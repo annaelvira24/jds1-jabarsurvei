@@ -19,7 +19,8 @@ class DashboardAdmin extends Component {
     offset: 0,
     currentPage: 1,
     perPage: 5,
-    pageCount: 0
+    pageCount: 0,
+    search: ""
   }
 
   constructor(){
