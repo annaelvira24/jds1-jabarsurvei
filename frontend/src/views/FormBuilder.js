@@ -74,7 +74,7 @@ class FormBuilder extends Component {
               label: 'Alamat',
               name: 'alamat',
               showHeader: true, 
-              icon: "⌂",
+              icon: "🚩",
               fields: [
                   {
                     type: 'text',
