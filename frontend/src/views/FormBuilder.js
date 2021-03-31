@@ -96,7 +96,7 @@ class FormBuilder extends Component {
                     className: 'form-control'
                   },
                   {
-                    type: 'text',
+                    type: 'textarea',
                     label: 'Alamat Lengkap',
                     className: 'form-control'
                   }
