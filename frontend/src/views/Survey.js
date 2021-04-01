@@ -31,7 +31,6 @@ class Survey extends Component {
 
       //this.handleSaveForm = this.handleSaveForm.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
-      this.checkRequired = this.checkRequired.bind(this);
     }
     
     componentDidMount() {
