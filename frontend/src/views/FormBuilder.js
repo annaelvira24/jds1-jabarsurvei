@@ -225,6 +225,7 @@ class FormBuilder extends Component {
     }
 
     handlePreviewEdit() {
+      document.getElementById('false-msg').innerHTML = "";
       $(this.fbBuilderWrapper.current).toggle();
       $(this.fbRenderWrapper.current).toggle();
       $(this.fbRender.current).formRender({
@@ -244,9 +245,6 @@ class FormBuilder extends Component {
     createNewSurvey(){
       const surveyTitle = document.getElementById('title-input').value;
       const surveyDescription = document.getElementById('description-input').value;
-      if(surveyTitle == ""){
-        surveyTitle = "Survey tanpa judul";
-      }
 
       http.post('http://localhost:5000/api/listSurvey/create', {
           id_admin : this.state.idAdmin,
@@ -275,12 +273,15 @@ class FormBuilder extends Component {
     }
 
     handleSaveForm() {
-      // if this is a create mode
-      if(this.state.idSurvey === undefined){
+      let surveyTitle = document.getElementById('title-input').value;
+      let jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json');
+      if(surveyTitle.length == 0 || jsonform == "[]"){
+        document.getElementById('false-msg').innerHTML = `Pastikan Anda sudah mengisi judul survey dan menambahkan paling tidak satu pertanyaan`;
+      }
+
+      else{
         this.createNewSurvey();
       }
-      //TODO: edit mode
-     
     }
 
     onInputChangeTitle(event){
@@ -307,15 +308,16 @@ class FormBuilder extends Component {
               <div id="fb-editor" ref={this.fbBuilder}/>
               <div id="builder-button-container">
                 <button id="button-clear" onClick={this.handleClearBuilder.bind(this)} className="btn btn-outline-secondary">Bersihkan</button>
-                <button id="button-render" onClick={this.handlePreviewEdit.bind(this)} className="btn">Tampilan</button>
+                <button id="button-render" onClick={this.handlePreviewEdit.bind(this)} className="btn t-blue">Tampilan</button>
               </div>
             </div>
 
             <div id="fb-rendered-form" ref={this.fbRenderWrapper}>
               <div id="fb-rendered" ref={this.fbRender}/>
               <div id="builder-button-container">
+                <span id="false-msg" className="input-message"></span> <br/> <br/>
                 <button id="button-edit" onClick={this.handlePreviewEdit.bind(this)} className="btn btn-outline-secondary">Edit kembali</button>
-                <button id="button-save" onClick={this.handleSaveForm.bind(this)} className="btn btn-outline-success">Simpan sebagai draft</button>
+                <button id="button-save" onClick={this.handleSaveForm.bind(this)} className="btn t-green">Publikasikan survei</button>
               </div>
             </div>
             
