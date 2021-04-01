@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
 -- Host: localhost    Database: crowdsource
 -- ------------------------------------------------------
--- Server version	8.0.23
+-- Server version	8.0.19
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -102,7 +102,7 @@ CREATE TABLE `link` (
 
 LOCK TABLES `link` WRITE;
 /*!40000 ALTER TABLE `link` DISABLE KEYS */;
-INSERT INTO `link` VALUES ('uxEJF3p7l0cOeqK2DJxGU',1,1);
+INSERT INTO `link` VALUES ('0AIOob6U-iE8j2UmnRyJp',2,3),('ByYTB4o70gyL2YgRRmGOn',3,3),('euS3k2SlSDoJDIExDNMCB',5,1),('qKQLk6XNb-jyLUwApabk7',4,2),('uxEJF3p7l0cOeqK2DJxGU',1,1),('Zadlx-TrRSFlM21JroJDZ',13,1);
 /*!40000 ALTER TABLE `link` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,7 +123,7 @@ CREATE TABLE `question` (
   PRIMARY KEY (`id_question`),
   KEY `id_survey` (`id_survey`),
   CONSTRAINT `FK_SurveyQuestion` FOREIGN KEY (`id_survey`) REFERENCES `survey` (`id_survey`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -132,7 +132,7 @@ CREATE TABLE `question` (
 
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
-INSERT INTO `question` VALUES (1,13,0,1,1,'{\"type\":\"checkbox-group\",\"required\":false,\"label\":\"Checkboxes\",\"toggle\":false,\"inline\":false,\"name\":\"checkbox-group-1616919612985\",\"other\":false,\"values\":[{\"label\":\"Option 1\",\"value\":\"option-1\",\"selected\":true}]}'),(2,13,1,1,1,'{\"type\":\"date\",\"required\":false,\"label\":\"Pilih Tanggal\",\"className\":\"form-control\",\"name\":\"date-1616919614893\"}'),(3,13,2,1,1,'{\"type\":\"file\",\"required\":false,\"label\":\"Upload File\",\"className\":\"form-control\",\"name\":\"file-1616919613868\",\"subtype\":\"file\",\"multiple\":false}'),(4,13,3,1,1,'{\"type\":\"header\",\"subtype\":\"h1\",\"label\":\"Header\"}'),(5,13,4,1,1,'{\"type\":\"number\",\"required\":false,\"label\":\"Angka\",\"className\":\"form-control\",\"name\":\"number-1616919618943\"}'),(6,13,5,1,1,'{\"type\":\"paragraph\",\"subtype\":\"p\",\"label\":\"Paragraf\"}'),(7,13,6,1,1,'{\"type\":\"radio-group\",\"required\":false,\"label\":\"Radio Group\",\"inline\":false,\"name\":\"radio-group-1616919620087\",\"other\":false,\"values\":[{\"label\":\"Option 1\",\"value\":\"option-1\",\"selected\":false},{\"label\":\"Option 2\",\"value\":\"option-2\",\"selected\":false},{\"label\":\"Option 3\",\"value\":\"option-3\",\"selected\":false}]}'),(8,13,7,1,1,'{\"type\":\"select\",\"required\":false,\"label\":\"Select\",\"className\":\"form-control\",\"name\":\"select-1616919620819\",\"multiple\":false,\"values\":[{\"label\":\"Option 1\",\"value\":\"option-1\",\"selected\":true},{\"label\":\"Option 2\",\"value\":\"option-2\",\"selected\":false},{\"label\":\"Option 3\",\"value\":\"option-3\",\"selected\":false}]}'),(9,13,8,1,1,'{\"type\":\"text\",\"required\":false,\"label\":\"Isian Singkat\",\"className\":\"form-control\",\"name\":\"text-1616919621331\",\"subtype\":\"text\"}'),(10,13,9,1,1,'{\"type\":\"textarea\",\"required\":false,\"label\":\"Text Area\",\"className\":\"form-control\",\"name\":\"textarea-1616919621918\",\"subtype\":\"textarea\"}');
+INSERT INTO `question` VALUES (1,13,0,1,1,'{\"type\":\"checkbox-group\",\"required\":false,\"label\":\"Checkboxes\",\"toggle\":false,\"inline\":false,\"name\":\"checkbox-group-1616919612985\",\"other\":false,\"values\":[{\"label\":\"Option 1\",\"value\":\"option-1\",\"selected\":true}]}'),(2,13,1,1,1,'{\"type\":\"date\",\"required\":false,\"label\":\"Pilih Tanggal\",\"className\":\"form-control\",\"name\":\"date-1616919614893\"}'),(3,13,2,1,1,'{\"type\":\"file\",\"required\":false,\"label\":\"Upload File\",\"className\":\"form-control\",\"name\":\"file-1616919613868\",\"subtype\":\"file\",\"multiple\":false}'),(4,13,3,1,1,'{\"type\":\"header\",\"subtype\":\"h1\",\"label\":\"Header\"}'),(5,13,4,1,1,'{\"type\":\"number\",\"required\":false,\"label\":\"Angka\",\"className\":\"form-control\",\"name\":\"number-1616919618943\"}'),(6,13,5,1,1,'{\"type\":\"paragraph\",\"subtype\":\"p\",\"label\":\"Paragraf\"}'),(7,13,6,1,1,'{\"type\":\"radio-group\",\"required\":false,\"label\":\"Radio Group\",\"inline\":false,\"name\":\"radio-group-1616919620087\",\"other\":false,\"values\":[{\"label\":\"Option 1\",\"value\":\"option-1\",\"selected\":false},{\"label\":\"Option 2\",\"value\":\"option-2\",\"selected\":false},{\"label\":\"Option 3\",\"value\":\"option-3\",\"selected\":false}]}'),(8,13,7,1,1,'{\"type\":\"select\",\"required\":false,\"label\":\"Select\",\"className\":\"form-control\",\"name\":\"select-1616919620819\",\"multiple\":false,\"values\":[{\"label\":\"Option 1\",\"value\":\"option-1\",\"selected\":true},{\"label\":\"Option 2\",\"value\":\"option-2\",\"selected\":false},{\"label\":\"Option 3\",\"value\":\"option-3\",\"selected\":false}]}'),(9,13,8,1,1,'{\"type\":\"text\",\"required\":false,\"label\":\"Isian Singkat\",\"className\":\"form-control\",\"name\":\"text-1616919621331\",\"subtype\":\"text\"}'),(10,13,9,1,1,'{\"type\":\"textarea\",\"required\":false,\"label\":\"Text Area\",\"className\":\"form-control\",\"name\":\"textarea-1616919621918\",\"subtype\":\"textarea\"}'),(11,1,0,1,1,'{\"type\": \"text\",\"required\": true,\"label\": \"Nama Lengkap\",\"className\": \"form-control\",\"name\": \"text-1617260923345\"}'),(12,1,1,1,1,'{\"type\": \"number\",\"required\": false,\"label\": \"Usia\",\"className\": \"form-control\",\"name\": \"number-1617260950648\"}'),(13,1,2,1,1,'{\"type\": \"date\",\"required\": true,\"label\": \"Tanggal lahir\",\"className\": \"form-control\",\"name\": \"date-1617261763985\"}'),(14,2,0,1,1,'{\"type\": \"text\",\"required\": true,\"label\": \"Nama Lengkap\",\"className\": \"form-control\",\"name\": \"text-1617260923345\"}'),(15,2,1,1,1,'{\"type\": \"number\",\"required\": false,\"label\": \"Usia\",\"className\": \"form-control\",\"name\": \"number-1617260950648\"}'),(16,2,2,1,1,'{\"type\": \"date\",\"required\": true,\"label\": \"Tanggal lahir\",\"className\": \"form-control\",\"name\": \"date-1617261763985\"}'),(17,3,0,1,1,'{\"type\": \"text\",\"required\": true,\"label\": \"Nama Lengkap\",\"className\": \"form-control\",\"name\": \"text-1617260923345\"}'),(18,3,1,1,1,'{\"type\": \"number\",\"required\": false,\"label\": \"Usia\",\"className\": \"form-control\",\"name\": \"number-1617260950648\"}'),(19,3,2,1,1,'{\"type\": \"date\",\"required\": true,\"label\": \"Tanggal lahir\",\"className\": \"form-control\",\"name\": \"date-1617261763985\"}'),(20,5,0,1,1,'{\"type\": \"text\",\"required\": true,\"label\": \"Nama Lengkap\",\"className\": \"form-control\",\"name\": \"text-1617260923345\"}'),(21,5,1,1,1,'{\"type\": \"number\",\"required\": false,\"label\": \"Usia\",\"className\": \"form-control\",\"name\": \"number-1617260950648\"}'),(22,5,2,1,1,'{\"type\": \"date\",\"required\": true,\"label\": \"Tanggal lahir\",\"className\": \"form-control\",\"name\": \"date-1617261763985\"}'),(23,4,0,1,1,'{\"type\": \"text\",\"required\": true,\"label\": \"Nama Lengkap\",\"className\": \"form-control\",\"name\": \"text-1617260923345\"}'),(24,4,1,1,1,'{\"type\": \"number\",\"required\": false,\"label\": \"Usia\",\"className\": \"form-control\",\"name\": \"number-1617260950648\"}'),(25,4,2,1,1,'{\"type\": \"date\",\"required\": true,\"label\": \"Tanggal lahir\",\"className\": \"form-control\",\"name\": \"date-1617261763985\"}');
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -173,4 +173,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-29 17:47:57
+-- Dump completed on 2021-04-01 14:51:32
