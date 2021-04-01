@@ -242,11 +242,8 @@ class FormBuilder extends Component {
     }
 
     createNewSurvey(){
-      const surveyTitle = document.getElementById('title-input').value;
+      const surveyTitle = document.getElementById('title-input').value || "Survey tanpa judul";
       const surveyDescription = document.getElementById('description-input').value;
-      if(surveyTitle == ""){
-        surveyTitle = "Survey tanpa judul";
-      }
 
       http.post('http://localhost:5000/api/listSurvey/create', {
           id_admin : this.state.idAdmin,

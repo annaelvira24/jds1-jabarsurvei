@@ -31,6 +31,7 @@ class Survey extends Component {
 
       //this.handleSaveForm = this.handleSaveForm.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.checkRequired = this.checkRequired.bind(this);
     }
     
     componentDidMount() {
@@ -48,7 +49,7 @@ class Survey extends Component {
                 desc : res.data[0].decription
               });
               for (var i = 0; i<res.data.length; i++){
-                console.log(res.data[i].details);
+                // console.log(res.data[i].details);
                 formDataTemp.push(JSON.parse(res.data[i].details));
               }
               $(this.fbRender.current).formRender({
@@ -65,9 +66,11 @@ class Survey extends Component {
     }
 
     handleSubmit(e) {
+      e.preventDefault();
+
       const answer = JSON.stringify($(this.fbRender.current).formRender("userData"));
       const time = Date.now();
-      console.log(new Date(time));
+      // console.log(new Date(time));
 
       const body = { 
         id: this.state.id,
@@ -79,10 +82,10 @@ class Survey extends Component {
 
       http.post("http://localhost:5000/api/submit/submitAnswer", body)
         .then((res)=>{
-          console.log("Success");
+          window.location.href = `/${this.state.link}/success`
         })
         .catch((err)=>{
-          console.log("Error: "+err);
+          alert(err);
         })
     }
 
