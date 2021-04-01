@@ -66,7 +66,6 @@ class TableAdmin extends Component {
     }
 
     cellButtonLink (cell, row, enumObject, rowIndex){
-        console.log(row);
         let theButton;
         if(row.randomlink != null){
             theButton = <Button variant = "default" className = "t-blue btn-sm" onClick = {(e) => this.handleShowLink(e,row.id_survey)}>
@@ -136,8 +135,7 @@ const SearchBar = ({on_search}) => {
 
     return (
         <Form inline onSubmit={ search }>
-            {/* <Form.Control size="sm" type="text" placeholder="Search" /> */}
-            <FormControl placeholder = "Pencarian" type="text" className="mr-sm-2" ref={ searchRef } />
+            <FormControl placeholder = "Pencarian..." type="text" className="mr-sm-2" ref={ searchRef } />
             <Button type="submit">Cari</Button>
         </Form>
     )
