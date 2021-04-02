@@ -25,7 +25,7 @@ function App() {
           <Route exact path="/" component={LandingPage}/>
           <Route exact path="/survey/:link" component={Survey}/>
           <Route exact path="/result/:link" component={Result}>
-            { (getUser()) && (<Redirect to="/" />) }
+            { (!getUser()) && (<Redirect to="/" />) }
           </Route>
           <Route exact path="/login" component={LoginPage}>
             { (getUser()) && (<Redirect to="/" />) }

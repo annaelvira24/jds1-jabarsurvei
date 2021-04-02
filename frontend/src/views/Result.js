@@ -1,7 +1,10 @@
 import $ from "jquery";
 import React, { Component, createRef } from "react";
 import { Button } from "react-bootstrap";
+import TableAdmin from '../components/TableAdmin.js';
+import PaginationButton from '../components/Pagination.js';
 import http from "../http-common";
+import { getUser } from './../util/Common.js';
 import 'jquery-ui-sortable';
 import './../assets/scss/Survey.scss'
 
@@ -20,6 +23,9 @@ class Result extends Component {
     hideButton = createRef();
 
     state = {
+      cookie: undefined,
+      idSurvey : undefined,
+      idAdmin : undefined,
       link : undefined,
       id : '',
       title : '',
@@ -28,19 +34,20 @@ class Result extends Component {
 
     constructor(){
       super();
+      this.state.cookie = getUser();
+      this.state.idAdmin = JSON.parse(atob(this.state.cookie))[0].id_admin;
 
       //this.handleSaveForm = this.handleSaveForm.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
     }
-    
     componentDidMount() {
       if (this.props.match)
         this.state.link = this.props.match.params.link;
 
       // edit existing survey
       if(this.state.link !== undefined){
-        http.get('http://localhost:5000/api/surveyFill/getSurvey/' + this.state.link)
+        http.get('http://localhost:5000/api/surveyRes/getResult/' + this.state.link)
         .then(res => {          
+            console.log(res.data);
             if(res.data[0] !== undefined){
               this.setState({
                 id: res.data[0].id_survey,
@@ -51,10 +58,7 @@ class Result extends Component {
                 // console.log(res.data[i].details);
                 formDataTemp.push(JSON.parse(res.data[i].details));
               }
-              $(this.fbRender.current).formRender({
-                formData : formDataTemp,
-                dataType: 'json'
-              });
+              console.log(formDataTemp);
             }
             else{
               this.setState({title: "Survey Tidak Ditemukan"});
@@ -63,31 +67,6 @@ class Result extends Component {
         });
       }
     }
-
-    handleSubmit(e) {
-      e.preventDefault();
-
-      const answer = JSON.stringify($(this.fbRender.current).formRender("userData"));
-      const time = Date.now();
-      // console.log(new Date(time));
-
-      const body = { 
-        id: this.state.id,
-        link: this.state.link,
-        timestamp: time,
-        data: answer
-      }
-      console.log(body);
-
-      http.post("http://localhost:5000/api/submit/submitAnswer", body)
-        .then((res)=>{
-          window.location.href = `/${this.state.link}/success`
-        })
-        .catch((err)=>{
-          alert(err);
-        })
-    }
-
     render() {
         return(
           <div id = "result-container">
@@ -97,9 +76,7 @@ class Result extends Component {
             </div>
   
             <div id="result-main">
-              <div id="fb-rendered" ref={this.fbRender}>
-              </div>
-              <Button type="button" variant = "default" className="t-green" id="button-submit" onClick={this.handleSubmit} ref={this.hideButton}>Submit</Button>
+              
             </div>
           </div>
         );
