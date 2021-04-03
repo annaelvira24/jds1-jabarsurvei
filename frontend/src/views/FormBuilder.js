@@ -45,6 +45,8 @@ class FormBuilder extends Component {
         })
       );
     }
+
+
     
     componentDidMount() {
       const textArea = document.getElementsByTagName('textarea');
@@ -77,22 +79,22 @@ class FormBuilder extends Component {
               icon: "🚩",
               fields: [
                   {
-                    type: 'text',
+                    type: 'autocomplete',
                     label: 'Provinsi',
                     className: 'form-control'
                   },
                   {
-                    type: 'text',
+                    type: 'autocomplete',
                     label: 'Kota/Kabupaten',
                     className: 'form-control'
                   },
                   {
-                    type: 'text',
+                    type: 'autocomplete',
                     label: 'Kecamatan',
                     className: 'form-control'
                   },
                   {
-                    type: 'text',
+                    type: 'autocomplete',
                     label: 'Kelurahan',
                     className: 'form-control'
                   },

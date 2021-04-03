@@ -45,3 +45,6 @@ const submitRoutes = require('./app/routes/submit.routes')
 app.use('/api/submit', submitRoutes);
 const surveyFillRoutes = require('./app/routes/surveyFill.routes')
 app.use('/api/surveyFill', surveyFillRoutes);
+
+const alamatRoutes = require('./app/routes/alamat.routes')
+app.use('/api/alamat', alamatRoutes);

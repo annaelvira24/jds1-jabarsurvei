@@ -23,7 +23,8 @@ class Survey extends Component {
       link : undefined,
       id : '',
       title : '',
-      desc : ''
+      desc : '',
+      token : ''
     }
 
     constructor(){
@@ -31,7 +32,9 @@ class Survey extends Component {
 
       //this.handleSaveForm = this.handleSaveForm.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.test = this.test.bind(this);
     }
+
     
     componentDidMount() {
       if (this.props.match)
@@ -39,28 +42,50 @@ class Survey extends Component {
 
       // edit existing survey
       if(this.state.link !== undefined){
-        http.get('http://localhost:5000/api/surveyFill/getSurvey/' + this.state.link)
+        http.get('https://x.rajaapi.com/poe')
         .then(res => {          
-            if(res.data[0] !== undefined){
-              this.setState({
-                id: res.data[0].id_survey,
-                title: res.data[0].survey_title,
-                desc : res.data[0].decription
-              });
-              for (var i = 0; i<res.data.length; i++){
-                console.log(res.data[i].details);
-                formDataTemp.push(JSON.parse(res.data[i].details));
-              }
-              $(this.fbRender.current).formRender({
-                formData : formDataTemp,
-                dataType: 'json'
-              });
-            }
-            else{
-              this.setState({title: "Survey Tidak Ditemukan"});
-              $(this.hideButton.current).toggle();
-            }
+          this.setState({ 
+            token: res.data.token
+          });
+          console.log(this.state.token);
+          http.get('http://localhost:5000/api/alamat/Provinsi/' + this.state.token)
+          .then(res => {          
+            let newValues_Provinsi = res.data.data;
+            console.log(newValues_Provinsi);
+
+            http.get('http://localhost:5000/api/surveyFill/getSurvey/' + this.state.link)
+            .then(res => {          
+                if(res.data[0] !== undefined){
+                  this.setState({
+                    id: res.data[0].id_survey,
+                    title: res.data[0].survey_title,
+                    desc : res.data[0].decription
+                  });
+                  for (var i = 0; i<res.data.length; i++){
+                    let result = JSON.parse(res.data[i].details);
+                    if(result.type == "autocomplete" && result.label == "Provinsi"){
+                      result.values = newValues_Provinsi;
+                    }
+                    console.log(result);
+                    formDataTemp.push(result);
+                  }
+                  $(this.fbRender.current).formRender({
+                    formData : formDataTemp,
+                    dataType: 'json'
+                  });
+                }
+                else{
+                  this.setState({title: "Survey Tidak Ditemukan"});
+                  $(this.hideButton.current).toggle();
+                }
+            });
+
+          });
         });
+
+        
+
+        
       }
     }
 
@@ -85,6 +110,34 @@ class Survey extends Component {
           console.log("Error: "+err);
         })
     }
+
+    // test(){
+    //   var dejson = ($(this.fbRender).formRender("userData"));
+    //     // console.log(dejson);
+    //     for(const fiels in dejson){
+    //       if(dejson[fiels].type == "autocomplete"){
+    //         console.log(dejson[fiels].values);
+    //         dejson[fiels].values = [
+    //           {
+    //             "label": "Hai",
+    //             "value": "1",
+    //             "selected": true
+    //           },
+    //           {
+    //             "label": "B",
+    //             "value": "2",
+    //             "selected": false
+    //           },
+    //           {
+    //             "label": "ew",
+    //             "value": "3",
+    //             "selected": false
+    //           }
+    //         ]
+    //       }
+    //     }
+    // }
+    
 
     render() {
         return(
