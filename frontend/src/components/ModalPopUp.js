@@ -24,7 +24,7 @@ class ModalPopUp extends Component{
     handleClose(){
         this.setState({ show: false });
         if(this.props.status == 'create'){
-            window.location.reload();
+            window.location.href='/dashboard';
         }
     };
 

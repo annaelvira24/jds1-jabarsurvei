@@ -16,3 +16,7 @@
 td{
         font-size: 14px !important;
 }
+
+#surveyLink {
+        text-decoration: none;
+}    

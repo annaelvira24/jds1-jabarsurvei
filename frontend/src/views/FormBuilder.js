@@ -1,6 +1,7 @@
 import $ from "jquery";
 import autosize from 'autosize';
 import React, { Component, createRef } from "react";
+import ModalPopUp from '../components/ModalPopUp.js'
 import http from "../http-common";
 import { getUser } from './../util/Common.js';
 import 'jquery-ui-sortable';
@@ -25,7 +26,10 @@ class FormBuilder extends Component {
       idSurvey : undefined,
       idAdmin : undefined,
       surveyTitle : undefined,
-      description : undefined
+      description : undefined,
+      status : '',
+      headingText : '',
+      surveyLink : ''
     }
 
     constructor(){
@@ -36,6 +40,10 @@ class FormBuilder extends Component {
       this.getSurveyTitle = this.getSurveyTitle.bind(this);
     }
 
+    ModalRef = (obj) => { 
+      this.showModal = obj && obj.handleShow 
+    }
+
     getSurveyTitle(){
       http.get('http://localhost:5000/api/fBuilder/getTitleById/' + this.state.idSurvey)
       .then(res =>
@@ -44,6 +52,10 @@ class FormBuilder extends Component {
           description : res.data[0].decription
         })
       );
+    }
+
+    onSurveyClick = () => {
+      this.showModal();
     }
     
     componentDidMount() {
@@ -69,6 +81,14 @@ class FormBuilder extends Component {
         disabledActionButtons: ['clear','save'], 
         disableFields: ['autocomplete','button', 'hidden'],
         disabledAttrs: ['name', 'access', 'className', 'value', 'maxlength', 'step', 'placeholder', 'subtype', 'rows'],
+        typeUserDisabledAttrs: {
+          'checkbox-group': [
+            'toggle',
+            'inline',
+            {'options': ['label']
+          }
+          ]
+        },
         inputSets: [
             {
               label: 'Alamat',
@@ -165,8 +185,8 @@ class FormBuilder extends Component {
               other: 'Lainnya',
               paragraph: 'Paragraf',
               placeholder: 'Placeholder',
-              'placeholder.value': 'Nilai',
-              'placeholder.label': 'Label',
+              'placeholder.value': 'nilai',
+              'placeholder.label': 'Label opsi',
               'placeholder.text': '',
               'placeholder.textarea': '',
               'placeholder.email': 'Isi alamat email anda',
@@ -232,7 +252,6 @@ class FormBuilder extends Component {
       dataType: 'json',
       formData:  $(this.fbBuilder.current).formBuilder('getData', 'json')
       });
-
     }
 
     handleClearBuilder() {
@@ -249,7 +268,8 @@ class FormBuilder extends Component {
       http.post('http://localhost:5000/api/listSurvey/create', {
           id_admin : this.state.idAdmin,
           survey_title : surveyTitle,
-          decription : surveyDescription
+          decription : surveyDescription,
+          status : 'Aktif'
         })
         .then(res=>{
           if(res.status === 200){
@@ -258,16 +278,26 @@ class FormBuilder extends Component {
               let jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json');
                 http.post('http://localhost:5000/api/fBuilder/createform', {
                   id_survey : this.state.idSurvey,
-                  status : true,
                   details: jsonform
                 })
                 .then(res => {
                   if(res.status === 200){
-                    // pass
+                    http.post(`http://localhost:5000/api/surveyLink/createLink`, {
+                        id_survey : this.state.idSurvey,
+                        id_admin : this.state.idAdmin
+                    })
+                    .then((res) => {
+                      console.log(res.data);
+                      this.setState({
+                        status : 'create',
+                        headingText : 'Survei Anda berhasil dipublikasikan! Berikut link survei Anda',
+                        surveyLink : 'http://localhost:3000/survey/' + res.data
+                      })
+                      this.onSurveyClick();
+                    })
                   }
                 })
             });
-            window.location.href="/dashboard";
           }
         })
     }
@@ -322,6 +352,12 @@ class FormBuilder extends Component {
             </div>
             
           </div>
+          <ModalPopUp 
+              ref={this.ModalRef}
+              status={this.state.status}
+              modalHeading={this.state.headingText}
+              link = {this.state.surveyLink}
+          />
         </div>
       );
     }
