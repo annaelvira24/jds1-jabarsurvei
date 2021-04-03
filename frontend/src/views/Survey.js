@@ -31,6 +31,7 @@ class Survey extends Component {
 
       //this.handleSaveForm = this.handleSaveForm.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.checkRequired = this.checkRequired.bind(this);
     }
     
     componentDidMount() {
@@ -66,6 +67,11 @@ class Survey extends Component {
 
     handleSubmit(e) {
       e.preventDefault();
+      const requiredFilled = this.checkRequired();
+      if (!requiredFilled) {
+        alert("Mohon isi semua kotak yang ditandai dengan bintang merah")
+        return
+      }
 
       const answer = JSON.stringify($(this.fbRender.current).formRender("userData"));
       const time = Date.now();
@@ -86,6 +92,19 @@ class Survey extends Component {
         .catch((err)=>{
           alert(err);
         })
+    }
+
+    checkRequired() {
+      const fields = $(this.fbRender.current).formRender("userData");
+      for (var i = 0; i < fields.length; i++){
+        if (!fields[i].required) continue;
+        
+        if (!fields[i].userData) return false;
+        else {
+          if (!fields[i].userData[0]) return false;
+        }
+      }
+      return true;
     }
 
     render() {
