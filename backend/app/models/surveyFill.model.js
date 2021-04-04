@@ -14,7 +14,7 @@ var SurveyFill = function(SurveyFill){
 };
 
 SurveyFill.getSurvey = function(link, result){
-    dbConn.query("Select link.id_survey as id_survey, survey_title, decription, details from survey,question,link where randomlink = ? and survey.id_survey = question.id_survey and survey.id_survey = link.id_survey  ", link, function (err, res) {
+    dbConn.query("Select link.id_survey as id_survey, survey_title, decription, status, details from survey,question,link where randomlink = ? and survey.id_survey = question.id_survey and survey.id_survey = link.id_survey ", link, function (err, res) {
         if(err) {
             console.log("error: ", err);
             result(err, null);

@@ -37,7 +37,6 @@ class Survey extends Component {
       if (this.props.match)
         this.state.link = this.props.match.params.link;
 
-      // edit existing survey
       if(this.state.link !== undefined){
         http.get('http://localhost:5000/api/surveyFill/getSurvey/' + this.state.link)
         .then(res => {          
@@ -47,14 +46,20 @@ class Survey extends Component {
                 title: res.data[0].survey_title,
                 desc : res.data[0].decription
               });
-              for (var i = 0; i<res.data.length; i++){
-                // console.log(res.data[i].details);
-                formDataTemp.push(JSON.parse(res.data[i].details));
+              if(res.data[0].status == 'Aktif'){
+                for (var i = 0; i<res.data.length; i++){
+                  console.log(res.data[i].details);
+                  formDataTemp.push(JSON.parse(res.data[i].details));
+                }
+                $(this.fbRender.current).formRender({
+                  formData : formDataTemp,
+                  dataType: 'json'
+                });
               }
-              $(this.fbRender.current).formRender({
-                formData : formDataTemp,
-                dataType: 'json'
-              });
+              else{
+                document.getElementById('not-accepting').innerHTML = "Maaf, survei sudah tidak menerima respons lagi."
+                $(this.hideButton.current).toggle();
+              }
             }
             else{
               this.setState({title: "Survey Tidak Ditemukan"});
@@ -97,6 +102,7 @@ class Survey extends Component {
             </div>
   
             <div id="survey-main">
+              <span id='not-accepting'></span>
               <div id="fb-rendered" ref={this.fbRender}>
               </div>
               <Button type="button" variant = "default" className="t-green" id="button-submit" onClick={this.handleSubmit} ref={this.hideButton}>Submit</Button>

@@ -13,5 +13,17 @@ exports.findById = function(req, res) {
     });
 };
 
+exports.updateStatus= function(req, res) {
+    SurveyAdmin.updateStatus(req.body.id, req.body.status,
+    function(err, response) {  
+        if (err){
+            res.send(err);  
+        }
+        else{
+            res.json(response);
+        }
+    });
+};
+
 
 
