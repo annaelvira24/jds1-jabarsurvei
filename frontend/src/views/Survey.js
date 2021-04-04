@@ -70,9 +70,11 @@ class Survey extends Component {
     }
 
     handleSubmit(e) {
+      e.preventDefault();
+
       const answer = JSON.stringify($(this.fbRender.current).formRender("userData"));
       const time = Date.now();
-      console.log(new Date(time));
+      // console.log(new Date(time));
 
       const body = { 
         id: this.state.id,
@@ -84,10 +86,10 @@ class Survey extends Component {
 
       http.post("http://localhost:5000/api/submit/submitAnswer", body)
         .then((res)=>{
-          console.log("Success");
+          window.location.href = `/${this.state.link}/success`
         })
         .catch((err)=>{
-          console.log("Error: "+err);
+          alert(err);
         })
     }
 
