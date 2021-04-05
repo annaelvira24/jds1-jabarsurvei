@@ -31,13 +31,13 @@ class Survey extends Component {
 
       //this.handleSaveForm = this.handleSaveForm.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.checkRequired = this.checkRequired.bind(this);
     }
     
     componentDidMount() {
       if (this.props.match)
         this.state.link = this.props.match.params.link;
 
-      // edit existing survey
       if(this.state.link !== undefined){
         http.get('http://localhost:5000/api/surveyFill/getSurvey/' + this.state.link)
         .then(res => {          
@@ -47,14 +47,20 @@ class Survey extends Component {
                 title: res.data[0].survey_title,
                 desc : res.data[0].decription
               });
-              for (var i = 0; i<res.data.length; i++){
-                console.log(res.data[i].details);
-                formDataTemp.push(JSON.parse(res.data[i].details));
+              if(res.data[0].status == 'Aktif'){
+                for (var i = 0; i<res.data.length; i++){
+                  console.log(res.data[i].details);
+                  formDataTemp.push(JSON.parse(res.data[i].details));
+                }
+                $(this.fbRender.current).formRender({
+                  formData : formDataTemp,
+                  dataType: 'json'
+                });
               }
-              $(this.fbRender.current).formRender({
-                formData : formDataTemp,
-                dataType: 'json'
-              });
+              else{
+                document.getElementById('not-accepting').innerHTML = "Maaf, survei sudah tidak menerima respons lagi."
+                $(this.hideButton.current).toggle();
+              }
             }
             else{
               this.setState({title: "Survey Tidak Ditemukan"});
@@ -65,9 +71,16 @@ class Survey extends Component {
     }
 
     handleSubmit(e) {
+      e.preventDefault();
+      const requiredFilled = this.checkRequired();
+      if (!requiredFilled) {
+        alert("Mohon isi semua kotak yang ditandai dengan bintang merah")
+        return
+      }
+
       const answer = JSON.stringify($(this.fbRender.current).formRender("userData"));
       const time = Date.now();
-      console.log(new Date(time));
+      // console.log(new Date(time));
 
       const body = { 
         id: this.state.id,
@@ -79,11 +92,24 @@ class Survey extends Component {
 
       http.post("http://localhost:5000/api/submit/submitAnswer", body)
         .then((res)=>{
-          console.log("Success");
+          window.location.href = `/${this.state.link}/success`
         })
         .catch((err)=>{
-          console.log("Error: "+err);
+          alert(err);
         })
+    }
+
+    checkRequired() {
+      const fields = $(this.fbRender.current).formRender("userData");
+      for (var i = 0; i < fields.length; i++){
+        if (!fields[i].required) continue;
+        
+        if (!fields[i].userData) return false;
+        else {
+          if (!fields[i].userData[0]) return false;
+        }
+      }
+      return true;
     }
 
     render() {
@@ -95,6 +121,7 @@ class Survey extends Component {
             </div>
   
             <div id="survey-main">
+              <span id='not-accepting'></span>
               <div id="fb-rendered" ref={this.fbRender}>
               </div>
               <Button type="button" variant = "default" className="t-green" id="button-submit" onClick={this.handleSubmit} ref={this.hideButton}>Submit</Button>

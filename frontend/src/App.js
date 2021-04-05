@@ -13,6 +13,7 @@ import CreateSurvey from './components/CreateSurvey';
 import { getUser } from './util/Common';
 
 import FormBuilder from './views/FormBuilder';
+import SubmitFeedback from './views/SubmitFeedback';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           </Route>
           <Route exact path="/FormBuilder/create" component={FormBuilder}/>
           <Route path="/FormBuilder/edit/id=:id" component={FormBuilder}/>
+          <Route exact path="/:link/success" component={SubmitFeedback}/>
       </Switch>
       </div>
     </Router>

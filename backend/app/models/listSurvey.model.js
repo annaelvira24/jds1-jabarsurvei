@@ -7,6 +7,7 @@ var dbConn = require('./../config/db.config');
 var ListSurvey = function(survey){
     this.id_survey = survey.id_survey;
     this.id_admin = survey.id_admin;
+    this.status  = survey.status;
     this.survey_title  = survey.survey_title;
     this.decription  = survey.decription;
 
@@ -27,9 +28,9 @@ ListSurvey.create = function(newSurvey, result){
 };
 
 ListSurvey.findAll = function (offset,limit,query,result) {
-    var q = "SELECT survey.id_survey, survey.survey_title, survey.decription, admin.username, link.randomlink FROM ((survey JOIN admin USING (id_admin)) JOIN link USING (id_survey))"
+    var q = "SELECT survey.id_survey, survey.survey_title, survey.decription, admin.username, link.randomlink FROM ((survey JOIN admin USING (id_admin)) JOIN link USING (id_survey)) WHERE survey.status = 'Aktif'"
     if (query) 
-        q += ` WHERE survey.survey_title LIKE "%${query}%"`
+        q += ` AND survey.survey_title LIKE "%${query}%"`
     q += " ORDER BY survey.id_survey"
     if (offset && limit) 
         q += ` LIMIT ${limit} OFFSET ${offset}` 
