@@ -24,15 +24,4 @@ SurveyFill.getSurvey = function(link, result){
         }
     });
 };
-SurveyFill.getResult = function(id, result){
-    dbConn.query("Select * from answer where id_survey = ?", id, function (err, res) {
-        if(err) {
-            console.log("error: ", err);
-            result(err, null);
-        }
-        else{
-            result(null, res);
-        }
-    });
-};
 module.exports = SurveyFill;
