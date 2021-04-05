@@ -1,11 +1,11 @@
 .table-header{
-        text-align: center;
-        vertical-align: middle;
+    text-align: center;
+    vertical-align: middle;
 }
 .List-Table{
-        max-width: 92%;
-        margin-left: auto;
-        margin-right: auto;
+    max-width: 92%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .Table2-Container{
@@ -13,10 +13,23 @@
         /* font-size: 10px !important; */
 }
 
-td{
-        font-size: 14px !important;
+#surveyLink {
+    text-decoration: none;
 }
 
-#surveyLink {
-        text-decoration: none;
-}    
+td{
+    font-size: 14px !important;
+    cursor: default !important;
+}
+
+td:focus{
+    outline: none !important;
+}
+
+#searchBar{
+    width: 350px;
+}
+
+#searchBar::after{
+    margin-top: 10px;
+}
