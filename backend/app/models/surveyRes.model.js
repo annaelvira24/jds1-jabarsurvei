@@ -21,4 +21,40 @@ SurveyRes.getResult = function(link, result){
         }
     });
 };
+
+SurveyRes.getAnswerByLink = function(link, result){
+    dbConn.query("Select link.id_survey, id_question, details, answer from (question join link using (id_survey)) join answer using (id_question) where randomlink = ? order by id_question", link, function (err, res) {
+        if(err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else{
+            result(null, res);
+        }
+    });
+};
+
+SurveyRes.getQuestionCount = function(link, result){
+    dbConn.query("Select count(*) from (question join link using (id_survey)) where randomlink = ?", link, function (err, res) {
+        if(err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else{
+            result(null, res);
+        }
+    });
+};
+
+// SurveyRes.getAnswerByQuestion = function(link, result){
+//     dbConn.query("Select answer from question join answer using (id_question) where id_question = ?", link, function (err, res) {
+//         if(err) {
+//             console.log("error: ", err);
+//             result(err, null);
+//         }
+//         else{
+//             result(null, res);
+//         }
+//     });
+// };
 module.exports = SurveyRes;

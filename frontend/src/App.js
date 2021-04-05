@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Redirect, Switch, Route} from 'react-router-dom
 import LandingPage from './views/LandingPage';
 import Survey from './views/Survey';
 import Result from './views/Result';
+import ResultSummary from './views/ResultSummary';
 import LoginPage from './views/LoginPage';
 import RegisterPage from './views/RegisterPage';
 import DashboardAdmin from './views/DashboardAdmin';
@@ -24,7 +25,8 @@ function App() {
       <Switch>
           <Route exact path="/" component={LandingPage}/>
           <Route exact path="/survey/:link" component={Survey}/>
-          <Route exact path="/result/:link" component={Result}>
+          <Route exact path="/result/:link" component={Result}/>
+          <Route exact path="/result/:link/summary" component={ResultSummary}>
             { (!getUser()) && (<Redirect to="/" />) }
           </Route>
           <Route exact path="/login" component={LoginPage}>
