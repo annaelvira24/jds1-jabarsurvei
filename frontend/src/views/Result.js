@@ -1,6 +1,6 @@
 import $ from "jquery";
 import React, { Component, createRef } from "react";
-import { Button } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import TableAdmin from '../components/TableAdmin.js';
 import PaginationButton from '../components/Pagination.js';
 import http from "../http-common";
@@ -17,10 +17,9 @@ require('formBuilder/dist/form-render.min.js');
 var formDataTemp = [];
 
 
-
 class Result extends Component {
     fbRender = createRef();
-    hideButton = createRef();
+    hideEverything = createRef();
 
     state = {
       cookie: undefined,
@@ -47,7 +46,7 @@ class Result extends Component {
       if(this.state.link !== undefined){
         http.get('http://localhost:5000/api/surveyRes/getResult/' + this.state.link)
         .then(res => {          
-            console.log(res.data);
+            //console.log(res.data);
             if(res.data[0] !== undefined){
               this.setState({
                 id: res.data[0].id_survey,
@@ -55,28 +54,47 @@ class Result extends Component {
                 desc : res.data[0].decription
               });
               for (var i = 0; i<res.data.length; i++){
-                // console.log(res.data[i].details);
+                // console.log(res.data[i].details);                
                 formDataTemp.push(JSON.parse(res.data[i].details));
               }
-              console.log(formDataTemp);
+              for (var i = 0; i<formDataTemp.length; i++){                
+                if(formDataTemp[i].required === undefined){
+                  //remove unnesecary file
+                  formDataTemp.splice(i,1);
+                }
+              }
+              //console.log(formDataTemp);
+              this.forceUpdate();
+              formDataTemp.map((formDataTemp) => (<p>{formDataTemp.label}</p>))
             }
             else{
               this.setState({title: "Survey Tidak Ditemukan"});
-              $(this.hideButton.current).toggle();
+              $(this.hideEverything.current).toggle();
             }
         });
       }
     }
     render() {
         return(
-          <div id = "result-container">
+          <div id = "result-container"> 
             <div id = "result-title-container">
               <p id="result-title">{this.state.title}</p>
               <p id="result-description">{this.state.desc}</p>
             </div>
   
-            <div id="result-main">
-              
+            <div id="result-main" ref={this.hideEverything}>
+              <p>{}</p>
+            <Table responsive>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  {formDataTemp.map((formDataTemp) =>(
+                    <th>{formDataTemp.label}</th>
+                  ))}
+                  
+                </tr>
+              </thead>
+            </Table>
             </div>
           </div>
         );
