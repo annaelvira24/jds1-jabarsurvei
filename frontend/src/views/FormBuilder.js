@@ -287,7 +287,6 @@ class FormBuilder extends Component {
                         id_admin : this.state.idAdmin
                     })
                     .then((res) => {
-                      console.log(res.data);
                       this.setState({
                         status : 'create',
                         headingText : 'Survei Anda berhasil dipublikasikan! Berikut link survei Anda',

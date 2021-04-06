@@ -1,12 +1,10 @@
 import $ from "jquery";
 import React, { Component, createRef } from "react";
 import { Button } from "react-bootstrap";
-import TableAdmin from '../components/TableAdmin.js';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import http from "../http-common";
 import { getUser } from './../util/Common.js';
-import 'jquery-ui-sortable';
-import './../assets/scss/Survey.scss'
+import './../assets/scss/Result.scss'
 
 class Result extends Component {
     fbRender = createRef();
@@ -18,9 +16,9 @@ class Result extends Component {
       idSurvey : undefined,
       idAdmin : undefined,
       link : undefined,
-      id : '',
-      title : '',
-      desc : ''
+      count : undefined,
+      title : undefined,
+      desc : undefined
     }
 
     constructor(){
@@ -29,22 +27,6 @@ class Result extends Component {
       this.state.idAdmin = JSON.parse(atob(this.state.cookie))[0].id_admin;
 
       this.getTables = this.getTables.bind(this);
-
-
-    //   if (this.props.match)
-    //     this.state.link = this.props.match.params.link;
-
-    //   if(this.state.link !== undefined){
-    //     http.get('http://localhost:5000/api/surveyRes/getAnswerByLink/' + this.state.link)
-    //     .then(res => {          
-    //         console.log(res.data);
-    //         if(res.data[0] !== undefined){
-    //           this.setState({
-    //               surveyResult : res.data
-    //           });
-    //         }
-    //     });
-    //   }
     }
 
     componentDidMount() {
@@ -52,40 +34,70 @@ class Result extends Component {
         this.state.link = this.props.match.params.link;
 
       if(this.state.link !== undefined){
+      http.get('http://localhost:5000/api/surveyRes/getResult/' + this.state.link)
+        .then(res => {          
+            console.log(res.data);
+            if(res.data[0] !== undefined){
+              this.setState({
+                title: res.data[0].survey_title,
+                desc : res.data[0].decription
+              });
+            }
+            else{
+              this.setState({title: "Survey Tidak Ditemukan"});
+              $(this.hideButton.current).toggle();
+            }
+        });
+
         http.get('http://localhost:5000/api/surveyRes/getAnswerByLink/' + this.state.link)
         .then(res => {          
             if(res.data[0] !== undefined){
               this.setState({
                   surveyResult : res.data
               });
+              http.get('http://localhost:5000/api/surveyRes/getQuestionCount/' + this.state.link)
+              .then(res => {          
+                  if(res.data[0] !== undefined){
+                    this.setState({
+                        count : res.data[0].count
+                    });
+                  }
+              });
             }
         });
       }
     }
 
-    getTables = (num) => {
+    getTables = () => {
         const array = [];
         let theTable;
         let theQuestion;
         let arraySlice = [];
+        let num = this.state.count;
         if(this.state.surveyResult !== undefined){
           let arrayResult = this.state.surveyResult    
         
           for(var i = 0; i < num; i++){
-              // console.log(this.state.surveyResult);
               arraySlice = arrayResult.slice(i*arrayResult.length/num, (i+1)*arrayResult.length/num );
-
               let question = JSON.parse(arraySlice[0].details);
+              
               theQuestion = 
-              <h4>{question.label} </h4>
+              <h5 id="question-title">{question.label} </h5>
               array.push(theQuestion);
               
               theTable = 
-              <BootstrapTable data={arraySlice} striped hover>
-                  <TableHeaderColumn isKey dataField="answer">Jawaban</TableHeaderColumn>
-              </BootstrapTable>
+              <div id="result-table">
+                <BootstrapTable data={arraySlice} striped hover>
+                    <TableHeaderColumn isKey dataField="answer">Jawaban</TableHeaderColumn>
+                </BootstrapTable>
+              </div>
             array.push(theTable)
           }
+        }
+        else if(this.state.desc !== undefined){
+          let emptyResponse =
+          <span>Belum ada respons untuk survei ini</span>
+          array.push(emptyResponse);
         }
           
         return array
@@ -93,15 +105,15 @@ class Result extends Component {
 
     render() {
         return(
-          <div id = "result-container">
-            <div id = "result-title-container">
-              <p id="result-title">{this.state.title}</p>
-              <p id="result-description">{this.state.desc}</p>
-            </div>
-  
-            <div id="result-main">
-                {/* <p>{this.state.surveyResult}</p> */}
-              {this.getTables(7)}
+          <div id = "result-summary-container">
+              <div id = "result-title-container">
+                <p id="survey-title">{this.state.title}</p>
+                <p id="survey-description">{this.state.desc}</p>
+              </div>
+            <div id = "result-summary">  
+              <div id="result-main">
+                {this.getTables()}
+              </div>
             </div>
           </div>
         );

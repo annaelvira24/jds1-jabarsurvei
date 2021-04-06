@@ -80,8 +80,6 @@ class Survey extends Component {
 
       const answer = JSON.stringify($(this.fbRender.current).formRender("userData"));
       const time = Date.now();
-      // console.log(new Date(time));
-
       const body = { 
         id: this.state.id,
         link: this.state.link,
