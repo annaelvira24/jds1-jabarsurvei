@@ -13,7 +13,24 @@
         /* font-size: 10px !important; */
 }
 
-#surveyLink {
+.table-container{
+        width: 100%;
+        /* min-width: 600px; */
+        overflow-x: auto;
+}
+
+.table-survey{
+        min-width: 800px;
+}
+
+/* th{
+        min-width: 10% !important;
+} */
+#desc{
+        width: 200px !important;
+}
+
+#surveyLink{
     text-decoration: none;
 }
 
