@@ -2,6 +2,8 @@ import $ from "jquery";
 import React, { Component, createRef } from "react";
 import { Button } from "react-bootstrap";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTable, faChartPie } from '@fortawesome/free-solid-svg-icons'
 import http from "../http-common";
 import { getUser } from './../util/Common.js';
 import './../assets/scss/Result.scss'
@@ -105,14 +107,27 @@ class Result extends Component {
 
     render() {
         return(
-          <div id = "result-summary-container">
-              <div id = "result-title-container">
-                <p id="survey-title">{this.state.title}</p>
-                <p id="survey-description">{this.state.desc}</p>
-              </div>
-            <div id = "result-summary">  
-              <div id="result-main">
-                {this.getTables()}
+          <div id = "result-container"> 
+            <div id="result-header-container">
+              Hasil Survei
+            </div>
+            <div>
+              <p id="result-title">{this.state.title}</p>
+              <p id="result-description">{this.state.desc}</p>              
+            </div>
+            <div className="buttons">
+              <Button variant="default" className="t-blue" id="button-table" onClick = {event =>  window.location.href='/result/'+ this.state.link}>
+                <FontAwesomeIcon icon={faTable} /> Tabel
+              </Button>
+              <Button variant="default" id="button-visual">
+                <FontAwesomeIcon icon={faChartPie} /> Visualisasi
+              </Button>
+            </div>
+            <div id = "result-summary-container">
+              <div id = "result-summary">  
+                <div id="result-main">
+                  {this.getTables()}
+                </div>
               </div>
             </div>
           </div>

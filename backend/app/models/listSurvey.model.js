@@ -72,7 +72,7 @@ ListSurvey.findByLink = function (link, result) {
 
 ListSurvey.count = function (result) {
     dbConn.query(
-        "SELECT COUNT(*) as count from survey",
+        "SELECT COUNT(*) as count from survey where status = 'Aktif'",
         
         function (err, res) {
         if(err) {

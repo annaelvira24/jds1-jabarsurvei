@@ -22,12 +22,16 @@ class Table_comp extends Component {
                     <Row className="SearchBar-Container">
                         <SearchBar on_search={ this.props.onSearch }/>
                     </Row>
-                    <BootstrapTable data={this.props.daftar_survey} striped hover>
-                        <TableHeaderColumn isKey dataField="id_survey" width="5%">Id</TableHeaderColumn>
-                        <TableHeaderColumn dataField='survey_title' dataFormat={this.cellLink} width="30%">Judul Survei</TableHeaderColumn>
-                        <TableHeaderColumn dataField="username" width="15%">Pembuat Survei</TableHeaderColumn>
-                        <TableHeaderColumn dataField='decription' width="50%">Deskripsi Survei</TableHeaderColumn>
-                    </BootstrapTable>
+                    <div className="table-container">
+                        <div className="table-survey">
+                            <BootstrapTable data={this.props.daftar_survey} striped hover>
+                                <TableHeaderColumn isKey dataField="id_survey" width="5%">Id</TableHeaderColumn>
+                                <TableHeaderColumn dataField='survey_title' dataFormat={this.cellLink} width="30%">Judul Survei</TableHeaderColumn>
+                                <TableHeaderColumn dataField="username" width="15%">Pembuat Survei</TableHeaderColumn>
+                                <TableHeaderColumn dataField='decription' width="50%">Deskripsi Survei</TableHeaderColumn>
+                            </BootstrapTable>
+                        </div>
+                    </div>
                 </Container>
             </div>
         );
