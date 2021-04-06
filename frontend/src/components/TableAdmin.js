@@ -110,14 +110,18 @@ class TableAdmin extends Component {
                     <Row className="SearchBar-Container">
                         <SearchBar on_search={ this.props.onSearch }/>
                     </Row>
-                    <BootstrapTable data={this.props.daftar_survey} striped hover>
-                        <TableHeaderColumn isKey dataField="id_survey" width="5%">Id</TableHeaderColumn>
-                        <TableHeaderColumn dataField='survey_title' width="25%">Judul Survei</TableHeaderColumn>
-                        <TableHeaderColumn dataField='decription' width="40%">Deskripsi Survei</TableHeaderColumn>
-                        <TableHeaderColumn dataField='button' width="10%" dataFormat={this.cellButtonLink}>Link</TableHeaderColumn>
-                        <TableHeaderColumn dataField='button' width="9%" dataFormat={this.cellButtonEdit}>Edit</TableHeaderColumn>
-                        <TableHeaderColumn dataField='button' width="11%" dataFormat={this.cellButtonDelete}>Hapus</TableHeaderColumn>
-                    </BootstrapTable>
+                    <div className="table-container">
+                        <div className="table-survey">
+                            <BootstrapTable data={this.props.daftar_survey} striped hover>
+                                <TableHeaderColumn isKey dataField="id_survey" width="5%">Id</TableHeaderColumn>
+                                <TableHeaderColumn dataField='survey_title' width="25%">Judul Survei</TableHeaderColumn>
+                                <TableHeaderColumn id="desc" dataField='decription' width="40%">Deskripsi Survei</TableHeaderColumn>
+                                <TableHeaderColumn dataField='button' width="10%" dataFormat={this.cellButtonLink}>Link</TableHeaderColumn>
+                                <TableHeaderColumn dataField='button' width="9%" dataFormat={this.cellButtonEdit}>Edit</TableHeaderColumn>
+                                <TableHeaderColumn dataField='button' width="11%" dataFormat={this.cellButtonDelete}>Hapus</TableHeaderColumn>
+                            </BootstrapTable>
+                        </div>
+                    </div>
                 </Container>
             </div>
         );
