@@ -34,6 +34,15 @@
     text-decoration: none;
 }
 
+.table-container{
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table-survey{
+    min-width: 800px;
+}
+
 td{
     font-size: 14px !important;
     cursor: default !important;
