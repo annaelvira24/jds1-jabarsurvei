@@ -13,12 +13,24 @@ var SurveyAdmin = function(survey){
 };
 
 SurveyAdmin.findById = function (id, offset, limit, query, result) {
-    var q = "Select * FROM (SELECT survey.id_survey, survey.id_admin, survey.survey_title, survey.decription, link.randomlink FROM survey LEFT JOIN link ON survey.id_survey = link.id_survey ORDER BY survey.id_survey DESC) t where id_admin = ?"
+    var q = "Select * FROM (SELECT survey.id_survey, survey.id_admin, survey.survey_title, survey.status, survey.decription, link.randomlink FROM survey LEFT JOIN link ON survey.id_survey = link.id_survey ORDER BY survey.id_survey DESC) t where id_admin = ?"
     if (query)
         q += ` and survey_title LIKE "%${query}%"`
     if (offset&&limit)
         q += ` LIMIT ${limit} OFFSET ${offset}`
     dbConn.query(q, id, function (err, res) {
+        if(err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else{
+            result(null, res);
+        }
+    });
+};
+
+SurveyAdmin.updateStatus = function(id, status, result){
+    dbConn.query("Update survey set status = ? where id_survey = ?", [status, id], function (err, res) {
         if(err) {
             console.log("error: ", err);
             result(err, null);

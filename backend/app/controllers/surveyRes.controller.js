@@ -10,3 +10,18 @@ exports.getResult = function(req, res) {
     });
 };
 
+exports.getAnswerByLink = function(req, res) {
+    SurveyRes.getAnswerByLink(req.params.link, 
+    function(err, form) {  
+        if (err)  res.send(err);  
+        res.json(form);
+    });
+};
+
+exports.getQuestionCount = function(req, res) {
+    SurveyRes.getQuestionCount(req.params.link, 
+    function(err, form) {  
+        if (err)  res.send(err);  
+        res.json(form);
+    });
+};

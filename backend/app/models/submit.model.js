@@ -41,14 +41,24 @@ Answer.submitAnswer = function (answers, result){
             var q_index = 0;
             for (var i = 0; i < data.length; i++){
                 const question = data[i];
-                if (question.type === "header" || question.type === "file" || question.type === "paragraph") 
+                console.log(question)
+                if (question.type === "header" || question.type === "file" || question.type === "paragraph"){
+                    q_index += 1;
                     continue;
-                const user_data = JSON.stringify(question.userData);
+                }
+                var user_data;
+                if (question.type === "checkbox-group"){
+                    user_data = JSON.stringify(question.userData);
+                } else {
+                    user_data = question.userData[0]
+                }
+
                 const test = {
                     id_question: ids[q_index].id_question,
                     id_survey: idSurvey,
                     answer: user_data
                 }
+                
                 dbConn.query("INSERT INTO answer SET ?", test, function(err, res){
                     if (err) {
                         result(err, null);

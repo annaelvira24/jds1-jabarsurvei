@@ -3,7 +3,7 @@ import {Row, FormControl, Button, Container, Form} from 'react-bootstrap';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import { Component, createRef} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faLink, faTrash } from '@fortawesome/free-solid-svg-icons'
 import ModalPopUp from './ModalPopUp.js'
 import http from "../http-common";
 import '../assets/css/Table_comp.css';
@@ -23,6 +23,7 @@ class TableAdmin extends Component {
             surveyLink : '',
         };
 
+        this.cellButtonStatus = this.cellButtonStatus.bind(this);
         this.cellButtonLink = this.cellButtonLink.bind(this);
     };
 
@@ -33,23 +34,6 @@ class TableAdmin extends Component {
     onSurveyClick = () => {
        this.showModal();
     }
-
-    handleGenLink(e, idSurvey, idAdmin){
-        e.preventDefault();
-        http.post(`http://localhost:5000/api/surveyLink/createLink`, {
-            id_survey : idSurvey,
-            id_admin : idAdmin
-        })
-        .then((res) => {
-          console.log(res.data);
-          this.setState({
-            status : 'create',
-            headingText : 'Link survei Anda berhasil dibuat!',
-            surveyLink : 'http://localhost:3000/survey/' + res.data
-          })
-          this.onSurveyClick();
-        })
-    };
 
     handleShowLink(e, idSurvey){
         e.preventDefault();
@@ -65,12 +49,28 @@ class TableAdmin extends Component {
         })
     }
 
-    cellButtonLink (cell, row, enumObject, rowIndex){
-        console.log(row);
+    handleUpdateStatus(e, idSurvey, status){
+        e.preventDefault();
+        http.post(`http://localhost:5000/api/surveyAdmin/updateStatus`, {
+            id : idSurvey,
+            status : status
+        })
+        .then((res) => {
+            window.location.reload();
+         })
+    }
+
+    cellLink (cell, row){
+        console.log(cell);
+        return (<div><a id="surveyLink" href={"/result/"+row.randomlink}>{cell}</a></div>);
+    }
+
+
+    cellButtonLink (cell, row){
         let theButton;
         if(row.randomlink != null){
             theButton = <Button variant = "default" className = "t-blue btn-sm" onClick = {(e) => this.handleShowLink(e,row.id_survey)}>
-                            Lihat Link
+                            <FontAwesomeIcon icon={faLink}/> Lihat Link
                         </Button>
         } 
         else {
@@ -81,20 +81,19 @@ class TableAdmin extends Component {
         return theButton;
     }
 
-    cellButtonEdit (cell, row, enumObject, rowIndex){
-        return(
-            <Button variant = "default" className = "t-yellow btn-sm" onClick = {(e) =>  window.location.href='/formbuilder/edit/id='+row.id_survey}>
-                <FontAwesomeIcon icon={faEdit}/> Edit
-            </Button>
-        );
-    }
-
-    cellButtonDelete (cell, row, enumObject, rowIndex){
-        return(
-            <Button variant = "danger" className = "btn-sm" onClick = {(e) =>  window.location.href='/formbuilder/edit/id='+row.id_survey}>
-                <FontAwesomeIcon icon={faTrash}/> Hapus
-            </Button>
-        );
+    cellButtonStatus (cell, row){
+        let theButton;
+        if(row.status == 'Aktif'){
+            theButton = <Button variant = "danger" className = "btn-sm" onClick = {(e) => this.handleUpdateStatus(e, row.id_survey, 'Non-aktif')}>
+                            Non-aktifkan
+                        </Button>
+        }
+        else{
+            theButton = <Button variant = "default" className = "t-green btn-sm" onClick = {(e) => this.handleUpdateStatus(e, row.id_survey, 'Aktif')}>
+                            Aktifkan
+                        </Button>
+        }
+        return theButton;
     }
 
     render(){
@@ -110,18 +109,14 @@ class TableAdmin extends Component {
                     <Row className="SearchBar-Container">
                         <SearchBar on_search={ this.props.onSearch }/>
                     </Row>
-                    <div className="table-container">
-                        <div className="table-survey">
-                            <BootstrapTable data={this.props.daftar_survey} striped hover>
-                                <TableHeaderColumn isKey dataField="id_survey" width="5%">Id</TableHeaderColumn>
-                                <TableHeaderColumn dataField='survey_title' width="25%">Judul Survei</TableHeaderColumn>
-                                <TableHeaderColumn id="desc" dataField='decription' width="40%">Deskripsi Survei</TableHeaderColumn>
-                                <TableHeaderColumn dataField='button' width="10%" dataFormat={this.cellButtonLink}>Link</TableHeaderColumn>
-                                <TableHeaderColumn dataField='button' width="9%" dataFormat={this.cellButtonEdit}>Edit</TableHeaderColumn>
-                                <TableHeaderColumn dataField='button' width="11%" dataFormat={this.cellButtonDelete}>Hapus</TableHeaderColumn>
-                            </BootstrapTable>
-                        </div>
-                    </div>
+                    <BootstrapTable data={this.props.daftar_survey} striped hover>
+                        <TableHeaderColumn isKey dataField="id_survey" width="5%">Id</TableHeaderColumn>
+                        <TableHeaderColumn dataField='survey_title' dataFormat={this.cellLink} width="22%">Judul Survei</TableHeaderColumn>
+                        <TableHeaderColumn dataField='decription' width="35%">Deskripsi Survei</TableHeaderColumn>
+                        <TableHeaderColumn dataField='status' width="9%">Status</TableHeaderColumn>
+                        <TableHeaderColumn dataField='button' width="13%" dataFormat={this.cellButtonStatus}>Ubah Status</TableHeaderColumn>
+                        <TableHeaderColumn dataField='button' width="12%" dataFormat={this.cellButtonLink}>Link</TableHeaderColumn>
+                    </BootstrapTable>
                 </Container>
             </div>
         );
@@ -140,8 +135,7 @@ const SearchBar = ({on_search}) => {
 
     return (
         <Form inline onSubmit={ search }>
-            {/* <Form.Control size="sm" type="text" placeholder="Search" /> */}
-            <FormControl placeholder = "Pencarian" type="text" className="mr-sm-2" ref={ searchRef } />
+            <FormControl placeholder = "Pencarian.." type="text" className="mr-sm-2" ref={ searchRef } />
             <Button type="submit">Cari</Button>
         </Form>
     )

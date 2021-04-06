@@ -30,38 +30,6 @@ class DashboardAdmin extends Component {
     this.handlePageClick = this.handlePageClick.bind(this)
     this.handleSearch = this.handleSearch.bind(this)
     this.findAll = this.findAll.bind(this)
-  }
-
-  static get coloumns() { 
-    return (
-      [{
-        text: 'No.',
-        width: '100px'
-      },{
-        dataField: 'survey_title',
-        text: 'Judul',
-        width: '50px'
-      },
-      {
-        dataField: 'decription',
-        text: 'Deskripsi Survei',
-        width: '100em'
-      },
-      {
-        dataField: 'randomLink',
-        text: 'Link',
-        width: '100em'
-      },
-      {
-        text: 'Edit',
-        width: '100em'
-      },
-      {
-        text: 'Hapus',
-        width: '100em'
-      }
-    ]
-    )
   } 
 
     render(){
@@ -78,7 +46,7 @@ class DashboardAdmin extends Component {
             </div>
           </header>
           <div className="Survey-Container">
-            <TableAdmin daftar_survey={this.state.display}  daftar_coloumn={this.constructor.coloumns} onSearch={ this.handleSearch } />
+            <TableAdmin daftar_survey={this.state.display} onSearch={ this.handleSearch } />
             <PaginationButton totalPage={this.state.pageCount} pageMargin={1} onPageClick={this.handlePageClick} currentPage={this.state.currentPage} className='mx-auto' />
           </div>
         </div>

@@ -46,34 +46,22 @@
 
 #survey-title{
    font-size: xx-large;
-   border-radius: 0 !important;
-   border: 0 none !important;
-   box-shadow: none !important;
-   background-color: #5AAB4E;
    color: white;
-   transition-duration: 0.5s;
+   padding-left: 10px;
 }
 
 #survey-description{
-   margin-top: -20px;
+   margin-top: -10px;
    font-size: medium;
-   border-radius: 0 !important;
-   border: 0 none !important;
-   box-shadow: none !important;
-   background-color: #5AAB4E;
    color: white;
-   transition-duration: 0.5s;
+   padding-left: 11px;
 }
 
 #button-submit{
    background-color: #5AAB4E;
    color: white;
    border-color: #5AAB4E;
-   margin-left: 2%;
-}
-
-#button-submit:hover{
-   background-color: rgb(53, 110, 44);
+   margin-top: 20px;
 }
 
 @media only screen and (max-width: 600px) {

@@ -4,7 +4,6 @@ const FBuilder = require('../models/fBuilder.model');
 
 exports.create = function(req, res) {
     const id_survey = req.body.id_survey;
-    const active_status = req.body.status;
     const details = JSON.parse(req.body.details);
     
     for(var i = 0; i < details.length; i++){
@@ -12,7 +11,6 @@ exports.create = function(req, res) {
             id_survey : id_survey,
             order_number : i,
             section : 1,
-            active_status : active_status,
             details : JSON.stringify(details[i])
         });
         FBuilder.create(question, function(err, result) {
