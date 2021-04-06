@@ -6,6 +6,7 @@ const surveyResController = require('../controllers/SurveyRes.controller');
 
 router.get('/getResult/:link', surveyResController.getResult);
 router.get('/getAnswerByLink/:link', surveyResController.getAnswerByLink);
+router.get('/getAnswerByLinkAlter/:link', surveyResController.getAnswerByLinkAlter);
 router.get('/getQuestionCount/:link', surveyResController.getQuestionCount);
 router.get('/getQuestionByLink/:link', surveyResController.getQuestionCount);
 

@@ -18,6 +18,14 @@ exports.getAnswerByLink = function(req, res) {
     });
 };
 
+exports.getAnswerByLinkAlter = function(req, res) {
+    SurveyRes.getAnswerByLinkAlter(req.params.link, 
+    function(err, form) {  
+        if (err)  res.send(err);  
+        res.json(form);
+    });
+};
+
 exports.getQuestionCount = function(req, res) {
     SurveyRes.getQuestionCount(req.params.link, 
     function(err, form) {  
