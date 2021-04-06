@@ -109,14 +109,18 @@ class TableAdmin extends Component {
                     <Row className="SearchBar-Container">
                         <SearchBar on_search={ this.props.onSearch }/>
                     </Row>
-                    <BootstrapTable data={this.props.daftar_survey} striped hover>
-                        <TableHeaderColumn isKey dataField="id_survey" width="5%">Id</TableHeaderColumn>
-                        <TableHeaderColumn dataField='survey_title' dataFormat={this.cellLink} width="22%">Judul Survei</TableHeaderColumn>
-                        <TableHeaderColumn dataField='decription' width="35%">Deskripsi Survei</TableHeaderColumn>
-                        <TableHeaderColumn dataField='status' width="9%">Status</TableHeaderColumn>
-                        <TableHeaderColumn dataField='button' width="13%" dataFormat={this.cellButtonStatus}>Ubah Status</TableHeaderColumn>
-                        <TableHeaderColumn dataField='button' width="12%" dataFormat={this.cellButtonLink}>Link</TableHeaderColumn>
-                    </BootstrapTable>
+                    <div className="table-container">
+                        <div className="table-survey">
+                            <BootstrapTable data={this.props.daftar_survey} striped hover>
+                                <TableHeaderColumn isKey dataField="id_survey" width="5%">Id</TableHeaderColumn>
+                                <TableHeaderColumn dataField='survey_title' dataFormat={this.cellLink} width="22%">Judul Survei</TableHeaderColumn>
+                                <TableHeaderColumn dataField='decription' width="30%">Deskripsi Survei</TableHeaderColumn>
+                                <TableHeaderColumn dataField='status' width="9%">Status</TableHeaderColumn>
+                                <TableHeaderColumn dataField='button' width="13%" dataFormat={this.cellButtonStatus}>Ubah Status</TableHeaderColumn>
+                                <TableHeaderColumn dataField='button' width="12%" dataFormat={this.cellButtonLink}>Link</TableHeaderColumn>
+                            </BootstrapTable>
+                        </div>
+                    </div>
                 </Container>
             </div>
         );
