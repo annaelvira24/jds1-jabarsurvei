@@ -89,11 +89,15 @@ class Result extends Component {
                         }
                       }
                     } */
+                    //console.log(surveyResult);
                     const chunk = (arr, size) => arr.reduce((acc, e, i) => (i % size ? acc[acc.length - 1].push(e) : acc.push([e]), acc), []);
                     surveyResult = chunk(surveyResult,formDataTemp.length);
                     for (var i = 0; i<surveyResult.length; i++){  
-                      var test = {answer : i+1}
-                      surveyResult[i].unshift(test)
+                      var order = {answer : i+1}
+                      var submit_time = {answer : surveyResult[i][0].submit_time}
+                      //console.log(submit_time)
+                      surveyResult[i].unshift(order)
+                      surveyResult[i].push(submit_time)
                     }
                     //console.log(surveyResult);
                     this.forceUpdate();
@@ -135,7 +139,7 @@ class Result extends Component {
                   {formDataTemp.map((formDataTemp) =>(
                     <th>{formDataTemp.label}</th>
                   ))}
-                  
+                  <th>Waktu Mengisi</th>
                 </tr>
               </thead>
               <tbody>

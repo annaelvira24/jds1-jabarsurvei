@@ -35,7 +35,7 @@ SurveyRes.getAnswerByLink = function(link, result){
 };
 
 SurveyRes.getAnswerByLinkAlter = function(link, result){
-    dbConn.query("Select link.id_survey, id_question, details, answer from (question join link using (id_survey)) join answer using (id_question) where randomlink = ?", link, function (err, res) {
+    dbConn.query("Select link.id_survey, id_question, details, answer, submit_time from (question join link using (id_survey)) join answer using (id_question) where randomlink = ? order by id_answer", link, function (err, res) {
         if(err) {
             console.log("error: ", err);
             result(err, null);
