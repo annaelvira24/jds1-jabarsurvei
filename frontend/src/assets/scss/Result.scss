@@ -41,7 +41,7 @@
 }
 
 .table-container{
-   width: 100%;
+   overflow-x: auto;
    overflow-y: auto;
 }
 
@@ -58,6 +58,7 @@
 }
 
 #result-table{
+   overflow: hidden;
    margin-bottom: 60px;
 }
 
@@ -79,6 +80,6 @@
 @media only screen and (max-width: 600px) {
    #result-summary{
       margin-left: 15px;
-      margin-right: 15px;
+      margin-right: 5px;
    }
 }

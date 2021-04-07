@@ -77,11 +77,26 @@ class Result extends Component {
         let arraySlice = [];
         let num = this.state.count;
         if(this.state.surveyResult !== undefined){
-          let arrayResult = this.state.surveyResult    
+          let arrayResult = this.state.surveyResult
+          const resultLength = arrayResult.length;
         
           for(var i = 0; i < num; i++){
               arraySlice = arrayResult.slice(i*arrayResult.length/num, (i+1)*arrayResult.length/num );
+              // arraySlice = arrayResult.splice(0);
+
               let question = JSON.parse(arraySlice[0].details);
+            
+              if(question.type == "checkbox-group"){
+                for (var j = 0; j < arraySlice.length; j++){
+                  console.log(JSON.parse(arraySlice[j].answer).join(', '));
+                  let ans = (JSON.parse(arraySlice[j].answer).join(', '));
+
+
+                  // console.log(arraySlice[j].answer.join(','));
+                  // let beautifulAns = JSON.parse(arraySlice[j].answer);
+                  // arraySlice[j].answer = 'halo';
+                }
+              }
               
               // theQuestion = 
               // <h5 id="question-title">{question.label} </h5>

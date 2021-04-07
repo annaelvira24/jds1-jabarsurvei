@@ -84,9 +84,7 @@ class FormBuilder extends Component {
         typeUserDisabledAttrs: {
           'checkbox-group': [
             'toggle',
-            'inline',
-            {'options': ['label']
-          }
+            'inline'
           ]
         },
         inputSets: [
