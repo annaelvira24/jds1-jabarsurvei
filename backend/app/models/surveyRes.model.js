@@ -47,7 +47,7 @@ SurveyRes.getAnswerByLinkAlter = function(link, result){
 };
 
 SurveyRes.getQuestionCount = function(link, result){
-    dbConn.query("select count(distinct id_answer) as count from (question join link using (id_survey)) join answer using (id_question) where randomlink = ?", link, function (err, res) {
+    dbConn.query("select count(distinct id_question) as count from (question join link using (id_survey)) join answer using (id_question) where randomlink = ?", link, function (err, res) {
         if(err) {
             console.log("error: ", err);
             result(err, null);

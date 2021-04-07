@@ -83,15 +83,19 @@ class Result extends Component {
               arraySlice = arrayResult.slice(i*arrayResult.length/num, (i+1)*arrayResult.length/num );
               let question = JSON.parse(arraySlice[0].details);
               
-              theQuestion = 
-              <h5 id="question-title">{question.label} </h5>
-              array.push(theQuestion);
+              // theQuestion = 
+              // <h5 id="question-title">{question.label} </h5>
+              // array.push(theQuestion);
               
               theTable = 
               <div id="result-table">
-                <BootstrapTable data={arraySlice} striped hover>
-                    <TableHeaderColumn isKey dataField="answer">Jawaban</TableHeaderColumn>
-                </BootstrapTable>
+                <div className="table-container">
+                  <div className="table-survey">
+                    <BootstrapTable data={arraySlice} striped hover>
+                        <TableHeaderColumn isKey dataField="answer">{question.label}</TableHeaderColumn>
+                    </BootstrapTable>
+                  </div>
+                </div>
               </div>
             array.push(theTable)
           }
