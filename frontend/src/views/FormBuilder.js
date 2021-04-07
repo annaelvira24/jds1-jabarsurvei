@@ -81,21 +81,25 @@ class FormBuilder extends Component {
                   {
                     type: 'autocomplete',
                     label: 'Provinsi',
+                    requireValidOption: true,
                     className: 'form-control'
                   },
                   {
                     type: 'autocomplete',
                     label: 'Kota/Kabupaten',
+                    requireValidOption: true,
                     className: 'form-control'
                   },
                   {
                     type: 'autocomplete',
                     label: 'Kecamatan',
+                    requireValidOption: true,
                     className: 'form-control'
                   },
                   {
                     type: 'autocomplete',
                     label: 'Kelurahan',
+                    requireValidOption: true,
                     className: 'form-control'
                   },
                   {

@@ -33,6 +33,10 @@ class Survey extends Component {
       //this.handleSaveForm = this.handleSaveForm.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       this.test = this.test.bind(this);
+      this.handleKota = this.handleKota.bind(this);
+      this.handleKecamatan = this.handleKecamatan.bind(this);
+      this.handleKelurahan = this.handleKelurahan.bind(this);
+
     }
 
     
@@ -47,11 +51,11 @@ class Survey extends Component {
           this.setState({ 
             token: res.data.token
           });
-          console.log(this.state.token);
+          // console.log(this.state.token);
           http.get('http://localhost:5000/api/alamat/Provinsi/' + this.state.token)
           .then(res => {          
             let newValues_Provinsi = res.data.data;
-            console.log(newValues_Provinsi);
+            // console.log(newValues_Provinsi);
 
             http.get('http://localhost:5000/api/surveyFill/getSurvey/' + this.state.link)
             .then(res => {          
@@ -63,16 +67,39 @@ class Survey extends Component {
                   });
                   for (var i = 0; i<res.data.length; i++){
                     let result = JSON.parse(res.data[i].details);
-                    if(result.type == "autocomplete" && result.label == "Provinsi"){
-                      result.values = newValues_Provinsi;
+                    if(result.type == "autocomplete" ){
+                      if( result.label == "Provinsi"){
+                        result.values = newValues_Provinsi;
+                      }
                     }
-                    console.log(result);
+                    // console.log(result);
                     formDataTemp.push(result);
                   }
                   $(this.fbRender.current).formRender({
                     formData : formDataTemp,
                     dataType: 'json'
                   });
+
+                  for(const fiels in formDataTemp){
+                    // console.log(dejson[fiels]);
+                    if(formDataTemp[fiels].type == "autocomplete" ){
+                      if(formDataTemp[fiels].label == "Provinsi"){
+                        var id_provinsi = formDataTemp[fiels].name + "-input"
+                        var prov = document.getElementById(id_provinsi);
+                        prov.addEventListener("change", this.handleKota);
+                      }
+                      if(formDataTemp[fiels].label == "Kota/Kabupaten"){
+                        var id_kota = formDataTemp[fiels].name + "-input"
+                        var kota = document.getElementById(id_kota);
+                        kota.addEventListener("change", this.handleKecamatan);
+                      }
+                      if(formDataTemp[fiels].label == "Kecamatan"){
+                        var id_kec = formDataTemp[fiels].name + "-input"
+                        var kec = document.getElementById(id_kec);
+                        kec.addEventListener("change", this.handleKelurahan);
+                      }
+                    }
+                  }
                 }
                 else{
                   this.setState({title: "Survey Tidak Ditemukan"});
@@ -82,8 +109,6 @@ class Survey extends Component {
 
           });
         });
-
-        
 
         
       }
@@ -111,32 +136,80 @@ class Survey extends Component {
         })
     }
 
-    // test(){
-    //   var dejson = ($(this.fbRender).formRender("userData"));
-    //     // console.log(dejson);
-    //     for(const fiels in dejson){
-    //       if(dejson[fiels].type == "autocomplete"){
-    //         console.log(dejson[fiels].values);
-    //         dejson[fiels].values = [
-    //           {
-    //             "label": "Hai",
-    //             "value": "1",
-    //             "selected": true
-    //           },
-    //           {
-    //             "label": "B",
-    //             "value": "2",
-    //             "selected": false
-    //           },
-    //           {
-    //             "label": "ew",
-    //             "value": "3",
-    //             "selected": false
-    //           }
-    //         ]
-    //       }
-    //     }
-    // }
+    handleKota(){
+      var dejson = ($(this.fbRender).formRender("userData"));
+      console.log("ini kota");
+      let id_prov = '';
+      for(const fiels in dejson){
+        if(dejson[fiels].label == "Provinsi"){
+          id_prov = dejson[fiels].userData[0];
+        }
+        // console.log(this.state.token);
+        if(dejson[fiels].label == "Kota/Kabupaten"){
+          let url = 'http://localhost:5000/api/alamat/Kota/' + this.state.token + '/'+ id_prov
+          http.get(url)
+          .then(res => {
+              // console.log(res.data.data);
+              dejson[fiels].values = res.data.data;
+              console.log(dejson[fiels].values);
+              var wrap = $(this.fbRender);
+              wrap.formRender('render', dejson);
+          })
+        }
+      }        
+    }
+    handleKecamatan(){
+      console.log("ini kecamatan");
+      var dejson = ($(this.fbRender).formRender("userData"));
+      let id_kota = '';
+      for(const fiels in dejson){
+        if(dejson[fiels].label == "Kota/Kabupaten"){
+          id_kota = dejson[fiels].userData[0];
+        }
+        if(dejson[fiels].label == "Kecamatan"){
+          let url = 'http://localhost:5000/api/alamat/Kecamatan/' + this.state.token + '/'+ id_kota
+          http.get(url)
+          .then(res => {
+              // console.log(res.data.data);
+              dejson[fiels].values = res.data.data;
+              console.log(dejson[fiels].values);
+              var wrap = $(this.fbRender);
+              wrap.formRender('render', dejson);
+          })
+        }
+      }
+    }
+    handleKelurahan(){
+      console.log("ini kelurahan");
+      var dejson = ($(this.fbRender).formRender("userData"));
+      let id_kec = '';
+      for(const fiels in dejson){
+        if(dejson[fiels].label == "Kecamatan"){
+          id_kec = dejson[fiels].userData[0];
+        }
+        if(dejson[fiels].label == "Kelurahan"){
+          let url = 'http://localhost:5000/api/alamat/Kelurahan/' + this.state.token + '/'+ id_kec
+          http.get(url)
+          .then(res => {
+              // console.log(res.data.data);
+              dejson[fiels].values = res.data.data;
+              console.log(dejson[fiels].values);
+              var wrap = $(this.fbRender);
+              wrap.formRender('render', dejson);
+          })
+        }
+      }
+    }
+
+    test(){
+      var dejson = ($(this.fbRender).formRender("userData"));
+        // console.log(dejson);
+        for(const fiels in dejson){
+          if(dejson[fiels].label == "Provinsi"){
+            // console.log(dejson[fiels].userData[0]);
+          }
+        }
+    }
     
 
     render() {
@@ -151,6 +224,7 @@ class Survey extends Component {
               <div id="fb-rendered" ref={this.fbRender}>
               </div>
               <Button type="button" variant = "default" className="t-green" id="button-submit" onClick={this.handleSubmit} ref={this.hideButton}>Submit</Button>
+              <Button type="button" variant = "default" className="t-green" id="button-submit" onClick={this.test} ref={this.test}>Submit</Button>
             </div>
           </div>
         );

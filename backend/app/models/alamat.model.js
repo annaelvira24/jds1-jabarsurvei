@@ -20,11 +20,6 @@ Alamat.getProvinsi = function (token,result) {
     .then(function (response) {
         // handle success
         let newProv = []
-        // let detail = {
-        //     label: "",
-        //     value: "",
-        //     selected: false
-        // }
         for(var i=0; i < response.data.data.length; i++){
             let detail = {
                 label: "",
@@ -63,8 +58,27 @@ Alamat.getKota = function (token, idProvinsi, result) {
     axios.get(url_get)
     .then(function (response) {
         // handle success
+
+        let newKota = []
+        for(var i=0; i < response.data.data.length; i++){
+            let detail = {
+                label: "",
+                value: "",
+                selected: false
+            }
+            detail.label = response.data.data[i].name; 
+            detail.value = response.data.data[i].id;
+            if(i == 0){
+                detail.selected = true;
+            }
+            newKota.push(detail); 
+            // console.log(detail.label);
+        }
+        console.log(newKota);
+        response.data.data = newKota;
+
         result(null, response.data);
-        console.log(response.data);
+        // console.log(response.data);
     })
     .catch(function (error) {
         // handle error
@@ -75,15 +89,31 @@ Alamat.getKota = function (token, idProvinsi, result) {
 
 Alamat.getKecamatan = function (token, idKota, result) {
     let url_get = "https://x.rajaapi.com/MeP7c5ne" + token +"/m/wilayah/kecamatan?idkabupaten=" + idKota;
-
     const axios = require('axios');
 
     // Make a request for a user with a given ID
     axios.get(url_get)
     .then(function (response) {
         // handle success
+        let newKecamatan = []
+        for(var i=0; i < response.data.data.length; i++){
+            let detail = {
+                label: "",
+                value: "",
+                selected: false
+            }
+            detail.label = response.data.data[i].name; 
+            detail.value = response.data.data[i].id;
+            if(i == 0){
+                detail.selected = true;
+            }
+            newKecamatan.push(detail); 
+            // console.log(detail.label);
+        }
+        console.log(newKecamatan);
+        response.data.data = newKecamatan;
         result(null, response.data);
-        console.log(response.data);
+        // console.log(response.data);
     })
     .catch(function (error) {
         // handle error
@@ -101,8 +131,25 @@ Alamat.getKelurahan = function (token, idKecamatan, result) {
     axios.get(url_get)
     .then(function (response) {
         // handle success
+        let newKelurahan = []
+        for(var i=0; i < response.data.data.length; i++){
+            let detail = {
+                label: "",
+                value: "",
+                selected: false
+            }
+            detail.label = response.data.data[i].name; 
+            detail.value = response.data.data[i].id;
+            if(i == 0){
+                detail.selected = true;
+            }
+            newKelurahan.push(detail); 
+            // console.log(detail.label);
+        }
+        console.log(newKelurahan);
+        response.data.data = newKelurahan;
         result(null, response.data);
-        console.log(response.data);
+        // console.log(response.data);
     })
     .catch(function (error) {
         // handle error
