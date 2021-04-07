@@ -77,25 +77,14 @@ class Result extends Component {
               .then(res => {          
                   if(res.data[0] !== undefined){
                     surveyResult = res.data
-                    /* //remove unnesecary stuff like header etc. (REDUNDANT)
-                    var retry = true;
-                    while(retry){
-                      retry = false;
-                      for (var i = 0; i<surveyResult.length; i++){                
-                        if(!surveyResult[i].details.match("required")){
-                          //remove unnesecary file
-                          surveyResult.splice(i,1);
-                          retry = true;
-                        }
-                      }
-                    } */
-                    //console.log(surveyResult);
                     const chunk = (arr, size) => arr.reduce((acc, e, i) => (i % size ? acc[acc.length - 1].push(e) : acc.push([e]), acc), []);
                     surveyResult = chunk(surveyResult,formDataTemp.length);
+
                     for (var i = 0; i<surveyResult.length; i++){  
                       var order = {answer : i+1}
-                      var submit_time = {answer : surveyResult[i][0].submit_time}
-                      //console.log(submit_time)
+                      var curtime = new Date(surveyResult[i][0].submit_time);
+                      //console.log(curtime);
+                      var submit_time = {answer : (/[A-z]{3} [0-9]{2}.*.GMT.[0-9]{4}/.exec(curtime.toString()))}
                       surveyResult[i].unshift(order)
                       surveyResult[i].push(submit_time)
                     }
