@@ -31,7 +31,6 @@ class Result extends Component {
       id : '',
       title : '',
       desc : ''
-      
     }
 
     constructor(){
@@ -48,17 +47,21 @@ class Result extends Component {
       if(this.state.link !== undefined){
         http.get('http://localhost:5000/api/surveyRes/getResult/' + this.state.link)
         .then(res => {          
-            //console.log(res.data);
             if(res.data[0] !== undefined){
               this.setState({
                 id: res.data[0].id_survey,
                 title: res.data[0].survey_title,
                 desc : res.data[0].decription
               });
+
+              var checkboxes = [];
               for (var i = 0; i<res.data.length; i++){
-                // console.log(res.data[i].details);                
+                if (JSON.parse(res.data[i].details).type == "checkbox-group"){
+                  checkboxes.push(i);
+                }
                 formDataTemp.push(JSON.parse(res.data[i].details));
               }
+              
               //remove unnesecary stuff like header etc.
               var retry = true;
               while(retry){
@@ -72,7 +75,6 @@ class Result extends Component {
                 }
               }
               //removed
-              //console.log(formDataTemp);
               http.get('http://localhost:5000/api/surveyRes/getAnswerByLinkAlter/' + this.state.link)
               .then(res => {          
                   if(res.data[0] !== undefined){
@@ -80,15 +82,17 @@ class Result extends Component {
                     const chunk = (arr, size) => arr.reduce((acc, e, i) => (i % size ? acc[acc.length - 1].push(e) : acc.push([e]), acc), []);
                     surveyResult = chunk(surveyResult,formDataTemp.length);
 
-                    for (var i = 0; i<surveyResult.length; i++){  
+                    for (var i = 0; i<surveyResult.length; i++){
+                      for (var item in checkboxes){
+                        surveyResult[i][checkboxes[item]].answer = (JSON.parse(surveyResult[i][checkboxes[item]].answer).join(', '));
+                      }
                       var order = {answer : i+1}
                       var curtime = new Date(surveyResult[i][0].submit_time);
-                      //console.log(curtime);
+
                       var submit_time = {answer : (/[A-z]{3} [0-9]{2}.*.GMT.[0-9]{4}/.exec(curtime.toString()))}
                       surveyResult[i].unshift(order)
                       surveyResult[i].push(submit_time)
                     }
-                    //console.log(surveyResult);
                     this.forceUpdate();
                   }
               });
