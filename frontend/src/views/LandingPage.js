@@ -27,14 +27,14 @@ class LandingPage extends Component {
     return (
       <div className="Content-Container">
         <header className="Landing-Container">
-            <Container className="Landing-header">
+            {/* <Container className="Landing-header"> */}
                 <Row className="Upper-header">
                     <Carousel_dash />
                 </Row>
                 <Row className="Addition-header">
                     <Card_dash/>
                 </Row>
-            </Container>
+            {/* </Container> */}
         </header>
         <div className="Survey-Container">
           <Table_comp daftar_survey={this.state.display} onSearch={ this.handleSearch } />

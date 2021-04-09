@@ -28,7 +28,7 @@
 
 #result-summary{
    margin-top: 5px;
-   margin-left: 2%;
+   margin-left: 3%;
    margin-right: 15%;
    margin-bottom: 10px;
 }
@@ -37,7 +37,12 @@
    margin-top: 30px;
    margin-left: 5%;
    margin-right: 5%;
-   margin-bottom: 10px;
+   margin-bottom: 60px;
+}
+
+#question-title{
+   font-size: medium;
+   font-weight: bold;
 }
 
 .table-container{
@@ -47,6 +52,12 @@
 
 .table-survey{
    max-height: 800px;
+}
+
+.chart-container{
+   max-width: 700px;
+   margin-top: 30px;
+   margin-bottom: 70px;
 }
 
 #result-summary-container{

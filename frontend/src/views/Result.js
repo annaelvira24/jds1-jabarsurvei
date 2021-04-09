@@ -24,13 +24,13 @@ class Result extends Component {
 
     state = {
       cookie: undefined,
-      
       idSurvey : undefined,
       idAdmin : undefined,
       link : undefined,
       id : '',
       title : '',
-      desc : ''
+      desc : '',
+      isOwner : false
     }
 
     constructor(){
@@ -48,11 +48,14 @@ class Result extends Component {
         http.get('http://localhost:5000/api/surveyRes/getResult/' + this.state.link)
         .then(res => {          
             if(res.data[0] !== undefined){
-              this.setState({
-                id: res.data[0].id_survey,
-                title: res.data[0].survey_title,
-                desc : res.data[0].decription
-              });
+              if(this.state.idAdmin == res.data[0].id_admin){
+                this.setState({
+                  id: res.data[0].id_survey,
+                  title: res.data[0].survey_title,
+                  desc : res.data[0].decription,
+                  isOwner : true
+                });
+              }
 
               var checkboxes = [];
               for (var i = 0; i<res.data.length; i++){
@@ -106,6 +109,7 @@ class Result extends Component {
       }
     }
     render() {
+      if(this.state.isOwner == true){
         return(
           <div id = "result-container"> 
             <div id="result-header-container">
@@ -125,30 +129,40 @@ class Result extends Component {
             </div>
             <div id="result-main" ref={this.hideEverything}>
               <p>{}</p>
-            <Table responsive>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  {formDataTemp.map((formDataTemp) =>(
-                    <th>{formDataTemp.label}</th>
-                  ))}
-                  <th>Waktu Mengisi</th>
-                </tr>
-              </thead>
-              <tbody>
-                {surveyResult.map((surveyResult) =>(
-                  <tr>
-                    {surveyResult.map((surveyResult) =>(
-                      <td>{surveyResult.answer}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+              <div className="table-container">
+                <div className="table-survey">
+                  <Table responsive>
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        {formDataTemp.map((formDataTemp) =>(
+                          <th>{formDataTemp.label}</th>
+                        ))}
+                        <th>Waktu Mengisi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {surveyResult.map((surveyResult) =>(
+                        <tr>
+                          {surveyResult.map((surveyResult) =>(
+                            <td>{surveyResult.answer}</td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </div>
+              </div>
             </div>
           </div>
         );
       }
+      else{
+        return(
+          <div></div>
+        );
+      }    
+    }
 }
   
 export default Result;
