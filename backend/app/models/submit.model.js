@@ -42,8 +42,10 @@ Answer.submitAnswer = function (answers, result){
             for (var i = 0; i < data.length; i++){
                 const question = data[i];
                 console.log(question)
-                if (question.type === "header" || question.type === "file" || question.type === "paragraph") 
+                if (question.type === "header" || question.type === "file" || question.type === "paragraph"){
+                    q_index += 1;
                     continue;
+                }
                 var user_data;
                 if (question.type === "checkbox-group"){
                     user_data = JSON.stringify(question.userData);
