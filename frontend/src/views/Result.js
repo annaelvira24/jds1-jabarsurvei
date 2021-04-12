@@ -87,8 +87,11 @@ class Result extends Component {
 
                     for (var i = 0; i<surveyResult.length; i++){
                       for (var item in checkboxes){
-                        surveyResult[i][checkboxes[item]].answer = (JSON.parse(surveyResult[i][checkboxes[item]].answer).join(', '));
+                        if(surveyResult[i][checkboxes[item]].answer.length > 0){
+                          surveyResult[i][checkboxes[item]].answer = (JSON.parse(surveyResult[i][checkboxes[item]].answer).join(', '));
+                        }
                       }
+
                       var order = {answer : i+1}
                       var curtime = new Date(surveyResult[i][0].submit_time);
 

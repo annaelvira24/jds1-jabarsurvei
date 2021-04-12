@@ -48,9 +48,23 @@ Answer.submitAnswer = function (answers, result){
                 }
                 var user_data;
                 if (question.type === "checkbox-group"){
-                    user_data = JSON.stringify(question.userData);
-                } else {
-                    user_data = question.userData[0]
+                    if(question.userData !== undefined){
+                        user_data = JSON.stringify(question.userData);
+                    }
+                    else{
+                        user_data = "";
+                    }
+                } 
+                else if (question.type === "radio-group"){
+                    if(question.userData == undefined){
+                        user_data = "";
+                    }
+                    else{
+                        user_data = question.userData[0];
+                    }
+                }
+                else {
+                    user_data = question.userData[0];
                 }
 
                 const test = {

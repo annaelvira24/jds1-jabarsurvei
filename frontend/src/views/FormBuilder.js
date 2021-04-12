@@ -79,7 +79,7 @@ class FormBuilder extends Component {
       $(this.fbBuilder.current).formBuilder({
         formData: formDataTemp,
         disabledActionButtons: ['clear','save'], 
-        disableFields: ['autocomplete','button', 'hidden'],
+        disableFields: ['autocomplete','button', 'hidden', "file"],
         disabledAttrs: ['name', 'access', 'className', 'value', 'maxlength', 'step', 'placeholder', 'subtype', 'rows'],
         typeUserDisabledAttrs: {
           'checkbox-group': [

@@ -109,13 +109,15 @@ class ResultSummary extends Component {
               if(question.type == "checkbox-group"){
                 let mapResult = new Map();
                 for (var j = 0; j < arraySlice.length; j++){
-                  let ans = (JSON.parse(arraySlice[j].answer));
-                  for (var k = 0; k<ans.length; k++){
-                    if (mapResult.has(ans[k])){
-                      mapResult.set(ans[k], mapResult.get(ans[k])+1);
-                    }
-                    else{
-                      mapResult.set(ans[k],1);
+                  if(arraySlice[j].answer !== ""){
+                    let ans = (JSON.parse(arraySlice[j].answer));
+                    for (var k = 0; k<ans.length; k++){
+                      if (mapResult.has(ans[k])){
+                        mapResult.set(ans[k], mapResult.get(ans[k])+1);
+                      }
+                      else{
+                        mapResult.set(ans[k],1);
+                      }
                     }
                   }
                 }
@@ -175,13 +177,15 @@ class ResultSummary extends Component {
               else if(question.type == "number"){
                 let mapResult = new Map();
                 for (var j = 0; j < arraySlice.length; j++){
-                  let ans = arraySlice[j].answer;
-                    if (mapResult.has(ans)){
-                      mapResult.set(ans, mapResult.get(ans)+1);
-                    }
-                    else{
-                      mapResult.set(ans,1);
-                    }
+                  if(arraySlice[j].answer !== ""){
+                    let ans = arraySlice[j].answer;
+                      if (mapResult.has(ans)){
+                        mapResult.set(ans, mapResult.get(ans)+1);
+                      }
+                      else{
+                        mapResult.set(ans,1);
+                      }
+                  }
                 }
 
                 if(mapResult.size <= 10){
@@ -254,13 +258,15 @@ class ResultSummary extends Component {
               else if(question.type == "select" || question.type == "radio-group"){
                 let mapResult = new Map();
                 for (var j = 0; j < arraySlice.length; j++){
-                  let ans = arraySlice[j].answer;
-                    if (mapResult.has(ans)){
-                      mapResult.set(ans, mapResult.get(ans)+1);
-                    }
-                    else{
-                      mapResult.set(ans,1);
-                    }
+                  if(arraySlice[j].answer !== ""){
+                    let ans = arraySlice[j].answer;
+                      if (mapResult.has(ans)){
+                        mapResult.set(ans, mapResult.get(ans)+1);
+                      }
+                      else{
+                        mapResult.set(ans,1);
+                      }
+                  }
                 }
                 theQuestion = <h5 id="question-title">{question.label}</h5>
                 array.push(theQuestion);
