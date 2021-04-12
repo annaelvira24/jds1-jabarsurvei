@@ -113,25 +113,13 @@
 }
 
 #button-render{
-    background-color: #00A5E1;
-    color: white;
     border-color: #00A5E1;
     margin-left: 2%;
 }
 
-#button-render:hover{
-    background-color: rgb(0, 120, 163);
-}
-
 #button-save{
-    background-color: #5AAB4E;
-    color: white;
     border-color: #5AAB4E;
     margin-left: 2%;
-}
-
-#button-save:hover{
-    background-color: rgb(53, 110, 44);
 }
 
 @media only screen and (max-width: 600px) {

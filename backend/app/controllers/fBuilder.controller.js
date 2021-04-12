@@ -4,16 +4,19 @@ const FBuilder = require('../models/fBuilder.model');
 
 exports.create = function(req, res) {
     const id_survey = req.body.id_survey;
-    const active_status = req.body.status;
     const details = JSON.parse(req.body.details);
     
     for(var i = 0; i < details.length; i++){
+        if(details[i].type == "checkbox-group" || details[i].type == "select" || details[i].type == "radio-group"){
+            for (var j = 0; j < details[i].values.length; j++){
+                details[i].values[j].value = details[i].values[j].label; 
+            }
+        }
         const question = new FBuilder({
             id_survey : id_survey,
             order_number : i,
             section : 1,
-            active_status : active_status,
-            details : JSON.stringify(details[i])
+            details : JSON.stringify(details[i], null, "")
         });
         FBuilder.create(question, function(err, result) {
             if (err) {

@@ -3,7 +3,7 @@ import { Card,Col, Row, Container,CardDeck} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPollH } from '@fortawesome/free-solid-svg-icons'
 import { faUsers } from '@fortawesome/free-solid-svg-icons'
-import '../assets/css/Card.dash.css';
+import '../assets/css/CardDash.css';
 import http from "../http-common";
 
 class Card_dash extends Component{
@@ -24,47 +24,44 @@ class Card_dash extends Component{
     render(){
         return(
             <CardDeck>
-                <Card className="Addition-Card">
-                    <Card.Body>
-                        <Container>
-                            <Row className="Addition-Row">
-                                <Col sm={5}>
-                                    <FontAwesomeIcon color = "#5AAB4E" size='9x' icon={faPollH} />
-                                </Col>
-                                <Col sm={7}>
+                <Row>
+                    <Col>
+                        <Card className="Addition-Card">
+                            <Card.Body>
+                                <Row id="card-info">
+                                    <Col sm={5}>
+                                        <FontAwesomeIcon color = "#5AAB4E" size='8x' icon={faPollH} />
+                                    </Col>
+                                    <Col sm={7}>
                                         <Card.Title>
-                                            <h5>Total</h5>
-                                            <h2>{this.state.count} Survey</h2>
+                                            <h5 id="card-h5">Total</h5>
+                                            <h3 id="card-h3">{this.state.count}
+                                            <br/>
+                                            Survey</h3>
                                         </Card.Title>
-                                    <Card.Text>
-                                        Periode Maret - Juli 2020
-                                    </Card.Text>
-                                </Col>
-                            </Row>
-                        </Container>
-                    </Card.Body>
-                </Card>
-                <Card className="Addition-Card">
-                    <Card.Body>
-                        <Container>
-                            <Row className="Addition-Row">
-                                <Col sm={5}>
-                                    <FontAwesomeIcon color = "#5AAB4E" size='7x' icon={faUsers} />
-                                </Col>
-                                <Col sm={7}>
-                                        <Card.Title>
-                                            <h5>Total</h5>
-                                            <h2>30.000 Responden</h2>
-                                        </Card.Title>
-                                    <Card.Text>
-                                        Periode Maret - Juli 2020
-                                    </Card.Text>
-                                </Col>
-                            </Row>
-                        </Container>
-                    </Card.Body>
-                </Card>
-                
+                                    </Col>
+                                </Row>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                    <Col>
+                        <Card className="Addition-Card">
+                            <Card.Body>
+                                    <Row id="card-info">
+                                        <Col sm={5}>
+                                            <FontAwesomeIcon color = "#5AAB4E" size='7x' icon={faUsers} />
+                                        </Col>
+                                        <Col sm={7}>
+                                            <Card.Title>
+                                                <h5 id="card-h5">Total</h5>
+                                                <h3 id="card-h3">30.000 Responden</h3>
+                                            </Card.Title>
+                                        </Col>
+                                    </Row>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
             </CardDeck>
         
             );
