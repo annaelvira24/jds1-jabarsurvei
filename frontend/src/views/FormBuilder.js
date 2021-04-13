@@ -5,6 +5,7 @@ import http from "../http-common";
 import { getUser } from './../util/Common.js';
 import 'jquery-ui-sortable';
 import './../assets/scss/FormBuilder.scss'
+import "../control_plugins/alamat"
 
 window.jQuery = $;
 window.$ = $;
@@ -46,8 +47,6 @@ class FormBuilder extends Component {
       );
     }
 
-
-    
     componentDidMount() {
       const textArea = document.getElementsByTagName('textarea');
       autosize(textArea);
@@ -65,13 +64,13 @@ class FormBuilder extends Component {
         });
         this.getSurveyTitle();
       }
- 
+
       $(this.fbBuilder.current).formBuilder({
         formData: formDataTemp,
         disabledActionButtons: ['clear','save'], 
-        disableFields: ['autocomplete','button', 'hidden'],
+        disableFields: ['autocomplete', 'button', 'hidden'],
         disabledAttrs: ['name', 'access', 'className', 'value', 'maxlength', 'step', 'placeholder', 'subtype', 'rows'],
-        inputSets: [
+        /*inputSets: [
             {
               label: 'Alamat',
               name: 'alamat',
@@ -109,7 +108,7 @@ class FormBuilder extends Component {
                   }
                 ]
             }
-        ],
+        ],*/
             
         i18n: {
           override: {
@@ -301,6 +300,7 @@ class FormBuilder extends Component {
     render() {
       return(
         <div id = "form-builder-container">
+          <p id="test-controller"></p>
           <div id = "form-builder-title">
             <div className="form-group">
               <input type="text" id="title-input" className="form-control" placeholder="Judul Survei" value={this.state.surveyTitle} onChange={(e) => this.onInputChangeTitle(e)}/>

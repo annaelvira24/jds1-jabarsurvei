@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import http from "../http-common";
 import 'jquery-ui-sortable';
 import './../assets/scss/Survey.scss'
+import '../control_plugins/alamat'
 
 window.jQuery = $;
 window.$ = $;
