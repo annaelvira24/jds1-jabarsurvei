@@ -288,7 +288,6 @@ class FormBuilder extends Component {
     render() {
       return(
         <div id = "form-builder-container">
-          <p id="test-controller"></p>
           <div id = "form-builder-title">
             <div className="form-group">
               <input type="text" id="title-input" className="form-control" placeholder="Judul Survei" value={this.state.surveyTitle} onChange={(e) => this.onInputChangeTitle(e)}/>

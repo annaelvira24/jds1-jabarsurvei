@@ -6,7 +6,6 @@ var FBuilder = function(fBuilder){
     this.id_survey = fBuilder.id_survey;
     this.order_number = fBuilder.order_number;
     this.section = fBuilder.section;
-    this.active_status = fBuilder.active_status;
     this.details = fBuilder.details;
 };
 

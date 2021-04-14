@@ -34,7 +34,6 @@ class Survey extends Component {
       //this.handleSaveForm = this.handleSaveForm.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       this.checkRequired = this.checkRequired.bind(this);
-      this.test = this.test.bind(this)
       this.checkForAlamat = this.checkForAlamat.bind(this)
     }
 
@@ -110,7 +109,7 @@ class Survey extends Component {
         return
       }
 
-      var answer = this.checkForAlamat($(this.fbRender.current).formRender("userData"))
+      var answer = JSON.stringify(this.checkForAlamat($(this.fbRender.current).formRender("userData")))
       const time = Date.now();
       const body = { 
         id: this.state.id,
@@ -120,13 +119,13 @@ class Survey extends Component {
       }
       
 
-      /*http.post("http://localhost:5000/api/submit/submitAnswer", body)
+      http.post("http://localhost:5000/api/submit/submitAnswer", body)
         .then((res)=>{
           window.location.href = `/${this.state.link}/success`
         })
         .catch((err)=>{
           alert(err);
-        })*/
+        })
     }
 
     checkRequired() {
@@ -142,12 +141,6 @@ class Survey extends Component {
       return true;
     }
 
-    
-
-    test(){
-      console.log($(this.fbRender.current).formRender("userData"))
-    }
-
     render() {
         return(
           <div id = "survey-container">
@@ -161,7 +154,6 @@ class Survey extends Component {
               <div id="fb-rendered" ref={this.fbRender}>
               </div>
               <Button type="button" variant = "default" className="t-green" id="button-submit" onClick={this.handleSubmit} ref={this.hideButton}>Submit</Button>
-              <Button type="button" variant = "default" className="t-green" id="button-submit" onClick={this.test}>Test</Button>
             </div>
           </div>
         );
