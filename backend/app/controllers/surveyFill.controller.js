@@ -9,12 +9,3 @@ exports.getSurvey = function(req, res) {
         res.json(form);
     });
 };
-
-exports.getResult = function(req, res) {
-    SurveyFill.getResult(req.params.id, 
-    function(err, form) {  
-        if (err)  res.send(err);  
-        res.json(form);
-    });
-};
-

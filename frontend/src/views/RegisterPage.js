@@ -173,7 +173,7 @@ class Register extends Component{
                             <input type="password" id="confirm-password-input" className="form-control" placeholder="Ulangi Password" onChange = {this.handlePasswordValidation} onClick={this.clearSpan.bind(this, "confirm-password-input")}/>
                             <span id="false-msg" className="input-message"></span>
                         </div>
-                        <Button type="submit" id="btn-register" className="btn btn-t-blue btn-block" onClick={(e) => this.handleRegister(e)}>Daftar</Button>
+                        <Button type="submit" id="btn-register" className="btn t-blue btn-block" onClick={(e) => this.handleRegister(e)}>Daftar</Button>
                         
                         <div id = "login">
                             <span>Sudah punya akun? </span>

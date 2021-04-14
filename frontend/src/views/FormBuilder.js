@@ -1,6 +1,7 @@
 import $ from "jquery";
 import autosize from 'autosize';
 import React, { Component, createRef } from "react";
+import ModalPopUp from '../components/ModalPopUp.js'
 import http from "../http-common";
 import { getUser } from './../util/Common.js';
 import 'jquery-ui-sortable';
@@ -26,7 +27,10 @@ class FormBuilder extends Component {
       idSurvey : undefined,
       idAdmin : undefined,
       surveyTitle : undefined,
-      description : undefined
+      description : undefined,
+      status : '',
+      headingText : '',
+      surveyLink : ''
     }
 
     constructor(){
@@ -35,6 +39,10 @@ class FormBuilder extends Component {
       this.state.idAdmin = JSON.parse(atob(this.state.cookie))[0].id_admin;
       this.handleSaveForm = this.handleSaveForm.bind(this);
       this.getSurveyTitle = this.getSurveyTitle.bind(this);
+    }
+
+    ModalRef = (obj) => { 
+      this.showModal = obj && obj.handleShow 
     }
 
     getSurveyTitle(){
@@ -47,6 +55,10 @@ class FormBuilder extends Component {
       );
     }
 
+    onSurveyClick = () => {
+      this.showModal();
+    }
+    
     componentDidMount() {
       const textArea = document.getElementsByTagName('textarea');
       autosize(textArea);
@@ -68,48 +80,14 @@ class FormBuilder extends Component {
       $(this.fbBuilder.current).formBuilder({
         formData: formDataTemp,
         disabledActionButtons: ['clear','save'], 
-        disableFields: ['autocomplete', 'button', 'hidden'],
+        disableFields: ['autocomplete','button', 'hidden', "file"],
         disabledAttrs: ['name', 'access', 'className', 'value', 'maxlength', 'step', 'placeholder', 'subtype', 'rows'],
-        /*inputSets: [
-            {
-              label: 'Alamat',
-              name: 'alamat',
-              showHeader: true, 
-              icon: "🚩",
-              fields: [
-                  {
-                    type: 'autocomplete',
-                    label: 'Provinsi',
-                    requireValidOption: true,
-                    className: 'form-control'
-                  },
-                  {
-                    type: 'autocomplete',
-                    label: 'Kota/Kabupaten',
-                    requireValidOption: true,
-                    className: 'form-control'
-                  },
-                  {
-                    type: 'autocomplete',
-                    label: 'Kecamatan',
-                    requireValidOption: true,
-                    className: 'form-control'
-                  },
-                  {
-                    type: 'autocomplete',
-                    label: 'Kelurahan',
-                    requireValidOption: true,
-                    className: 'form-control'
-                  },
-                  {
-                    type: 'textarea',
-                    label: 'Alamat Lengkap',
-                    className: 'form-control'
-                  }
-                ]
-            }
-        ],*/
-            
+        typeUserDisabledAttrs: {
+          'checkbox-group': [
+            'toggle',
+            'inline'
+          ]
+        },  
         i18n: {
           override: {
             'en-US': {
@@ -171,8 +149,8 @@ class FormBuilder extends Component {
               other: 'Lainnya',
               paragraph: 'Paragraf',
               placeholder: 'Placeholder',
-              'placeholder.value': 'Nilai',
-              'placeholder.label': 'Label',
+              'placeholder.value': 'nilai',
+              'placeholder.label': 'Label opsi',
               'placeholder.text': '',
               'placeholder.textarea': '',
               'placeholder.email': 'Isi alamat email anda',
@@ -231,13 +209,13 @@ class FormBuilder extends Component {
     }
 
     handlePreviewEdit() {
+      document.getElementById('false-msg').innerHTML = "";
       $(this.fbBuilderWrapper.current).toggle();
       $(this.fbRenderWrapper.current).toggle();
       $(this.fbRender.current).formRender({
       dataType: 'json',
       formData:  $(this.fbBuilder.current).formBuilder('getData', 'json')
       });
-
     }
 
     handleClearBuilder() {
@@ -248,16 +226,14 @@ class FormBuilder extends Component {
     }
 
     createNewSurvey(){
-      const surveyTitle = document.getElementById('title-input').value;
+      const surveyTitle = document.getElementById('title-input').value || "Survey tanpa judul";
       const surveyDescription = document.getElementById('description-input').value;
-      if(surveyTitle == ""){
-        surveyTitle = "Survey tanpa judul";
-      }
 
       http.post('http://localhost:5000/api/listSurvey/create', {
           id_admin : this.state.idAdmin,
           survey_title : surveyTitle,
-          decription : surveyDescription
+          decription : surveyDescription,
+          status : 'Aktif'
         })
         .then(res=>{
           if(res.status === 200){
@@ -266,27 +242,39 @@ class FormBuilder extends Component {
               let jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json');
                 http.post('http://localhost:5000/api/fBuilder/createform', {
                   id_survey : this.state.idSurvey,
-                  status : true,
                   details: jsonform
                 })
                 .then(res => {
                   if(res.status === 200){
-                    // pass
+                    http.post(`http://localhost:5000/api/surveyLink/createLink`, {
+                        id_survey : this.state.idSurvey,
+                        id_admin : this.state.idAdmin
+                    })
+                    .then((res) => {
+                      this.setState({
+                        status : 'create',
+                        headingText : 'Survei Anda berhasil dipublikasikan! Berikut link survei Anda',
+                        surveyLink : 'http://localhost:3000/survey/' + res.data
+                      })
+                      this.onSurveyClick();
+                    })
                   }
                 })
             });
-            window.location.href="/dashboard";
           }
         })
     }
 
     handleSaveForm() {
-      // if this is a create mode
-      if(this.state.idSurvey === undefined){
+      let surveyTitle = document.getElementById('title-input').value;
+      let jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json');
+      if(surveyTitle.length == 0 || jsonform == "[]"){
+        document.getElementById('false-msg').innerHTML = `Pastikan Anda sudah mengisi judul survey dan menambahkan paling tidak satu pertanyaan`;
+      }
+
+      else{
         this.createNewSurvey();
       }
-      //TODO: edit mode
-     
     }
 
     onInputChangeTitle(event){
@@ -314,19 +302,26 @@ class FormBuilder extends Component {
               <div id="fb-editor" ref={this.fbBuilder}/>
               <div id="builder-button-container">
                 <button id="button-clear" onClick={this.handleClearBuilder.bind(this)} className="btn btn-outline-secondary">Bersihkan</button>
-                <button id="button-render" onClick={this.handlePreviewEdit.bind(this)} className="btn">Tampilan</button>
+                <button id="button-render" onClick={this.handlePreviewEdit.bind(this)} className="btn t-blue">Tampilan</button>
               </div>
             </div>
 
             <div id="fb-rendered-form" ref={this.fbRenderWrapper}>
               <div id="fb-rendered" ref={this.fbRender}/>
               <div id="builder-button-container">
+                <span id="false-msg" className="input-message"></span> <br/> <br/>
                 <button id="button-edit" onClick={this.handlePreviewEdit.bind(this)} className="btn btn-outline-secondary">Edit kembali</button>
-                <button id="button-save" onClick={this.handleSaveForm.bind(this)} className="btn btn-outline-success">Simpan sebagai draft</button>
+                <button id="button-save" onClick={this.handleSaveForm.bind(this)} className="btn t-green">Publikasikan survei</button>
               </div>
             </div>
             
           </div>
+          <ModalPopUp 
+              ref={this.ModalRef}
+              status={this.state.status}
+              modalHeading={this.state.headingText}
+              link = {this.state.surveyLink}
+          />
         </div>
       );
     }

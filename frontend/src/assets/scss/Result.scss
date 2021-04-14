@@ -1,0 +1,96 @@
+#result-header-container{
+   border-radius: 10px;
+   padding: 15px;
+   color: white;
+   background-color: #00A5E1;
+   font-size: xx-large;
+   margin-bottom: 10px;
+}
+
+#result-title-container{
+   border-radius: 10px 10px 0 0;
+   padding: 10px;
+}
+
+#result-title{
+   font-size: large;
+   padding-left: 4px;
+   padding-top: 5px;
+   color: black;
+}
+
+#result-description{
+   margin-top: -10px;
+   font-size: small;
+   color: black;
+   padding-left: 4px;
+}
+
+#result-summary{
+   margin-top: 5px;
+   margin-left: 3%;
+   margin-right: 15%;
+   margin-bottom: 10px;
+}
+
+#result-container{
+   margin-top: 30px;
+   margin-left: 5%;
+   margin-right: 5%;
+   margin-bottom: 60px;
+}
+
+#question-title{
+   font-size: medium;
+   font-weight: bold;
+}
+
+.table-container{
+   overflow-x: auto;
+   overflow-y: auto;
+}
+
+.table-survey{
+   max-height: 800px;
+}
+
+.chart-container{
+   max-width: 700px;
+   margin-top: 30px;
+   margin-bottom: 70px;
+}
+
+#result-summary-container{
+   margin-top: 30px;
+   border-radius: 10px;
+   padding: 35px 3% 0 0;
+   border: 1px solid #ccc;
+   box-shadow: 0px 5px 5px #ccc ;
+}
+
+#result-table{
+   overflow: hidden;
+   margin-bottom: 60px;
+}
+
+.buttons {
+   width: 200px;
+   margin: 0 auto;
+   display: inline;
+}
+
+#button-table{
+   margin-right: 10px;
+   border: #00A5E1 solid 1px;
+}
+
+#button-visual{
+   border: #FEC32B solid 1px;
+}
+   
+@media only screen and (max-width: 600px) {
+   #result-summary{
+      margin-left: 15px;
+      margin-right: 5px;
+   }
+}

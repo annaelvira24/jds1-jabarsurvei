@@ -19,6 +19,7 @@ window.fbControls.push(function (controlClass) {
     }
 
     build() {
+      console.log("Building...")
       const { values, type, ...data } = this.config
 
       var prov_options = null
@@ -193,6 +194,11 @@ window.fbControls.push(function (controlClass) {
           console.log(kelurahan_options)
           kelurahan.append(kelurahan_options)
         })
+    }
+    
+    onRender(){
+      console.log("Rendering...")
+      console.log(this.config)
     }
   }
 

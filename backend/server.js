@@ -38,13 +38,17 @@ app.use('/api/surveyAdmin', surveyAdminRoutes);
 
 const surveyLinkRoutes = require('./app/routes/surveyLink.routes')
 app.use('/api/surveyLink', surveyLinkRoutes);
+
 const fBuilderRoutes = require('./app/routes/fBuilder.routes')
 app.use('/api/fBuilder', fBuilderRoutes);
 
 const submitRoutes = require('./app/routes/submit.routes')
 app.use('/api/submit', submitRoutes);
+
 const surveyFillRoutes = require('./app/routes/surveyFill.routes')
 app.use('/api/surveyFill', surveyFillRoutes);
 
 const alamatRoutes = require('./app/routes/alamat.routes')
 app.use('/api/alamat', alamatRoutes);
+const surveyResRoutes = require('./app/routes/surveyRes.routes')
+app.use('/api/surveyRes', surveyResRoutes);

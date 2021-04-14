@@ -1,0 +1,39 @@
+#card-info{
+    height: 120px;
+    width: 400px;
+    border-radius: 30px;
+}
+
+@media only screen and (max-width: 1000px) {
+    #card-info{
+        display: 'flex';
+        flexDirection: 'row';
+    }
+
+    #card-info{
+        font-size: small;
+        width: auto;
+    }   
+
+ }
+
+ @media only screen and (max-width: 700px) {
+    #card-info{
+        display: 'flex';
+        flexDirection: 'row';
+    }
+
+    #card-info{
+        font-size: 8px;
+        height: 160px;
+    }
+    
+    #card-h5{
+        font-size: 20px;
+    }
+
+    #card-h3{
+        font-size: 26px;
+    }
+
+ }

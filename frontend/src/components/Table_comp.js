@@ -1,47 +1,42 @@
-import { Table, Row, FormControl, Button, Container, Form} from 'react-bootstrap';
-import { createRef, useState } from "react";
+import { Row, Col, FormControl, Button, Container, Form} from 'react-bootstrap';
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import { createRef, Component } from "react";
+import { useRef } from "react-router-dom";
 import React from 'react';
 import '../assets/css/Table_comp.css';
-import { useHistory, useRef } from "react-router-dom";
 
+class Table_comp extends Component {
+    constructor(props){
+        super(props);
+    }
 
-const Table_comp = ({ daftar_survey, daftar_coloumn, onSearch }) => {
-    const history = useHistory();
+    cellLink (cell, row){
+        console.log(cell);
+        return (<div><a id="surveyLink" href={"/survey/"+row.randomlink}>{cell}</a></div>);
+    }
 
-    const routeChange = () =>{ 
-        let path = `newPath`; 
-        history.push(path);
-    };
-
-    return(
-        <div className='Table-Container'>
-            <Container className='Table2-Container'>
-                <Row className="SearchBar-Container">
-                    <SearchBar on_search={ onSearch }/>
-                </Row>
-                <Table striped hover size="sm" className="List-Table">
-                    <thead >
-                        <tr >
-                        {daftar_coloumn.map((coloumn) => (
-                                <th className = 'table-header'>{coloumn.text}</th>
-                        ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {daftar_survey.map((survey, index) => (
-                            <tr onClick={routeChange}>
-                                <td>{index+1}</td>
-                                <td>{survey.survey_title}</td>
-                                <td>{survey.username}</td>
-                                <td>{survey.decription}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>      
-            </Container>
-        </div>
+    render(){
+        return(
+            <div className='Table-Container'>
+                <Container className='Table2-Container'>
+                    <Row className="SearchBar-Container">
+                        <SearchBar on_search={ this.props.onSearch }/>
+                    </Row>
+                    <div className="table-container">
+                        <div className="table-survey">
+                            <BootstrapTable data={this.props.daftar_survey} striped hover>
+                                <TableHeaderColumn isKey dataField="id_survey" width="5%">Id</TableHeaderColumn>
+                                <TableHeaderColumn dataField='survey_title' dataFormat={this.cellLink} width="30%">Judul Survei</TableHeaderColumn>
+                                <TableHeaderColumn dataField="username" width="15%">Pembuat Survei</TableHeaderColumn>
+                                <TableHeaderColumn dataField='decription' width="50%">Deskripsi Survei</TableHeaderColumn>
+                            </BootstrapTable>
+                        </div>
+                    </div>
+                </Container>
+            </div>
         );
-  };
+    }
+};
 
 const SearchBar = ({on_search}) => {
     const searchRef = createRef();
@@ -55,9 +50,14 @@ const SearchBar = ({on_search}) => {
 
     return (
         <Form inline onSubmit={ search }>
-            {/* <Form.Control size="sm" type="text" placeholder="Search" /> */}
-            <FormControl type="text" className="mr-sm-2" ref={ searchRef } />
-            <Button type="submit">Cari</Button>
+            <Row>
+                <Col sm>
+                    <FormControl id="searchBar" placeholder="Pencarian..." type="text" className="mr-sm-2" ref={ searchRef } />
+                </Col>
+                <Col sm>
+                    <Button className="t-blue" type="submit">Cari</Button>
+                </Col>
+            </Row>
         </Form>
     )
 }

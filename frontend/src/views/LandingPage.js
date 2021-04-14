@@ -22,40 +22,22 @@ class LandingPage extends Component {
     this.handleSearch = this.handleSearch.bind(this)
     this.findAll = this.findAll.bind(this)
   }
-
-  static get coloumns() { 
-      return (
-        [{
-          dataField: 'id_survey',
-          text: 'Nomor Survey'
-        },{
-          dataField: 'survey_title',
-          text: 'Judul Suvey'
-        }, {
-          dataField: 'username',
-          text: 'Pembuat Survey'
-        }, {
-          dataField: 'decription',
-          text: 'Deskripsi'
-        }]
-      )
-  } 
   
   render(){
     return (
       <div className="Content-Container">
         <header className="Landing-Container">
-            <Container className="Landing-header">
+            {/* <Container className="Landing-header"> */}
                 <Row className="Upper-header">
                     <Carousel_dash />
                 </Row>
                 <Row className="Addition-header">
                     <Card_dash/>
                 </Row>
-            </Container>
+            {/* </Container> */}
         </header>
-        <div className="Survey-Container border">
-          <Table_comp daftar_survey={this.state.display}  daftar_coloumn={this.constructor.coloumns} onSearch={ this.handleSearch } />
+        <div className="Survey-Container">
+          <Table_comp daftar_survey={this.state.display} onSearch={ this.handleSearch } />
           <PaginationButton totalPage={this.state.pageCount} pageMargin={1} onPageClick={this.handlePageClick} currentPage={this.state.currentPage} className='mx-auto' />
         </div>
       </div>
