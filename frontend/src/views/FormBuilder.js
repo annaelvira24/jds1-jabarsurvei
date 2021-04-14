@@ -6,6 +6,7 @@ import http from "../http-common";
 import { getUser } from './../util/Common.js';
 import 'jquery-ui-sortable';
 import './../assets/scss/FormBuilder.scss'
+import "../control_plugins/alamat"
 
 window.jQuery = $;
 window.$ = $;
@@ -75,7 +76,7 @@ class FormBuilder extends Component {
         });
         this.getSurveyTitle();
       }
- 
+
       $(this.fbBuilder.current).formBuilder({
         formData: formDataTemp,
         disabledActionButtons: ['clear','save'], 
@@ -86,42 +87,7 @@ class FormBuilder extends Component {
             'toggle',
             'inline'
           ]
-        },
-        inputSets: [
-            {
-              label: 'Alamat',
-              name: 'alamat',
-              showHeader: true, 
-              fields: [
-                  {
-                    type: 'text',
-                    label: 'Provinsi',
-                    className: 'form-control'
-                  },
-                  {
-                    type: 'text',
-                    label: 'Kota/Kabupaten',
-                    className: 'form-control'
-                  },
-                  {
-                    type: 'text',
-                    label: 'Kecamatan',
-                    className: 'form-control'
-                  },
-                  {
-                    type: 'text',
-                    label: 'Kelurahan',
-                    className: 'form-control'
-                  },
-                  {
-                    type: 'text',
-                    label: 'Alamat Lengkap',
-                    className: 'form-control'
-                  }
-                ]
-            }
-        ],
-            
+        },  
         i18n: {
           override: {
             'en-US': {

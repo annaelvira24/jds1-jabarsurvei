@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import http from "../http-common";
 import 'jquery-ui-sortable';
 import './../assets/scss/Survey.scss'
+import '../control_plugins/alamat'
 
 window.jQuery = $;
 window.$ = $;
@@ -23,7 +24,8 @@ class Survey extends Component {
       link : undefined,
       id : '',
       title : '',
-      desc : ''
+      desc : '',
+      token : ''
     }
 
     constructor(){
@@ -32,7 +34,9 @@ class Survey extends Component {
       //this.handleSaveForm = this.handleSaveForm.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       this.checkRequired = this.checkRequired.bind(this);
+      this.checkForAlamat = this.checkForAlamat.bind(this)
     }
+
     
     componentDidMount() {
       if (this.props.match)
@@ -67,7 +71,34 @@ class Survey extends Component {
               $(this.hideButton.current).toggle();
             }
         });
+
+        
       }
+    }
+
+    checkForAlamat(answer){
+      const arr = answer.map(el => {
+        if (el.type === "alamat"){
+          const name = el.name
+          const input_name = `${name}-input`
+          const inputs = $(`[id^=${input_name}]`)
+          
+          var data = []
+          inputs.each((index, element) => {
+            var text = element.value
+            if (element.tagName === "SELECT")
+              text = $(element).find(`option[value="${text}"]`).text()
+            data.push(text)
+          })
+
+          var newEl = el
+          newEl.userData = data
+
+          return newEl
+        }
+        return el
+      })
+      return arr
     }
 
     handleSubmit(e) {
@@ -78,7 +109,7 @@ class Survey extends Component {
         return
       }
 
-      const answer = JSON.stringify($(this.fbRender.current).formRender("userData"));
+      var answer = JSON.stringify(this.checkForAlamat($(this.fbRender.current).formRender("userData")))
       const time = Date.now();
       const body = { 
         id: this.state.id,
@@ -86,7 +117,7 @@ class Survey extends Component {
         timestamp: time,
         data: answer
       }
-      console.log(body);
+      
 
       http.post("http://localhost:5000/api/submit/submitAnswer", body)
         .then((res)=>{
