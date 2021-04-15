@@ -22,10 +22,7 @@ class AlertBox extends Component{
     render(){
         return(
             <Alert show = {this.state.show} variant="danger" onClose={() => this.handleClose()} dismissible>
-                <Alert.Heading>{this.props.heading}</Alert.Heading>
-                <p>
-                    {this.props.text}
-                </p>
+                {this.props.text}
             </Alert>
         );
     };

@@ -125,7 +125,7 @@ class Survey extends Component {
           window.location.href = `/${this.state.link}/success`
         })
         .catch((err)=>{
-          alert(err);
+          console.log(err)
         })
     }
 
@@ -147,7 +147,6 @@ class Survey extends Component {
           <div id = "survey-container">
             <AlertBox 
               ref={this.AlertRef}
-              heading = "Anda belum mengisi semua pertanyaan wajib"
               text = "Mohon isi semua pertanyaan yang ditandai dengan bintang merah"
             />
             <div id = "survey-title-container">
