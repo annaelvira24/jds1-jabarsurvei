@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Component } from "react";
 import http from "../http-common";
 import "./../assets/css/SubmitFeedback.css";

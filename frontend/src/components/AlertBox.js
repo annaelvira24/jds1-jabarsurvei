@@ -11,7 +11,6 @@ class AlertBox extends Component{
         }
     }
 
-
     handleShow(){
         this.setState({ show: true })
     };

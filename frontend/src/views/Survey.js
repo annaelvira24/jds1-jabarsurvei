@@ -108,7 +108,6 @@ class Survey extends Component {
       const requiredFilled = this.checkRequired();
       if (!requiredFilled) {
         this.submitWarning();
-        // alert("Mohon isi semua kotak yang ditandai dengan bintang merah")
         return
       }
 
