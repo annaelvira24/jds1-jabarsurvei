@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row,} from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import Table_comp from '../components/Table_comp.js';
 import Carousel_dash from '../components/Carousel_dash.js';
 import Card_dash from '../components/Card_dash.js';
@@ -14,7 +14,7 @@ class LandingPage extends Component {
       display: [],
       offset: 0,
       currentPage: 1,
-      perPage: 5,
+      perPage: 10,
       pageCount: 0,
       search: ""
     };
@@ -27,14 +27,12 @@ class LandingPage extends Component {
     return (
       <div className="Content-Container">
         <header className="Landing-Container">
-            {/* <Container className="Landing-header"> */}
-                <Row className="Upper-header">
-                    <Carousel_dash />
-                </Row>
-                <Row className="Addition-header">
-                    <Card_dash/>
-                </Row>
-            {/* </Container> */}
+            <Row className="Upper-header">
+                <Carousel_dash />
+            </Row>
+            <Row className="Addition-header">
+                <Card_dash/>
+            </Row>
         </header>
         <div className="Survey-Container">
           <Table_comp daftar_survey={this.state.display} onSearch={ this.handleSearch } />
