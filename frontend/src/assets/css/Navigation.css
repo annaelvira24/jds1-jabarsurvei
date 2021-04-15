@@ -27,3 +27,14 @@
 .nav-link:hover{
   opacity: 70%;
 }
+
+@media only screen and (max-width: 991px) {
+  .navbar{
+    height: auto;
+  }
+
+  .nav-link{
+    margin: 0;
+    align-items: center;
+  }
+}
