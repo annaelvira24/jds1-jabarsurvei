@@ -57,8 +57,11 @@ class Survey extends Component {
               });
               if(res.data[0].status == 'Aktif'){
                 for (var i = 0; i<res.data.length; i++){
-                  console.log(res.data[i].details);
-                  formDataTemp.push(JSON.parse(res.data[i].details));
+                  let question = JSON.parse(res.data[i].details);
+                  formDataTemp.push(question);
+                  if(question.required){
+                    document.getElementById('required-span').innerHTML = `* Wajib diisi`;
+                  }
                 }
                 $(this.fbRender.current).formRender({
                   formData : formDataTemp,
@@ -155,7 +158,8 @@ class Survey extends Component {
             </div>
   
             <div id="survey-main">
-              <span id='not-accepting'></span>
+              <span id='required-span'></span>
+              <h5 id='not-accepting'></h5>
               <div id="fb-rendered" ref={this.fbRender}>
               </div>
               <Button type="button" variant = "default" className="t-green" id="button-submit" onClick={this.handleSubmit} ref={this.hideButton}>Submit</Button>
