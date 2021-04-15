@@ -3,7 +3,7 @@ import {Row, FormControl, Button, Container, Form} from 'react-bootstrap';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import { Component, createRef} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLink, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faLink } from '@fortawesome/free-solid-svg-icons'
 import ModalPopUp from './ModalPopUp.js'
 import http from "../http-common";
 import '../assets/css/Table_comp.css';
