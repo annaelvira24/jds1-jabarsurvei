@@ -61,7 +61,7 @@ class Survey extends Component {
                   dataType: 'json'
                 });
               }
-              else{
+              else {
                 document.getElementById('not-accepting').innerHTML = "Maaf, survei sudah tidak menerima respons lagi."
                 $(this.hideButton.current).toggle();
               }
@@ -103,13 +103,16 @@ class Survey extends Component {
 
     handleSubmit(e) {
       e.preventDefault();
-      const requiredFilled = this.checkRequired();
+
+      var answer = this.checkForAlamat($(this.fbRender.current).formRender("userData"))
+      const requiredFilled = this.checkRequired(answer);
+      console.log(requiredFilled)
       if (!requiredFilled) {
         alert("Mohon isi semua kotak yang ditandai dengan bintang merah")
         return
       }
 
-      var answer = JSON.stringify(this.checkForAlamat($(this.fbRender.current).formRender("userData")))
+      answer = JSON.stringify(answer)
       const time = Date.now();
       const body = { 
         id: this.state.id,
@@ -128,11 +131,18 @@ class Survey extends Component {
         })
     }
 
-    checkRequired() {
-      const fields = $(this.fbRender.current).formRender("userData");
+    checkRequired(fields) {
       for (var i = 0; i < fields.length; i++){
         if (!fields[i].required) continue;
         
+        if (fields[i].type === 'alamat'){
+          var filled = true
+          fields[i].userData.forEach(el => {
+            if (!el) filled = false
+          })
+          return filled
+        }
+
         if (!fields[i].userData) return false;
         else {
           if (!fields[i].userData[0]) return false;
