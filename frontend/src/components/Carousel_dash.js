@@ -24,7 +24,7 @@ const Carousel_dash = () => {
                             Menjadi solusi andalan survei dan visualisasi hasil data survei Jawa Barat
                         </p>
                         <p>
-                            <Button color="#00A5E1" onClick={(e) => window.location.href='/register'}>Daftar Sekarang</Button>
+                            <Button variant="default" className="t-blue" onClick={(e) => window.location.href='/register'}>Daftar Sekarang</Button>
                         </p>
                     </Carousel.Caption>
                 </Carousel.Item>
@@ -54,7 +54,7 @@ const Carousel_dash = () => {
                     <Carousel.Caption>
                         <h1>Visualisasi Data</h1>
                         <p>
-                            Data mudah dilihat dan dianalisis dengan visualisasi data yang menarik dan lengkap untuk beragam filter data
+                            Data mudah dilihat dan dianalisis dengan visualisasi data yang menarik
                         </p>
                     </Carousel.Caption>
                 </Carousel.Item>
