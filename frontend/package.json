@@ -28,7 +28,8 @@
     "react-table": "^7.6.3",
     "universal-cookie": "^4.0.4",
     "validator": "^13.5.2",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "xlsx": "^0.16.9"
   },
   "scripts": {
     "start": "react-scripts start",
