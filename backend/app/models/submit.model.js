@@ -42,7 +42,7 @@ Answer.submitAnswer = function (answers, result){
                     continue;
                 }
                 var user_data;
-                if (question.type === "checkbox-group"){
+                if (question.type === "checkbox-group" || question.type === "alamat"){
                     if(question.userData !== undefined){
                         user_data = JSON.stringify(question.userData);
                     }
