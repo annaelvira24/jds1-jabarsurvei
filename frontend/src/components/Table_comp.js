@@ -11,7 +11,6 @@ class Table_comp extends Component {
     }
 
     cellLink (cell, row){
-        console.log(cell);
         return (<div><a id="surveyLink" href={"/survey/"+row.randomlink}>{cell}</a></div>);
     }
 

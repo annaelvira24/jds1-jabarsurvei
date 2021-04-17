@@ -2,6 +2,7 @@ import $ from "jquery";
 import autosize from 'autosize';
 import React, { Component, createRef } from "react";
 import ModalPopUp from '../components/ModalPopUp.js'
+import AlertBox from '../components/AlertBox.js'
 import http from "../http-common";
 import { getUser } from './../util/Common.js';
 import 'jquery-ui-sortable';
@@ -45,6 +46,10 @@ class FormBuilder extends Component {
       this.showModal = obj && obj.handleShow 
     }
 
+    AlertRef = (obj) => { 
+      this.showAlert = obj && obj.handleShow 
+    }
+
     getSurveyTitle(){
       http.get('http://localhost:5000/api/fBuilder/getTitleById/' + this.state.idSurvey)
       .then(res =>
@@ -58,6 +63,10 @@ class FormBuilder extends Component {
     onSurveyClick = () => {
       this.showModal();
     }
+
+    submitWarning = () => {
+      this.showAlert();
+    }    
     
     componentDidMount() {
       const textArea = document.getElementsByTagName('textarea');
@@ -226,7 +235,7 @@ class FormBuilder extends Component {
     }
 
     createNewSurvey(){
-      const surveyTitle = document.getElementById('title-input').value || "Survey tanpa judul";
+      const surveyTitle = document.getElementById('title-input').value;
       const surveyDescription = document.getElementById('description-input').value;
 
       http.post('http://localhost:5000/api/listSurvey/create', {
@@ -269,7 +278,8 @@ class FormBuilder extends Component {
       let surveyTitle = document.getElementById('title-input').value;
       let jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json');
       if(surveyTitle.length == 0 || jsonform == "[]"){
-        document.getElementById('false-msg').innerHTML = `Pastikan Anda sudah mengisi judul survey dan menambahkan paling tidak satu pertanyaan`;
+        this.submitWarning();
+        // document.getElementById('false-msg').innerHTML = `Pastikan Anda sudah mengisi judul survey dan menambahkan paling tidak satu pertanyaan`;
       }
 
       else{
@@ -288,6 +298,10 @@ class FormBuilder extends Component {
     render() {
       return(
         <div id = "form-builder-container">
+          <AlertBox 
+            ref={this.AlertRef}
+            text = "Pastikan Anda sudah mengisi judul survey dan menambahkan paling tidak satu pertanyaan"
+          />
           <div id = "form-builder-title">
             <div className="form-group">
               <input type="text" id="title-input" className="form-control" placeholder="Judul Survei" value={this.state.surveyTitle} onChange={(e) => this.onInputChangeTitle(e)}/>
