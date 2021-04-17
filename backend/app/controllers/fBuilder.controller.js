@@ -12,11 +12,12 @@ exports.create = function(req, res) {
                 details[i].values[j].value = details[i].values[j].label; 
             }
         }
+        let strDetails = JSON.stringify(details[i], null, "").replace(/<(?:.|\n)*?>/gm, '');
         const question = new FBuilder({
             id_survey : id_survey,
             order_number : i,
             section : 1,
-            details : JSON.stringify(details[i], null, "")
+            details : strDetails
         });
         FBuilder.create(question, function(err, result) {
             if (err) {
