@@ -3,7 +3,6 @@ import React, { Component, createRef } from "react";
 import { Table, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTable, faChartPie } from '@fortawesome/free-solid-svg-icons'
-import PaginationButton from '../components/Pagination.js';
 import http from "../http-common";
 import { getUser } from './../util/Common.js';
 import 'jquery-ui-sortable';
@@ -58,9 +57,13 @@ class Result extends Component {
               }
 
               var checkboxes = [];
+              var alamat = [];
               for (var i = 0; i<res.data.length; i++){
                 if (JSON.parse(res.data[i].details).type == "checkbox-group"){
                   checkboxes.push(i);
+                }
+                else if (JSON.parse(res.data[i].details).type == "alamat"){
+                  alamat.push(i);
                 }
                 formDataTemp.push(JSON.parse(res.data[i].details));
               }
@@ -89,6 +92,12 @@ class Result extends Component {
                       for (var item in checkboxes){
                         if(surveyResult[i][checkboxes[item]].answer.length > 0){
                           surveyResult[i][checkboxes[item]].answer = (JSON.parse(surveyResult[i][checkboxes[item]].answer).join(', '));
+                        }
+                      }
+
+                      for (var item in alamat){
+                        if(surveyResult[i][alamat[item]].answer.length > 0){
+                          surveyResult[i][alamat[item]].answer = ((JSON.parse(surveyResult[i][alamat[item]].answer)).reverse().join(', '));
                         }
                       }
 
