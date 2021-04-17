@@ -3,7 +3,7 @@ import React, { Component, createRef } from "react";
 import { Table, Button } from "react-bootstrap";
 import xlsx from 'xlsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTable, faChartPie } from '@fortawesome/free-solid-svg-icons'
+import { faTable, faChartPie, faDownload } from '@fortawesome/free-solid-svg-icons'
 import PaginationButton from '../components/Pagination.js';
 import http from "../http-common";
 import { getUser } from './../util/Common.js';
@@ -159,8 +159,8 @@ class Result extends Component {
               <Button variant="default" className="t-yellow" id="button-visual" onClick = {event =>  window.location.href='/result/'+ this.state.link + '/summary'}>
                 <FontAwesomeIcon icon={faChartPie} /> Visualisasi
               </Button>
-              <Button onClick={this.exportXLSX.bind(this)}>
-                Simpan ke dalam Excel
+              <Button variant="default" className="t-green" id="button-excel" onClick={this.exportXLSX.bind(this)}>
+                <FontAwesomeIcon icon={faDownload} /> Unduh File Excel
               </Button>
             </div>
             <div id="result-main" ref={this.hideEverything}>
