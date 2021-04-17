@@ -1,8 +1,8 @@
-import { Row, Col, FormControl, Button, Container, Form} from 'react-bootstrap';
+import { React, createRef, Component } from "react";
+import { Row, InputGroup, FormControl, Button, Container, Form} from 'react-bootstrap';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-import { createRef, Component } from "react";
-import { useRef } from "react-router-dom";
-import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import '../assets/css/Table_comp.css';
 
 class Table_comp extends Component {
@@ -11,7 +11,6 @@ class Table_comp extends Component {
     }
 
     cellLink (cell, row){
-        console.log(cell);
         return (<div><a id="surveyLink" href={"/survey/"+row.randomlink}>{cell}</a></div>);
     }
 
@@ -44,20 +43,17 @@ const SearchBar = ({on_search}) => {
     const search = (e) => {
         e.preventDefault()
         const query = searchRef.current.value
-        console.log(query)
         on_search(query)
     }
 
     return (
-        <Form inline onSubmit={ search }>
-            <Row>
-                <Col sm>
-                    <FormControl id="searchBar" placeholder="Pencarian..." type="text" className="mr-sm-2" ref={ searchRef } />
-                </Col>
-                <Col sm>
-                    <Button className="t-blue" type="submit">Cari</Button>
-                </Col>
-            </Row>
+        <Form id="searchbar-form" onSubmit={ search }>
+            <InputGroup>
+                    <FormControl id="searchBar" placeholder="Pencarian..." type="text" ref={ searchRef } />
+                    <InputGroup.Append>
+                        <Button className="t-blue" type="submit"><FontAwesomeIcon icon = {faSearch}/></Button>
+                    </InputGroup.Append>
+            </InputGroup>
         </Form>
     )
 }

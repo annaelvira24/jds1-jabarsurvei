@@ -15,7 +15,6 @@ exports.submitAnswer = function(req,res){
         req.body, 
         function(err, answer){
             if (err) {
-                console.log(err);
                 res.send(err);
             }
             else{
@@ -25,15 +24,15 @@ exports.submitAnswer = function(req,res){
         });
 };
 
-// exports.createLink = function(req, res) {
-//     Answer.createLink(req, 
-//     function(err, Answer) {  
-//         if (err){
-//             res.send(err);
-//         }
-//         else{
-//             res.status(200).json(Answer);
-//         }
-//         return;
-//     });
-// };
+exports.count = function(req,res){
+    Answer.count(
+    function(err, answer){
+        if (err) {
+            res.send(err);
+        }
+        else{
+            res.json(answer[0]);
+        }
+        return;
+    });
+};
