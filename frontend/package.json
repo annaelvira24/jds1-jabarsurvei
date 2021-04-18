@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
+    "@fortawesome/free-brands-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@reactchartjs/react-chart.js": "^1.0.0-rc.3",
@@ -29,7 +30,8 @@
     "react-table": "^7.6.3",
     "universal-cookie": "^4.0.4",
     "validator": "^13.5.2",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "xlsx": "^0.16.9"
   },
   "scripts": {
     "start": "react-scripts start",

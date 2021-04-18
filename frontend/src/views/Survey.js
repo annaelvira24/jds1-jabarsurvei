@@ -3,6 +3,7 @@ import React, { Component, createRef } from "react";
 import ReCAPTCHA from "react-google-recaptcha"
 import { Button } from "react-bootstrap";
 import http from "../http-common";
+import AlertBox from '../components/AlertBox.js'
 import 'jquery-ui-sortable';
 import './../assets/scss/Survey.scss'
 import '../control_plugins/alamat'
@@ -14,8 +15,6 @@ require('formBuilder');
 require('formBuilder/dist/form-render.min.js');
 
 var formDataTemp = [];
-
-
 
 class Survey extends Component {
     fbRender = createRef();
@@ -32,15 +31,20 @@ class Survey extends Component {
 
     constructor(){
       super();
-
-      //this.handleSaveForm = this.handleSaveForm.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       this.checkRequired = this.checkRequired.bind(this);
       this.checkForAlamat = this.checkForAlamat.bind(this);
       this.handleCaptchaResponseChange = this.handleCaptchaResponseChange.bind(this);
     }
 
-    
+    AlertRef = (obj) => { 
+      this.showAlert = obj && obj.handleShow 
+    }
+
+    submitWarning = () => {
+      this.showAlert();
+    }    
+
     componentDidMount() {
       if (this.props.match)
         this.state.link = this.props.match.params.link;
@@ -56,8 +60,11 @@ class Survey extends Component {
               });
               if(res.data[0].status == 'Aktif'){
                 for (var i = 0; i<res.data.length; i++){
-                  console.log(res.data[i].details);
-                  formDataTemp.push(JSON.parse(res.data[i].details));
+                  let question = JSON.parse(res.data[i].details);
+                  formDataTemp.push(question);
+                  if(question.required){
+                    document.getElementById('required-span').innerHTML = `* Wajib diisi`;
+                  }
                 }
                 $(this.fbRender.current).formRender({
                   formData : formDataTemp,
@@ -65,7 +72,7 @@ class Survey extends Component {
                 });
               }
               else{
-                document.getElementById('not-accepting').innerHTML = "Maaf, survei sudah tidak menerima respons lagi."
+                document.getElementById('not-accepting').innerHTML = "Maaf, survei ini sudah ditutup."
                 $(this.hideButton.current).toggle();
               }
             }
@@ -73,9 +80,7 @@ class Survey extends Component {
               this.setState({title: "Survey Tidak Ditemukan"});
               $(this.hideButton.current).toggle();
             }
-        });
-
-        
+        }); 
       }
     }
 
@@ -106,9 +111,12 @@ class Survey extends Component {
 
     handleSubmit(e) {
       e.preventDefault();
-      const requiredFilled = this.checkRequired();
+
+      var answer = this.checkForAlamat($(this.fbRender.current).formRender("userData"))
+      const requiredFilled = this.checkRequired(answer);
+      console.log(requiredFilled)
       if (!requiredFilled) {
-        alert("Mohon isi semua kotak yang ditandai dengan bintang merah")
+        this.submitWarning();
         return
       }
 
@@ -127,7 +135,6 @@ class Survey extends Component {
         recaptchaResponse: this.state.recaptchaResponse
       }
       
-
       http.post("http://localhost:5000/api/submit/submitAnswer", body)
         .then((res)=>{
           if(res.data == false){
@@ -143,11 +150,18 @@ class Survey extends Component {
         })
     }
 
-    checkRequired() {
-      const fields = $(this.fbRender.current).formRender("userData");
+    checkRequired(fields) {
       for (var i = 0; i < fields.length; i++){
         if (!fields[i].required) continue;
         
+        if (fields[i].type === 'alamat'){
+          var filled = true
+          fields[i].userData.forEach(el => {
+            if (!el) filled = false
+          })
+          return filled
+        }
+
         if (!fields[i].userData) return false;
         else {
           if (!fields[i].userData[0]) return false;
@@ -166,13 +180,18 @@ class Survey extends Component {
     render() {
         return(
           <div id = "survey-container">
+            <AlertBox 
+              ref={this.AlertRef}
+              text = "Mohon isi semua pertanyaan yang ditandai dengan bintang merah"
+            />
             <div id = "survey-title-container">
               <p id="survey-title">{this.state.title}</p>
               <p id="survey-description">{this.state.desc}</p>
             </div>
   
             <div id="survey-main">
-              <span id='not-accepting'></span>
+              <span id='required-span'></span>
+              <h5 id='not-accepting'></h5>
               <div id="fb-rendered" ref={this.fbRender}>
               </div>
               <ReCAPTCHA
