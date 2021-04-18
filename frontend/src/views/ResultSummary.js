@@ -143,7 +143,6 @@ class ResultSummary extends Component {
                     callbacks: {
                       label: function(tooltipItem, data) {
                         var dataset = data.datasets[tooltipItem.datasetIndex];
-                        var meta = dataset._meta[Object.keys(dataset._meta)[0]];
                         var total = arrayResult.length/num;
                         var currentValue = dataset.data[tooltipItem.index];
                         var percentage = parseFloat((currentValue/total*100).toFixed(1));
@@ -312,6 +311,85 @@ class ResultSummary extends Component {
                 let theChart = 
                 <div className="chart-container">
                   <Pie
+                    data = {dataset}
+                    options = {option}
+                  />
+                </div>
+                array.push(theChart);
+              }
+
+              else if(question.type == "alamat"){
+                let mapResult = new Map();
+                let beautifulResult = [];
+                for (var j = 0; j < arraySlice.length; j++){
+                  if(arraySlice[j].answer !== ""){
+                    beautifulResult.push({"answer" : JSON.parse(arraySlice[j].answer).reverse().join(", ")});
+                    let ans = (JSON.parse(arraySlice[j].answer))[0];
+                      if (mapResult.has(ans)){
+                        mapResult.set(ans, mapResult.get(ans)+1);
+                      }
+                      else{
+                        mapResult.set(ans,1);
+                      }
+                  }
+                }
+
+                theTable = 
+                <div id="result-table">
+                  <div className="table-container">
+                    <div className="table-survey">
+                      <BootstrapTable data={beautifulResult} striped hover>
+                          <TableHeaderColumn isKey dataField="answer">{question.label}</TableHeaderColumn>
+                      </BootstrapTable>
+                    </div>
+                  </div>
+                </div>
+                array.push(theTable)
+
+                theQuestion = <h5 id="question-title">Provinsi</h5>
+                array.push(theQuestion);
+
+                let chartData = this.splitMap(mapResult);
+
+                let dataset = {
+                  labels: chartData.keys,
+                  datasets: [
+                    {
+                      data: chartData.values,
+                      backgroundColor: 'rgba(255, 99, 132, 0.4)',
+                      borderWidth: 1,
+                    },
+                  ],
+                };
+
+                let option = {
+                  tooltips: {
+                    callbacks: {
+                      label: function(tooltipItem, data) {
+                        var dataset = data.datasets[tooltipItem.datasetIndex];
+                        var total = arraySlice.length
+                        var currentValue = dataset.data[tooltipItem.index];
+                        var percentage = parseFloat((currentValue/total*100).toFixed(1));
+                        return currentValue + ' (' + percentage + '%)';
+                      }
+                    }
+                  },
+                  scales: {
+                    yAxes: [{
+                      ticks: {
+                        min: 0,
+                        stepSize: 1
+                      }
+                    }]
+                  },
+                  legend: {
+                    display: false,
+                  }
+                };
+
+                let theChart = 
+                <div className="chart-container">
+                  <Bar
                     data = {dataset}
                     options = {option}
                   />

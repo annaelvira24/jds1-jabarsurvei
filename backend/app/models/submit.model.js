@@ -1,22 +1,17 @@
 'use strict';
-const { nanoid } = require('nanoid')
 
 var dbConn = require('./../config/db.config');
-
-
 
 var Answer = function(answer){
     this.id_quetion = answer.id_quetion;
     this.id_survey = answer.id_survey;
     this.id_answer = answer.id_answer;
     this.answer = answer.answer;
-
 };
 
 Answer.getLastIdAnswer = function (result) {
     dbConn.query("Select MAX(id_answer) as id_answer from answer ", function (err, res) {
         if(err) {
-            console.log("error: ", err);
             result(err, null);
         }
         else{
@@ -47,7 +42,7 @@ Answer.submitAnswer = function (answers, result){
                     continue;
                 }
                 var user_data;
-                if (question.type === "checkbox-group"){
+                if (question.type === "checkbox-group" || question.type === "alamat"){
                     if(question.userData !== undefined){
                         user_data = JSON.stringify(question.userData);
                     }
@@ -85,14 +80,19 @@ Answer.submitAnswer = function (answers, result){
             result(null, res);
             return;
         }
-    })
-    
-    
-    
+    })   
 }
 
-
-
-
+Answer.count = function (result) {
+    dbConn.query(
+        "SELECT COUNT(DISTINCT submit_time) as count from answer", function (err, res) {
+        if(err) {
+            result(err, null);
+        }
+        else{
+            result(null, res);
+        }
+    });
+};
 
 module.exports = Answer;

@@ -8,38 +8,13 @@
     margin-right: auto;
 }
 
-.Table2-Container{
-        /* justify-content: center; */
-        /* font-size: 10px !important; */
-}
-
-.table-container{
-        width: 100%;
-        overflow-x: auto;
-}
-
-.table-survey{
-        min-width: 800px;
-}
-
-/* th{
-        min-width: 10% !important;
-} */
-#desc{
-        width: 200px !important;
-}
-
-#surveyLink{
-    text-decoration: none;
-}
-
 .table-container{
     width: 100%;
     overflow-x: auto;
 }
 
 .table-survey{
-    min-width: 800px;
+    min-width: 700px;
 }
 
 td{
@@ -51,10 +26,43 @@ td:focus{
     outline: none !important;
 }
 
-#searchBar{
-    width: 350px;
+
+#desc{
+    width: 200px !important;
 }
 
-#searchBar::after{
-    margin-top: 10px;
+#surveyLink{
+    text-decoration: none;
 }
+
+#searchbar-form{
+    width: 50%;
+}
+
+#searchbar-form-admin{
+    width: 60%;
+    margin-left: 38%;
+}
+
+#button-create {
+    position: absolute;
+    right: 0;
+    margin-top: -20px;
+}
+
+@media only screen and (max-width: 768px) {
+    #searchbar-form{
+        width: 100%;
+    }
+
+    #searchbar-form-admin{
+        margin-left: 0;
+        width: 100%;
+    }
+
+    #button-create {
+        position: relative;
+        width: 100%;
+        margin-top: 10px;
+    }
+ }
