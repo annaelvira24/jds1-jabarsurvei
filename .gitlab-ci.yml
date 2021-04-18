@@ -56,6 +56,6 @@ backend-test:
     script:
         - echo "Backend testing"
         - cd database
-        - mysql -u root -p
+        - ls
         # - npm run test
         - ls backend/node_modules/
