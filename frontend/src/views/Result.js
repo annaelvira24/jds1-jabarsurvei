@@ -160,7 +160,7 @@ class Result extends Component {
                 <FontAwesomeIcon icon={faChartPie} /> Visualisasi
               </Button>
               <Button variant="default" className="t-green" id="button-excel" onClick={this.exportXLSX.bind(this)}>
-                <FontAwesomeIcon icon={faDownload} /> Unduh File Excel
+                <FontAwesomeIcon icon={faDownload} /> <span id="download-text">Unduh File Excel</span>
               </Button>
             </div>
             <div id="result-main" ref={this.hideEverything}>
