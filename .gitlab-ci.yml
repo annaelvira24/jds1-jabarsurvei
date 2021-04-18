@@ -37,8 +37,7 @@ backend-build:
         # - Get-Content database/crowdsource.sql | mysql -u root crowdsource
 
     script:
-        - cd database
-        - cd ../backend
+        - cd backend
         - echo "Building backend"
         - npm install
 
@@ -56,5 +55,7 @@ backend-test:
         - test-run
     script:
         - echo "Backend testing"
+        - cd database
+        - mysql -u root -p
         # - npm run test
         - ls backend/node_modules/
