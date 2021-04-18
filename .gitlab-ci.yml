@@ -55,7 +55,6 @@ backend-test:
         - test-run
     script:
         - echo "Backend testing"
-        - cd database
-        - ls
+        - pwd
         # - npm run test
         - ls backend/node_modules/
