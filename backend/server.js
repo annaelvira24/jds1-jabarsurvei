@@ -25,7 +25,7 @@ const adminRoutes = require('./app/routes/admin.routes')
 app.use('/api/admin', adminRoutes);
 
 // set port, listen for requests
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.NODE_ENV === 'test' ? 5001 : 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });

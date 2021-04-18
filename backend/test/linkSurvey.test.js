@@ -3,20 +3,16 @@ const expect = require("chai").expect;
 
 // This agent refers to PORT where program is runninng.
 
-var server = supertest.agent("http://localhost:5000");
+var server = supertest.agent("http://localhost:5001");
 
 
 describe("Generate link unit test create link",function(){
-
-    // #1 should return home page
-    
     it("should not return error",function(done){
     
         let data_id = {
         id_survey : 2, 
         id_admin : 3
         }
-        // calling home page api
         server
         .post("/api/surveyLink/createLink")
         .send(data_id)
@@ -34,12 +30,8 @@ describe("Generate link unit test create link",function(){
 });
 
 describe("Generate link unit test find link by id",function(){
-
-    // #1 should return home page
   
     it("should return link",function(done){
-  
-      // calling home page api
       server
       .get("/api/surveyLink/1")
       .expect("Content-type",/json/)
