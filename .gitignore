@@ -7,3 +7,5 @@ backend/package-lock.json
 frontend/yarn.lock
 frontend/yarn.lock
 frontend/package-lock.json
+frontend/.env
+backend/.env
