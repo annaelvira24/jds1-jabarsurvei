@@ -44,9 +44,4 @@ backend-test:
         - test-run
     script:
         - echo "Backend testing"
-<<<<<<< HEAD
         - npm run test
-=======
-        - cd backend
-        - ls backend/
->>>>>>> 5a873cef9c4accbcd4c1eea27337cce27b98d4df
