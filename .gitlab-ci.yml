@@ -43,4 +43,5 @@ backend-test:
         - test-run
     script:
         - echo "Backend testing"
+        - cd backend
         - npm run test
