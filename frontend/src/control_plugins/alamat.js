@@ -92,6 +92,7 @@ window.fbControls.push(function (controlClass) {
           events: {
             change: this.handleProvinsiChange
           },
+          className: 'form-control',
         }),
         this.markup('p', 'Kota/Kabupaten'),
         this.markup('select', null, {
@@ -99,6 +100,7 @@ window.fbControls.push(function (controlClass) {
           events: {
             change: this.handleKotaChange
           },
+          className: 'form-control',
         }),
         this.markup('p', 'Kecamatan'),
         this.markup('select', null, {
@@ -106,14 +108,17 @@ window.fbControls.push(function (controlClass) {
           events: {
             change: this.handleKecamatanChange
           },
+          className: 'form-control',
         }),
         this.markup('p', 'Kelurahan'),
         this.markup('select', null, {
           id: `${data.id}-input-kelurahan`,
+          className: 'form-control',
         }),
         this.markup('p', 'Alamat Lengkap'),
         this.markup('textarea', null, {
           id: `${data.id}-input-lengkap`,
+          className: 'form-control',
         }),
         this.markup('p')
       ]
