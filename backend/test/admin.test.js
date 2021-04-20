@@ -27,7 +27,6 @@ describe("Admin unit test",function(){
 
 describe("Admin unit test",function(){
   it("should successfully login",function(done){
-
     let admin = {
       email : "example@gmail.com", 
       password : "password123"
@@ -44,5 +43,23 @@ describe("Admin unit test",function(){
       done();
     });
   });
+});
 
+describe("Admin unit test",function(){
+  it("should fail to login",function(done){
+    let admin = {
+      email : "example@gmail.com", 
+      password : "wrongpassword"
+    }
+    server
+    .post("/api/admin/login")
+    .send(admin)
+    .expect("Content-type",/json/)
+    .expect(200)
+    .end(function(err,res){
+      console.log(res.data)
+      expect(res.data).to.be.undefined;
+      done();
+    });
+  });
 });
