@@ -39,7 +39,6 @@ frontend-test:
         - echo "Frontend testing"
         - cd frontend
         - npm run test
-        - a
 
 backend-test:
     stage: test
@@ -48,4 +47,4 @@ backend-test:
     script:
         - echo "Backend testing"
         - cd backend
-        - npm run test
+        # - npm run test
