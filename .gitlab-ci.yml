@@ -36,8 +36,10 @@ frontend-test:
     tags:
         - test-run
     script:
-        - echo "Frontend testing not implemented yet"
-        - ls frontend/
+        - echo "Frontend testing"
+        - cd frontend
+        - npm run test
+        - a
 
 backend-test:
     stage: test
