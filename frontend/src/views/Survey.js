@@ -22,6 +22,7 @@ class Survey extends Component {
 
     state = {
       link : undefined,
+      close : false,
       id : '',
       title : '',
       desc : '',
@@ -72,6 +73,7 @@ class Survey extends Component {
                 });
               }
               else{
+                this.setState({close: true});
                 document.getElementById('not-accepting').innerHTML = "Maaf, survei ini sudah ditutup."
                 $(this.hideButton.current).toggle();
               }
@@ -194,11 +196,13 @@ class Survey extends Component {
               <h5 id='not-accepting'></h5>
               <div id="fb-rendered" ref={this.fbRender}>
               </div>
-              <ReCAPTCHA
-                ref={(el) => { this.recaptcha = el; }}
-                sitekey={process.env.REACT_APP_PUBLIC_RECAPTHCA_SITE_KEY}
-                onChange={this.handleCaptchaResponseChange}
-              />
+              <div style = {{display:(this.state.close? 'none' : 'block')}}>
+                <ReCAPTCHA
+                  ref={(el) => { this.recaptcha = el; }}
+                  sitekey={process.env.REACT_APP_PUBLIC_RECAPTHCA_SITE_KEY}
+                  onChange={this.handleCaptchaResponseChange}
+                />
+              </div>
               <Button type="button" variant = "default" className="t-green" id="button-submit" onClick={this.handleSubmit} ref={this.hideButton}>Submit</Button>
             </div>
           </div>
