@@ -1,20 +1,11 @@
-import $ from "jquery";
 import React, { Component, createRef } from "react";
 import { Table, Button } from "react-bootstrap";
 import xlsx from 'xlsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTable, faChartPie, faDownload } from '@fortawesome/free-solid-svg-icons'
-import PaginationButton from '../components/Pagination.js';
 import http from "../http-common";
 import { getUser } from './../util/Common.js';
-import 'jquery-ui-sortable';
 import './../assets/scss/Result.scss'
-
-window.jQuery = $;
-window.$ = $;
-
-require('formBuilder');
-require('formBuilder/dist/form-render.min.js');
 
 var formDataTemp = [];
 var surveyResult = [];

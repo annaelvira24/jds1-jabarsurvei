@@ -18,5 +18,12 @@ describe('Login Page', () => {
         component, 'login-form'
         );
     });
+
+    it('is has a login button', () => {
+        const component = ReactTestUtils.renderIntoDocument(<LoginPage/>);    
+        var node = ReactTestUtils.findRenderedDOMComponentWithTag(
+        component, 'Button'
+        );
+    });
   })
 
