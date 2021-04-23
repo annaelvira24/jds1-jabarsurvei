@@ -12,10 +12,16 @@ describe('Landing Page', () => {
         );
     });
 
-    it('Upper-header contain Addition-header', () => {
+    it('Addition-header loaded', () => {
         const component = ReactTestUtils.renderIntoDocument(<LandingPage/>);    
         var node = ReactTestUtils.findRenderedDOMComponentWithClass(
         component, 'Addition-header'
+        );
+    });
+    it('Loaded Survey-Container', () => {
+        const component = ReactTestUtils.renderIntoDocument(<LandingPage/>);    
+        var node = ReactTestUtils.findRenderedDOMComponentWithClass(
+        component, 'Survey-Container'
         );
     });
    
