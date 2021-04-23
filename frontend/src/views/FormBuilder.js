@@ -96,7 +96,13 @@ class FormBuilder extends Component {
             'toggle',
             'inline'
           ]
-        },  
+        },
+        onAddOption: (optionTemplate, optionIndex) => {
+          optionTemplate.label = `Pilihan Jawaban`
+          optionTemplate.value = `pilihan-jawaban`
+          return optionTemplate
+        },
+        controlOrder: ['text', 'textarea', 'number', 'select', 'radio-group', 'checkbox-group', 'date', 'alamat', 'header'],  
         i18n: {
           override: {
             'en-US': {
@@ -158,8 +164,8 @@ class FormBuilder extends Component {
               other: 'Lainnya',
               paragraph: 'Paragraf',
               placeholder: 'Placeholder',
-              'placeholder.value': 'nilai',
-              'placeholder.label': 'Label opsi',
+              'placeholder.value': '',
+              'placeholder.label': 'Pilihan Jawaban',
               'placeholder.text': '',
               'placeholder.textarea': '',
               'placeholder.email': 'Isi alamat email anda',
