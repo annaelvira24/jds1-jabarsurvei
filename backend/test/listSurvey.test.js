@@ -68,3 +68,23 @@ describe("List survey unit test",function(){
     });
   });
 });
+
+describe("List survey unit test",function(){
+  it("should successfully create new survey",function(done){
+    let survey = {
+      id_admin : 2,
+      survey_title : "Test Survey",
+      decription : "Test Description",
+      status : 'Aktif'
+    }
+    server
+    .post("/api/listSurvey/create")
+    .send(survey)
+    .expect("Content-type",/json/)
+    .expect(200)
+    .end(function(err,res){
+      expect(res.body.data.id_survey).to.eql(14)
+      done();
+    });
+  });
+});

@@ -35,3 +35,22 @@ describe("Form builder unit test",function(){
     });
   });
 });
+
+describe("Form builder unit test",function(){
+  it("should create new form",function(done){
+    const survey = {
+      id_survey: 1,
+      details: '[{"type":"header","label":"Header"},{"type":"paragraph","label":"Paragraf"}]'
+    }
+
+    server
+    .post("/api/fBuilder/createform")
+    .send(survey)
+    .expect("Content-type",/json/)
+    .expect(200)
+    .end(function(err,res){
+      expect(res.text).to.be.eq("OK")
+      done();
+    });
+  });
+});

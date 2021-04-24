@@ -56,10 +56,53 @@ describe("Admin unit test",function(){
     .send(admin)
     .expect("Content-type",/json/)
     .expect(200)
-    .end(function(err,res){
-      console.log(res.data)
-      expect(res.data).to.be.undefined;
+    .end(function(err, res){
+      expect(res.body).to.be.null;
       done();
     });
   });
 });
+
+describe("Admin unit test",function(){
+  it("should register new admin",function(done){
+    let admin = { 
+      email : "newadmin@gmail.com",
+      password : "newpassword",
+      username : "newadmin",
+      gender : "laki-laki",
+      city : "Bandung",
+      phone : "01234567"
+   }
+    server
+    .post("/api/admin/register")
+    .send(admin)
+    .expect("Content-type", /json/)
+    .expect(200)
+    .end(function(err, res){
+      expect(res.status).to.eql(200);
+      expect(res.error).to.eql(false);
+      done()
+    });
+  });
+});
+
+describe("Admin unit test",function(){
+  it("should login new admin",function(done){
+    let admin = {
+      email : "newadmin@gmail.com", 
+      password : "newpassword"
+    }
+    server
+    .post("/api/admin/login")
+    .send(admin)
+    .expect("Content-type",/json/)
+    .expect(200)
+    .end(function(err,res){
+      expect(res.status).to.eql(200);
+      expect(res.error).to.eql(false);
+      expect(res.body[0].id_admin).to.eql(14);
+      done();
+    });
+  });
+});
+
