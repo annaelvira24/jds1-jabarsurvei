@@ -4,9 +4,6 @@ stages:
     - build
     - test
 
-# services:
-#     - mysql:latest
-
 cache:
     paths:
         - backend/node_modules/
@@ -29,6 +26,7 @@ backend-build:
     script:
         - cd backend
         - echo "Building backend"
+        - npm install
 
 frontend-test:
     stage: test
