@@ -14,8 +14,8 @@ if(process.env.NODE_ENV !== 'test'){
 
 else{
   dbConn = mysql.createConnection({
-    host     : 'ppl-crowdsource.mysql.database.azure.com',
-    user     : 'crowdsource@ppl-crowdsource',
+    host     : 'ppl-jds-crowdsource.mysql.database.azure.com',
+    user     : 'crowdsourceadmin@ppl-jds-crowdsource',
     password : 'ppl-kelompok-8',
     database : 'crowdsourcetest',
     port     : 3306,
