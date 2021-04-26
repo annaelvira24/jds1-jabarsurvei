@@ -108,14 +108,16 @@ window.fbControls.push(function (controlClass) {
           events: {
             change: this.handleKecamatanChange
           },
-          className: 'form-control',
+          className: 'form-control'
         }),
         this.markup('p', 'Kelurahan'),
         this.markup('select', null, {
           id: `${data.id}-input-kelurahan`,
           className: 'form-control',
         }),
-        this.markup('p', 'Alamat Lengkap'),
+        this.markup('p', 'Alamat Lengkap', {
+          className: 'form-builder-alamat'
+        }),
         this.markup('textarea', null, {
           id: `${data.id}-input-lengkap`,
           className: 'form-control',
