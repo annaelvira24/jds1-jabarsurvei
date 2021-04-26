@@ -2,6 +2,7 @@ import $ from "jquery";
 import autosize from 'autosize';
 import React, { Component, createRef } from "react";
 import ModalPopUp from '../components/ModalPopUp.js'
+import AlertBox from '../components/AlertBox.js'
 import http from "../http-common";
 import { getUser } from './../util/Common.js';
 import 'jquery-ui-sortable';
@@ -45,6 +46,10 @@ class FormBuilder extends Component {
       this.showModal = obj && obj.handleShow 
     }
 
+    AlertRef = (obj) => { 
+      this.showAlert = obj && obj.handleShow 
+    }
+
     getSurveyTitle(){
       http.get('http://localhost:5000/api/fBuilder/getTitleById/' + this.state.idSurvey)
       .then(res =>
@@ -58,6 +63,10 @@ class FormBuilder extends Component {
     onSurveyClick = () => {
       this.showModal();
     }
+
+    submitWarning = () => {
+      this.showAlert();
+    }    
     
     componentDidMount() {
       const textArea = document.getElementsByTagName('textarea');
@@ -79,7 +88,7 @@ class FormBuilder extends Component {
 
       $(this.fbBuilder.current).formBuilder({
         formData: formDataTemp,
-        disabledActionButtons: ['clear','save'], 
+        disabledActionButtons: ['clear','save', 'data'], 
         disableFields: ['autocomplete','button', 'hidden', "file"],
         disabledAttrs: ['name', 'access', 'className', 'value', 'maxlength', 'step', 'placeholder', 'subtype', 'rows'],
         typeUserDisabledAttrs: {
@@ -87,7 +96,13 @@ class FormBuilder extends Component {
             'toggle',
             'inline'
           ]
-        },  
+        },
+        onAddOption: (optionTemplate, optionIndex) => {
+          optionTemplate.label = `Pilihan Jawaban`
+          optionTemplate.value = `pilihan-jawaban`
+          return optionTemplate
+        },
+        controlOrder: ['text', 'textarea', 'number', 'select', 'radio-group', 'checkbox-group', 'date', 'alamat', 'header'],  
         i18n: {
           override: {
             'en-US': {
@@ -97,7 +112,7 @@ class FormBuilder extends Component {
               autocomplete: 'Autocomplete',
               button: 'Tombol',
               cannotBeEmpty: 'Tidak boleh kosong',
-              checkboxGroup: 'Checkboxes',
+              checkboxGroup: 'Pilihan Majemuk',
               className: 'Class',
               clearAllMessage: 'Are you sure you want to clear all fields?',
               clear: 'Hapus semua',
@@ -137,7 +152,7 @@ class FormBuilder extends Component {
               name: 'Nama',
               no: 'Tidak',
               noFieldsToClear: 'Tidak ada field untuk dibersihkan',
-              number: 'Angka',
+              number: 'Isian Angka',
               off: 'Off',
               on: 'On',
               option: 'Pilihan',
@@ -149,8 +164,8 @@ class FormBuilder extends Component {
               other: 'Lainnya',
               paragraph: 'Paragraf',
               placeholder: 'Placeholder',
-              'placeholder.value': 'nilai',
-              'placeholder.label': 'Label opsi',
+              'placeholder.value': '',
+              'placeholder.label': 'Pilihan Jawaban',
               'placeholder.text': '',
               'placeholder.textarea': '',
               'placeholder.email': 'Isi alamat email anda',
@@ -158,7 +173,7 @@ class FormBuilder extends Component {
               'placeholder.className': 'space separated classes',
               'placeholder.password': 'Isi kata sandi',
               preview: 'Preview',
-              radioGroup: 'Radio Group',
+              radioGroup: 'Pilihan Berganda',
               radio: 'Radio',
               removeMessage: 'Hapus Elemen',
               removeOption: 'Hapus Opsi',
@@ -169,7 +184,7 @@ class FormBuilder extends Component {
               rows: 'Baris',
               save: 'Simpan',
               selectOptions: 'Opsi',
-              select: 'Select',
+              select: 'Pilihan Menu Turun',
               selectColor: 'Pilih Warna',
               selectionsMessage: 'Perbolehkan banyak pilihan',
               size: 'Ukuran',
@@ -226,7 +241,7 @@ class FormBuilder extends Component {
     }
 
     createNewSurvey(){
-      const surveyTitle = document.getElementById('title-input').value || "Survey tanpa judul";
+      const surveyTitle = document.getElementById('title-input').value;
       const surveyDescription = document.getElementById('description-input').value;
 
       http.post('http://localhost:5000/api/listSurvey/create', {
@@ -269,7 +284,8 @@ class FormBuilder extends Component {
       let surveyTitle = document.getElementById('title-input').value;
       let jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json');
       if(surveyTitle.length == 0 || jsonform == "[]"){
-        document.getElementById('false-msg').innerHTML = `Pastikan Anda sudah mengisi judul survey dan menambahkan paling tidak satu pertanyaan`;
+        this.submitWarning();
+        // document.getElementById('false-msg').innerHTML = `Pastikan Anda sudah mengisi judul survey dan menambahkan paling tidak satu pertanyaan`;
       }
 
       else{
@@ -288,6 +304,10 @@ class FormBuilder extends Component {
     render() {
       return(
         <div id = "form-builder-container">
+          <AlertBox 
+            ref={this.AlertRef}
+            text = "Pastikan Anda sudah mengisi judul survey dan menambahkan paling tidak satu pertanyaan"
+          />
           <div id = "form-builder-title">
             <div className="form-group">
               <input type="text" id="title-input" className="form-control" placeholder="Judul Survei" value={this.state.surveyTitle} onChange={(e) => this.onInputChangeTitle(e)}/>

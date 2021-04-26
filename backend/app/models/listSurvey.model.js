@@ -2,8 +2,6 @@
 
 var dbConn = require('./../config/db.config');
 
-//Admin object create 
-
 var ListSurvey = function(survey){
     this.id_survey = survey.id_survey;
     this.id_admin = survey.id_admin;
@@ -84,6 +82,5 @@ ListSurvey.count = function (result) {
         }
     });
 };
-
 
 module.exports = ListSurvey;

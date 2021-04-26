@@ -45,6 +45,13 @@
          input[type='checkbox']{
             filter: hue-rotate(270deg) brightness(1.0);
          }
+
+         .formbuilder-alamat {
+             p {
+                 margin-top: 1rem;
+                 margin-bottom: 0.5rem;
+             }
+         }
      }
 }
 

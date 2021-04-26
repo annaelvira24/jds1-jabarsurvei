@@ -1,9 +1,9 @@
 import React from 'react';
-import {Row, FormControl, Button, Container, Form} from 'react-bootstrap';
+import {Row, Col, InputGroup, FormControl, Button, Container, Form} from 'react-bootstrap';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import { Component, createRef} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLink, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faLink, faSearch, faPlus } from '@fortawesome/free-solid-svg-icons'
 import ModalPopUp from './ModalPopUp.js'
 import http from "../http-common";
 import '../assets/css/Table_comp.css';
@@ -107,7 +107,14 @@ class TableAdmin extends Component {
                 />
                 <Container className='Table2-Container'>
                     <Row className="SearchBar-Container">
+                    <Col xs={12} md={9}>
                         <SearchBar on_search={ this.props.onSearch }/>
+                    </Col>
+                    <Col xs={12} md={3} className="justify-content-md-right">
+                        <Button variant="default" className='t-green' id="button-create" onClick = {event =>  window.location.href='/formbuilder/create'}>
+                            <FontAwesomeIcon icon={faPlus} /> Survei Baru
+                        </Button>
+                    </Col>
                     </Row>
                     <div className="table-container">
                         <div className="table-survey">
@@ -138,9 +145,13 @@ const SearchBar = ({on_search}) => {
     }
 
     return (
-        <Form inline onSubmit={ search }>
-            <FormControl placeholder = "Pencarian.." type="text" className="mr-sm-2" ref={ searchRef } />
-            <Button type="submit">Cari</Button>
+        <Form id="searchbar-form-admin" onSubmit={ search }>
+            <InputGroup>
+                    <FormControl id="searchBar" placeholder="Pencarian..." type="text" ref={ searchRef } />
+                    <InputGroup.Append>
+                        <Button className="t-blue" type="submit"><FontAwesomeIcon icon = {faSearch}/></Button>
+                    </InputGroup.Append>
+            </InputGroup>
         </Form>
     )
 };

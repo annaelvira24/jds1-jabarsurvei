@@ -32,27 +32,6 @@ class DashboardAdmin extends Component {
     this.findAll = this.findAll.bind(this)
   } 
 
-    render(){
-      return (
-        <div className="Content-Container" id="dashboard-admin">
-          <header>
-            <h1 className = 'Title-h1-Dashboard'> DAFTAR SURVEI</h1>
-            <h2 className = 'Title-h2-Dashboard'> {this.state.username}</h2>
-            <br/>
-            <div className="wrapper-button-create">
-              <button type="button" className='btn btn-outline-t-green' id="button-create" onClick = {event =>  window.location.href='/formbuilder/create'}>
-              <FontAwesomeIcon icon={faPlus} /> Survei Baru
-              </button>
-            </div>
-          </header>
-          <div className="Survey-Container">
-            <TableAdmin daftar_survey={this.state.display} onSearch={ this.handleSearch } />
-            <PaginationButton totalPage={this.state.pageCount} pageMargin={1} onPageClick={this.handlePageClick} currentPage={this.state.currentPage} className='mx-auto' />
-          </div>
-        </div>
-      );
-    }
-
     handlePageClick(e) {
       // Change active page
       const current = this.state.currentPage
@@ -132,5 +111,19 @@ class DashboardAdmin extends Component {
         })
     }
 
+    render(){
+      return (
+        <div className="Content-Container" id="dashboard-admin">
+          <header>
+            <h1 className = 'Title-h1-Dashboard'> DAFTAR SURVEI</h1>
+            <h2 className = 'Title-h2-Dashboard'> {this.state.username}</h2>
+          </header>
+          <div className="Survey-Container">
+            <TableAdmin daftar_survey={this.state.display} onSearch={ this.handleSearch } />
+            <PaginationButton totalPage={this.state.pageCount} pageMargin={1} onPageClick={this.handlePageClick} currentPage={this.state.currentPage} className='mx-auto' />
+          </div>
+        </div>
+      );
+    }
 };
   export default DashboardAdmin;
