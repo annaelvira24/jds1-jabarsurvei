@@ -1,3 +1,4 @@
+import $ from "jquery";
 import React, { Component, createRef } from "react";
 import { Table, Button } from "react-bootstrap";
 import xlsx from 'xlsx';
@@ -9,6 +10,9 @@ import './../assets/scss/Result.scss'
 
 var formDataTemp = [];
 var surveyResult = [];
+
+window.jQuery = $;
+window.$ = $;
 
 class Result extends Component {
     fbRender = createRef();
