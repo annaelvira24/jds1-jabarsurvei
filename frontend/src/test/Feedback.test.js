@@ -17,7 +17,7 @@ describe('Submit Feedback', () => {
         component, 'p'
         );
     });
-    it('Hyperlink loaded, () => {
+    it('Hyperlink loaded', () => {
         const component = ReactTestUtils.renderIntoDocument(<Feedback/>);    
         var thead = ReactTestUtils.scryRenderedDOMComponentsWithTag(
         component, 'a'
