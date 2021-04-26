@@ -337,7 +337,7 @@ class ResultSummary extends Component {
                 theTable = 
                 <div id="result-table">
                   <div className="table-container">
-                    <div className="table-survey">
+                    <div id="table-survey-result">
                       <BootstrapTable data={beautifulResult} striped hover>
                           <TableHeaderColumn isKey dataField="answer">{question.label}</TableHeaderColumn>
                       </BootstrapTable>

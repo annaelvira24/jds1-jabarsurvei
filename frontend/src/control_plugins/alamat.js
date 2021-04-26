@@ -11,7 +11,7 @@ window.fbControls.push(function (controlClass) {
         i18n: {
           'default': 'Alamat',
         },
-        icon: "🚩",
+        icon: "⚑",
         mi18n: {
           requireValidOption: 'requireValidOption',
         },
