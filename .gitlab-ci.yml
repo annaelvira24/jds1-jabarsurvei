@@ -1,11 +1,11 @@
-image: node
+image: node:latest
 
 stages:
     - build
     - test
 
-services:
-    - mysql:latest
+# services:
+#     - mysql:latest
 
 cache:
     paths:
@@ -29,7 +29,6 @@ backend-build:
     script:
         - cd backend
         - echo "Building backend"
-        - npm install
 
 frontend-test:
     stage: test
@@ -47,4 +46,4 @@ backend-test:
     script:
         - echo "Backend testing"
         - cd backend
-        # - npm run test
+        - npm run test
