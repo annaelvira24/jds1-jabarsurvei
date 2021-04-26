@@ -1,1 +1,13 @@
-IF3250-08-jds1-CrowdSource
+# IF3250-08-jds1-CrowdSource
+## Jabar Survei Kelompok 8 PPL
+
+## Deskripsi 
+Aplikasi Jabar Survei merupakan aplikasi berbasis web yang digunakan untuk melakukan proses pembautan survei dan pengisian survei oleh para pengguna web. Untuk menjalankan aplikasi silakan ikuti panduan pada User Manual.
+
+## Prerequisites
+* MySQL versi 8.0.19 (MySQL Community Server)
+* NodeJS  versi 12.16.3
+* npm versi 6.14.4
+* yarn versi 1.22.4
+
+

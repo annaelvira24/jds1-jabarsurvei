@@ -51,7 +51,7 @@ class FormBuilder extends Component {
     }
 
     getSurveyTitle(){
-      http.get('http://localhost:5000/api/fBuilder/getTitleById/' + this.state.idSurvey)
+      http.get('/api/fBuilder/getTitleById/' + this.state.idSurvey)
       .then(res =>
         this.setState({
           surveyTitle : res.data[0].survey_title,
@@ -77,7 +77,7 @@ class FormBuilder extends Component {
 
       // edit existing survey
       if(this.state.idSurvey !== undefined){
-        http.get('http://localhost:5000/api/fBuilder/findById/' + this.state.idSurvey)
+        http.get('/api/fBuilder/findById/' + this.state.idSurvey)
         .then(res => {
           for (var i = 0; i<res.data.length; i++){
             formDataTemp.push(JSON.parse(res.data[i].details));
@@ -88,7 +88,7 @@ class FormBuilder extends Component {
 
       $(this.fbBuilder.current).formBuilder({
         formData: formDataTemp,
-        disabledActionButtons: ['clear','save'], 
+        disabledActionButtons: ['clear','save', 'data'], 
         disableFields: ['autocomplete','button', 'hidden', "file"],
         disabledAttrs: ['name', 'access', 'className', 'value', 'maxlength', 'step', 'placeholder', 'subtype', 'rows'],
         typeUserDisabledAttrs: {
@@ -96,7 +96,13 @@ class FormBuilder extends Component {
             'toggle',
             'inline'
           ]
-        },  
+        },
+        onAddOption: (optionTemplate, optionIndex) => {
+          optionTemplate.label = `Pilihan Jawaban`
+          optionTemplate.value = `pilihan-jawaban`
+          return optionTemplate
+        },
+        controlOrder: ['text', 'textarea', 'number', 'select', 'radio-group', 'checkbox-group', 'date', 'alamat', 'header'],  
         i18n: {
           override: {
             'en-US': {
@@ -106,7 +112,7 @@ class FormBuilder extends Component {
               autocomplete: 'Autocomplete',
               button: 'Tombol',
               cannotBeEmpty: 'Tidak boleh kosong',
-              checkboxGroup: 'Checkboxes',
+              checkboxGroup: 'Pilihan Majemuk',
               className: 'Class',
               clearAllMessage: 'Are you sure you want to clear all fields?',
               clear: 'Hapus semua',
@@ -146,7 +152,7 @@ class FormBuilder extends Component {
               name: 'Nama',
               no: 'Tidak',
               noFieldsToClear: 'Tidak ada field untuk dibersihkan',
-              number: 'Angka',
+              number: 'Isian Angka',
               off: 'Off',
               on: 'On',
               option: 'Pilihan',
@@ -158,8 +164,8 @@ class FormBuilder extends Component {
               other: 'Lainnya',
               paragraph: 'Paragraf',
               placeholder: 'Placeholder',
-              'placeholder.value': 'nilai',
-              'placeholder.label': 'Label opsi',
+              'placeholder.value': '',
+              'placeholder.label': 'Pilihan Jawaban',
               'placeholder.text': '',
               'placeholder.textarea': '',
               'placeholder.email': 'Isi alamat email anda',
@@ -167,7 +173,7 @@ class FormBuilder extends Component {
               'placeholder.className': 'space separated classes',
               'placeholder.password': 'Isi kata sandi',
               preview: 'Preview',
-              radioGroup: 'Radio Group',
+              radioGroup: 'Pilihan Berganda',
               radio: 'Radio',
               removeMessage: 'Hapus Elemen',
               removeOption: 'Hapus Opsi',
@@ -178,7 +184,7 @@ class FormBuilder extends Component {
               rows: 'Baris',
               save: 'Simpan',
               selectOptions: 'Opsi',
-              select: 'Select',
+              select: 'Pilihan Menu Turun',
               selectColor: 'Pilih Warna',
               selectionsMessage: 'Perbolehkan banyak pilihan',
               size: 'Ukuran',
@@ -238,7 +244,7 @@ class FormBuilder extends Component {
       const surveyTitle = document.getElementById('title-input').value;
       const surveyDescription = document.getElementById('description-input').value;
 
-      http.post('http://localhost:5000/api/listSurvey/create', {
+      http.post('/api/listSurvey/create', {
           id_admin : this.state.idAdmin,
           survey_title : surveyTitle,
           decription : surveyDescription,
@@ -249,13 +255,13 @@ class FormBuilder extends Component {
             let idSurvey = res.data.data.id_survey;
             this.setState ({ idSurvey : idSurvey }, function() {
               let jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json');
-                http.post('http://localhost:5000/api/fBuilder/createform', {
+                http.post('/api/fBuilder/createform', {
                   id_survey : this.state.idSurvey,
                   details: jsonform
                 })
                 .then(res => {
                   if(res.status === 200){
-                    http.post(`http://localhost:5000/api/surveyLink/createLink`, {
+                    http.post(`/api/surveyLink/createLink`, {
                         id_survey : this.state.idSurvey,
                         id_admin : this.state.idAdmin
                     })

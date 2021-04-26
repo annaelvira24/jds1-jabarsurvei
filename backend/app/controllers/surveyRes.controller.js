@@ -1,6 +1,6 @@
 'use strict';
 
-const SurveyRes = require('../models/SurveyRes.model');
+const SurveyRes = require('../models/surveyRes.model');
 
 exports.getResult = function(req, res) {
     SurveyRes.getResult(req.params.link, 

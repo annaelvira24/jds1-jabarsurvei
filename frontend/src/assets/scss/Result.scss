@@ -50,7 +50,7 @@
    overflow-y: auto;
 }
 
-.table-survey{
+#table-survey-result{
    max-height: 500px;
 }
 
@@ -87,10 +87,20 @@
 #button-visual{
    border: #FEC32B solid 1px;
 }
-   
+
+#button-excel{
+   float: right;
+   margin-left: 10px;
+   border: #53A047 solid 1px;
+}
+
 @media only screen and (max-width: 600px) {
    #result-summary{
       margin-left: 15px;
       margin-right: 5px;
+   }
+
+   #download-text{
+      display: none;
    }
 }

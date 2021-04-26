@@ -19,6 +19,7 @@ frontend-build:
     script:
         - cd frontend
         - echo "Building frontend"
+        - npm install
 
 backend-build:
     stage: build
@@ -34,8 +35,9 @@ frontend-test:
     tags:
         - test-run
     script:
-        - echo "Frontend testing not implemented yet"
-        - ls frontend/
+        - echo "Frontend testing"
+        - cd frontend
+        - npm run test
 
 backend-test:
     stage: test

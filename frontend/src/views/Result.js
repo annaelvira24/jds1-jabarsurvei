@@ -1,18 +1,11 @@
-import $ from "jquery";
 import React, { Component, createRef } from "react";
 import { Table, Button } from "react-bootstrap";
+import xlsx from 'xlsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTable, faChartPie } from '@fortawesome/free-solid-svg-icons'
+import { faTable, faChartPie, faDownload } from '@fortawesome/free-solid-svg-icons'
 import http from "../http-common";
 import { getUser } from './../util/Common.js';
-import 'jquery-ui-sortable';
 import './../assets/scss/Result.scss'
-
-window.jQuery = $;
-window.$ = $;
-
-require('formBuilder');
-require('formBuilder/dist/form-render.min.js');
 
 var formDataTemp = [];
 var surveyResult = [];
@@ -44,7 +37,7 @@ class Result extends Component {
 
       // edit existing survey
       if(this.state.link !== undefined){
-        http.get('http://localhost:5000/api/surveyRes/getResult/' + this.state.link)
+        http.get('/api/surveyRes/getResult/' + this.state.link)
         .then(res => {          
             if(res.data[0] !== undefined){
               if(this.state.idAdmin == res.data[0].id_admin){
@@ -81,7 +74,7 @@ class Result extends Component {
                 }
               }
               //removed
-              http.get('http://localhost:5000/api/surveyRes/getAnswerByLinkAlter/' + this.state.link)
+              http.get('/api/surveyRes/getAnswerByLinkAlter/' + this.state.link)
               .then(res => {          
                   if(res.data[0] !== undefined){
                     surveyResult = res.data
@@ -120,6 +113,35 @@ class Result extends Component {
         });
       }
     }
+
+    exportXLSX(){
+      console.log("WIP");
+      let jsonxlsx = [];
+      for(var i = 0;i<surveyResult.length;i++){
+        var parser = '{'
+        for(var j = 0; j < formDataTemp.length+2;j++){
+          if(j==0){
+            parser+='"No":"'+surveyResult[i][j].answer+'",';
+          }
+          else if(j == formDataTemp.length+1){
+            parser+='"Waktu Mengisi":"'+surveyResult[i][j].answer+'"';
+          }
+          else{
+            parser+='"'+ formDataTemp[j-1].label +'":"'+surveyResult[i][j].answer+'",';
+          }
+        }
+        parser+='}';
+        jsonxlsx.push(JSON.parse(parser));
+      }
+      console.log(jsonxlsx)
+      var filename = this.state.title + ".xlsx";
+      console.log(filename);
+      let workbook = xlsx.utils.book_new(); 
+      xlsx.utils.book_append_sheet(workbook, xlsx.utils.json_to_sheet(jsonxlsx), "Sheet1"); 
+      
+      xlsx.writeFile(workbook,filename); 
+    }
+
     render() {
       if(this.state.isOwner == true){
         return(
@@ -137,6 +159,9 @@ class Result extends Component {
               </Button>
               <Button variant="default" className="t-yellow" id="button-visual" onClick = {event =>  window.location.href='/result/'+ this.state.link + '/summary'}>
                 <FontAwesomeIcon icon={faChartPie} /> Visualisasi
+              </Button>
+              <Button variant="default" className="t-green" id="button-excel" onClick={this.exportXLSX.bind(this)}>
+                <FontAwesomeIcon icon={faDownload} /> <span id="download-text">Unduh File Excel</span>
               </Button>
             </div>
             <div id="result-main" ref={this.hideEverything}>

@@ -1,5 +1,6 @@
 import $ from "jquery";
 import React, { Component, createRef } from "react";
+import ReCAPTCHA from "react-google-recaptcha"
 import { Button } from "react-bootstrap";
 import http from "../http-common";
 import AlertBox from '../components/AlertBox.js'
@@ -21,17 +22,20 @@ class Survey extends Component {
 
     state = {
       link : undefined,
+      close : false,
       id : '',
       title : '',
       desc : '',
-      token : ''
+      token : '',
+      recaptchaResponse:""
     }
 
     constructor(){
       super();
       this.handleSubmit = this.handleSubmit.bind(this);
       this.checkRequired = this.checkRequired.bind(this);
-      this.checkForAlamat = this.checkForAlamat.bind(this)
+      this.checkForAlamat = this.checkForAlamat.bind(this);
+      this.handleCaptchaResponseChange = this.handleCaptchaResponseChange.bind(this);
     }
 
     AlertRef = (obj) => { 
@@ -47,7 +51,7 @@ class Survey extends Component {
         this.state.link = this.props.match.params.link;
 
       if(this.state.link !== undefined){
-        http.get('http://localhost:5000/api/surveyFill/getSurvey/' + this.state.link)
+        http.get('/api/surveyFill/getSurvey/' + this.state.link)
         .then(res => {          
             if(res.data[0] !== undefined){
               this.setState({
@@ -69,6 +73,7 @@ class Survey extends Component {
                 });
               }
               else{
+                this.setState({close: true});
                 document.getElementById('not-accepting').innerHTML = "Maaf, survei ini sudah ditutup."
                 $(this.hideButton.current).toggle();
               }
@@ -117,21 +122,33 @@ class Survey extends Component {
         return
       }
 
-      answer = JSON.stringify(answer)
+      if(this.state.recaptchaResponse==""){
+        alert("Mohon isi verifikasi sebelum melakukan submit");
+        return
+      }
+
+      var answer = JSON.stringify(this.checkForAlamat($(this.fbRender.current).formRender("userData")))
       const time = Date.now();
       const body = { 
         id: this.state.id,
         link: this.state.link,
         timestamp: time,
-        data: answer
+        data: answer,
+        recaptchaResponse: this.state.recaptchaResponse
       }
       
-      http.post("http://localhost:5000/api/submit/submitAnswer", body)
+      http.post("/api/submit/submitAnswer", body)
         .then((res)=>{
-          window.location.href = `/${this.state.link}/success`
+          if(res.data == false){
+            alert("Anda terdeteksi sebagai robot");
+          }else{
+            window.location.href = `/${this.state.link}/success`
+            this.recaptcha.reset();
+          }
         })
         .catch((err)=>{
-          console.log(err)
+          alert(err);
+          this.recaptcha.reset();
         })
     }
 
@@ -155,6 +172,13 @@ class Survey extends Component {
       return true;
     }
 
+    	
+  handleCaptchaResponseChange(response) {
+    this.setState({
+      recaptchaResponse: response,
+    });
+  }
+
     render() {
         return(
           <div id = "survey-container">
@@ -171,6 +195,13 @@ class Survey extends Component {
               <span id='required-span'></span>
               <h5 id='not-accepting'></h5>
               <div id="fb-rendered" ref={this.fbRender}>
+              </div>
+              <div style = {{display:(this.state.close? 'none' : 'block')}}>
+                <ReCAPTCHA
+                  ref={(el) => { this.recaptcha = el; }}
+                  sitekey={process.env.REACT_APP_PUBLIC_RECAPTHCA_SITE_KEY}
+                  onChange={this.handleCaptchaResponseChange}
+                />
               </div>
               <Button type="button" variant = "default" className="t-green" id="button-submit" onClick={this.handleSubmit} ref={this.hideButton}>Submit</Button>
             </div>

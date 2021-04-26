@@ -11,7 +11,7 @@ window.fbControls.push(function (controlClass) {
         i18n: {
           'default': 'Alamat',
         },
-        icon: "🚩",
+        icon: "⚑",
         mi18n: {
           requireValidOption: 'requireValidOption',
         },
@@ -32,7 +32,7 @@ window.fbControls.push(function (controlClass) {
         var token_input = $(`#${data.id}-token`)
         if (token_input) token_input.html(this.token)
 
-        http.get('http://localhost:5000/api/alamat/Provinsi/' + this.token)
+        http.get('/api/alamat/Provinsi/' + this.token)
         .then(res => {
           const id_prov = res.data.data[0].value
           prov_options = res.data.data.map(el => {
@@ -44,7 +44,7 @@ window.fbControls.push(function (controlClass) {
             prov_select.append(prov_options)
           }
 
-          var url = 'http://localhost:5000/api/alamat/Kota/' + this.token + '/'+ id_prov
+          var url = '/api/alamat/Kota/' + this.token + '/'+ id_prov
           http.get(url)
             .then(res => {
               const id_kota = res.data.data[0].value
@@ -54,7 +54,7 @@ window.fbControls.push(function (controlClass) {
 
               $(`#${data.id}-input-kota`).append(kota_options)
 
-              var url = 'http://localhost:5000/api/alamat/Kecamatan/' + this.token + '/'+ id_kota
+              var url = '/api/alamat/Kecamatan/' + this.token + '/'+ id_kota
               http.get(url)
                 .then(res => {
                   const id_kecamatan = res.data.data[0].value
@@ -64,7 +64,7 @@ window.fbControls.push(function (controlClass) {
 
                   $(`#${data.id}-input-kecamatan`).append(kecamatan_options)
 
-                  var url = 'http://localhost:5000/api/alamat/Kelurahan/' + this.token + '/'+ id_kecamatan
+                  var url = '/api/alamat/Kelurahan/' + this.token + '/'+ id_kecamatan
                   http.get(url)
                     .then(res => {
                       const kelurahan_options = res.data.data.map(el => {
@@ -92,6 +92,7 @@ window.fbControls.push(function (controlClass) {
           events: {
             change: this.handleProvinsiChange
           },
+          className: 'form-control',
         }),
         this.markup('p', 'Kota/Kabupaten'),
         this.markup('select', null, {
@@ -99,6 +100,7 @@ window.fbControls.push(function (controlClass) {
           events: {
             change: this.handleKotaChange
           },
+          className: 'form-control',
         }),
         this.markup('p', 'Kecamatan'),
         this.markup('select', null, {
@@ -106,14 +108,19 @@ window.fbControls.push(function (controlClass) {
           events: {
             change: this.handleKecamatanChange
           },
+          className: 'form-control'
         }),
         this.markup('p', 'Kelurahan'),
         this.markup('select', null, {
           id: `${data.id}-input-kelurahan`,
+          className: 'form-control',
         }),
-        this.markup('p', 'Alamat Lengkap'),
+        this.markup('p', 'Alamat Lengkap', {
+          className: 'form-builder-alamat'
+        }),
         this.markup('textarea', null, {
           id: `${data.id}-input-lengkap`,
+          className: 'form-control',
         }),
         this.markup('p')
       ]
@@ -135,7 +142,7 @@ window.fbControls.push(function (controlClass) {
       kecamatan.empty()
       kelurahan.empty()
 
-      var url = 'http://localhost:5000/api/alamat/Kota/' + token + '/'+ id_prov
+      var url = '/api/alamat/Kota/' + token + '/'+ id_prov
       http.get(url)
         .then(res => {
           const kota_options = res.data.data.map(el => {
@@ -160,7 +167,7 @@ window.fbControls.push(function (controlClass) {
       console.log(id_kota)
       console.log(token)
 
-      var url = 'http://localhost:5000/api/alamat/Kecamatan/' + token + '/'+ id_kota
+      var url = '/api/alamat/Kecamatan/' + token + '/'+ id_kota
       http.get(url)
         .then(res => {
           const kecamatan_options = res.data.data.map(el => {
@@ -185,7 +192,7 @@ window.fbControls.push(function (controlClass) {
       console.log(id_kecamatan)
       console.log(token)
 
-      var url = 'http://localhost:5000/api/alamat/Kelurahan/' + token + '/'+ id_kecamatan
+      var url = '/api/alamat/Kelurahan/' + token + '/'+ id_kecamatan
       http.get(url)
         .then(res => {
           const kelurahan_options = res.data.data.map(el => {
