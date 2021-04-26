@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Container, Row,} from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import Table_comp from '../components/Table_comp.js';
 import Carousel_dash from '../components/Carousel_dash.js';
 import Card_dash from '../components/Card_dash.js';
-import '../assets/css/LandingPage.css';
+import PaginationButton from '../components/Pagination';
 import http from "../http-common";
-import PaginationButton from '../components/Pagination'
+import '../assets/css/LandingPage.css';
 
 class LandingPage extends Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class LandingPage extends Component {
       display: [],
       offset: 0,
       currentPage: 1,
-      perPage: 5,
+      perPage: 10,
       pageCount: 0,
       search: ""
     };
@@ -26,16 +26,14 @@ class LandingPage extends Component {
   render(){
     return (
       <div className="Content-Container">
-        <header className="Landing-Container">
-            {/* <Container className="Landing-header"> */}
-                <Row className="Upper-header">
-                    <Carousel_dash />
-                </Row>
-                <Row className="Addition-header">
-                    <Card_dash/>
-                </Row>
-            {/* </Container> */}
-        </header>
+        <div className="Landing-Container">
+            <div className="Upper-header">
+                <Carousel_dash />
+            </div>
+            <div className="Addition-header">
+                <Card_dash/>
+            </div>
+        </div>
         <div className="Survey-Container">
           <Table_comp daftar_survey={this.state.display} onSearch={ this.handleSearch } />
           <PaginationButton totalPage={this.state.pageCount} pageMargin={1} onPageClick={this.handlePageClick} currentPage={this.state.currentPage} className='mx-auto' />
@@ -49,7 +47,7 @@ class LandingPage extends Component {
   }
 
   findAll() {
-    http.get('http://localhost:5000/api/listSurvey/findAll')
+    http.get('/api/listSurvey/findAll')
       .then(res => {
         const listSurvey = res.data;
         const count = Math.ceil(listSurvey.length/this.state.perPage)
@@ -80,7 +78,7 @@ class LandingPage extends Component {
     const parsed = parseInt(button)
 
     const offset = (parsed-1)*this.state.perPage
-    var url = `http://localhost:5000/api/listSurvey/findAll?offset=${offset}&limit=${this.state.perPage}`
+    var url = `/api/listSurvey/findAll?offset=${offset}&limit=${this.state.perPage}`
     if (this.state.search)
       url += `&query=${this.state.search}`
     http.get(url)
@@ -95,7 +93,7 @@ class LandingPage extends Component {
 
   handleSearch(query) {
     if (!query) this.findAll();
-    var url = `http://localhost:5000/api/listSurvey/findAll?query=${query}`
+    var url = `/api/listSurvey/findAll?query=${query}`
     http.get(url)
       .then((res) => {
         const listSurvey = res.data

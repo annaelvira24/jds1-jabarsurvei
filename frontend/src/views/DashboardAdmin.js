@@ -32,27 +32,6 @@ class DashboardAdmin extends Component {
     this.findAll = this.findAll.bind(this)
   } 
 
-    render(){
-      return (
-        <div className="Content-Container" id="dashboard-admin">
-          <header>
-            <h1 className = 'Title-h1-Dashboard'> DAFTAR SURVEI</h1>
-            <h2 className = 'Title-h2-Dashboard'> {this.state.username}</h2>
-            <br/>
-            <div className="wrapper-button-create">
-              <button type="button" className='btn btn-outline-t-green' id="button-create" onClick = {event =>  window.location.href='/formbuilder/create'}>
-              <FontAwesomeIcon icon={faPlus} /> Survei Baru
-              </button>
-            </div>
-          </header>
-          <div className="Survey-Container">
-            <TableAdmin daftar_survey={this.state.display} onSearch={ this.handleSearch } />
-            <PaginationButton totalPage={this.state.pageCount} pageMargin={1} onPageClick={this.handlePageClick} currentPage={this.state.currentPage} className='mx-auto' />
-          </div>
-        </div>
-      );
-    }
-
     handlePageClick(e) {
       // Change active page
       const current = this.state.currentPage
@@ -72,7 +51,7 @@ class DashboardAdmin extends Component {
       const offset = (parsed-1)*this.state.perPage
       this.setState({currentPage: parsed})
       
-      var url = `http://localhost:5000/api/surveyAdmin/${this.state.id_admin}?offset=${offset}&limit=${this.state.perPage}`
+      var url = `/api/surveyAdmin/${this.state.id_admin}?offset=${offset}&limit=${this.state.perPage}`
       if (this.state.search)
         url += `&query=${this.state.search}`
       http.get(url)
@@ -87,7 +66,7 @@ class DashboardAdmin extends Component {
 
     handleSearch(query) {
       if (!query) this.findAll();
-      var url = `http://localhost:5000/api/surveyAdmin/${this.state.id_admin}?query=${query}`
+      var url = `/api/surveyAdmin/${this.state.id_admin}?query=${query}`
       http.get(url)
         .then((res) => {
           console.log(res.data)
@@ -106,7 +85,7 @@ class DashboardAdmin extends Component {
 
     componentDidMount() {
       if(!this.state.username){
-        let url = 'http://localhost:5000/api/admin/' + this.state.id_admin
+        let url = '/api/admin/' + this.state.id_admin
         http.get(url)
         .then(res => {
           this.setState({ username : res.data[0].username });
@@ -116,7 +95,7 @@ class DashboardAdmin extends Component {
     }
 
     findAll() {
-      let url = 'http://localhost:5000/api/surveyAdmin/' + this.state.id_admin
+      let url = '/api/surveyAdmin/' + this.state.id_admin
       http.get(url)
         .then(res => {
           const listSurveyAdmin = res.data;
@@ -132,5 +111,19 @@ class DashboardAdmin extends Component {
         })
     }
 
+    render(){
+      return (
+        <div className="Content-Container" id="dashboard-admin">
+          <header>
+            <h1 className = 'Title-h1-Dashboard'> DAFTAR SURVEI</h1>
+            <h2 className = 'Title-h2-Dashboard'> {this.state.username}</h2>
+          </header>
+          <div className="Survey-Container">
+            <TableAdmin daftar_survey={this.state.display} onSearch={ this.handleSearch } />
+            <PaginationButton totalPage={this.state.pageCount} pageMargin={1} onPageClick={this.handlePageClick} currentPage={this.state.currentPage} className='mx-auto' />
+          </div>
+        </div>
+      );
+    }
 };
   export default DashboardAdmin;

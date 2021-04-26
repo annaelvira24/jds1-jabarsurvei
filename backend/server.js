@@ -25,7 +25,7 @@ const adminRoutes = require('./app/routes/admin.routes')
 app.use('/api/admin', adminRoutes);
 
 // set port, listen for requests
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.NODE_ENV === 'test' ? 5001 : 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
@@ -48,5 +48,7 @@ app.use('/api/submit', submitRoutes);
 const surveyFillRoutes = require('./app/routes/surveyFill.routes')
 app.use('/api/surveyFill', surveyFillRoutes);
 
+const alamatRoutes = require('./app/routes/alamat.routes')
+app.use('/api/alamat', alamatRoutes);
 const surveyResRoutes = require('./app/routes/surveyRes.routes')
 app.use('/api/surveyRes', surveyResRoutes);

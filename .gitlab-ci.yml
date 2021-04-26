@@ -1,21 +1,13 @@
-image: node
+image: node:latest
 
 stages:
     - build
     - test
 
-services:
-    - mysql:latest
-
 cache:
     paths:
         - backend/node_modules/
         - frontend/node_modules/
-
-# before_script:
-#    - apt --assume-yes update
-#    - apt --assume-yes install mysql-client
-#    - mysql --version
 
 frontend-build:
     stage: build
@@ -24,17 +16,12 @@ frontend-build:
     script:
         - cd frontend
         - echo "Building frontend"
+        - npm install
 
 backend-build:
     stage: build
     tags:
         - test-run
-
-    before_script:
-        - echo "Building database"
-        # - mysql --user=root --host=localhost --password="" -e 'CREATE DATABASE IF NOT EXISTS crowdsource;'
-        # - \n
-        # - Get-Content database/crowdsource.sql | mysql -u root crowdsource
 
     script:
         - cd backend
@@ -46,8 +33,9 @@ frontend-test:
     tags:
         - test-run
     script:
-        - echo "Frontend testing not implemented yet"
-        - ls frontend/
+        - echo "Frontend testing"
+        - cd frontend
+        - npm run test
 
 backend-test:
     stage: test
@@ -55,5 +43,5 @@ backend-test:
         - test-run
     script:
         - echo "Backend testing"
-        # - npm run test
-        - ls backend/node_modules/
+        - cd backend
+        - npm run test

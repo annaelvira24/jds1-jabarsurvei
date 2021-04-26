@@ -8,16 +8,22 @@ import http from "../http-common";
 
 class Card_dash extends Component{
     state = {
-        count: undefined
+        countSurvey: undefined,
+        countRespons: undefined
     };
 
     componentDidMount() {
-        http.get('http://localhost:5000/api/listSurvey/count')
+        http.get('/api/listSurvey/count')
           .then(res => {
             const countSurvey = res.data.count;
-            this.state.count= countSurvey;
-            console.log(this.state.count);
+            this.state.countSurvey= countSurvey;
           })
+
+        http.get('/api/submit/count')
+            .then(res => {
+            const countRespons = res.data.count;
+            this.state.countRespons= countRespons;
+        })
         
     }
 
@@ -35,7 +41,7 @@ class Card_dash extends Component{
                                     <Col sm={7}>
                                         <Card.Title>
                                             <h5 id="card-h5">Total</h5>
-                                            <h3 id="card-h3">{this.state.count}
+                                            <h3 id="card-h3">{this.state.countSurvey}
                                             <br/>
                                             Survey</h3>
                                         </Card.Title>
@@ -54,7 +60,9 @@ class Card_dash extends Component{
                                         <Col sm={7}>
                                             <Card.Title>
                                                 <h5 id="card-h5">Total</h5>
-                                                <h3 id="card-h3">30.000 Responden</h3>
+                                                <h3 id="card-h3">{this.state.countRespons}
+                                                <br/>
+                                                Responden</h3>
                                             </Card.Title>
                                         </Col>
                                     </Row>

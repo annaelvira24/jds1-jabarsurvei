@@ -26,6 +26,10 @@
     width: 100%;
 }
 
+#link{
+    text-decoration: none;
+}
+
 @media only screen and (max-width: 600px) {
     #feedback-container{
         margin-top: 50px;
