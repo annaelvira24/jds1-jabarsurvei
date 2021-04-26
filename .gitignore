@@ -1,4 +1,3 @@
-
 frontend/package-lock.json
 frontend/yarn.lock
 frontend/yarn.lock
@@ -9,7 +8,13 @@ backend/package-lock.json
 backend/.env
 frontend/node_modules
 frontend/yarn-error.log
-frontend/yarn.lock
 frontend/.env
 frontend/src/.scannerwork
 frontend/src/sonar-project.properties
+backend/node_modules
+backend/package-lock.json
+backend/.env
+backend/sonar-project.properties
+backend/.scannerwork
+
+
