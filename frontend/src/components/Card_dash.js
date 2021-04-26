@@ -13,13 +13,13 @@ class Card_dash extends Component{
     };
 
     componentDidMount() {
-        http.get('http://localhost:5000/api/listSurvey/count')
+        http.get('/api/listSurvey/count')
           .then(res => {
             const countSurvey = res.data.count;
             this.state.countSurvey= countSurvey;
           })
 
-        http.get('http://localhost:5000/api/submit/count')
+        http.get('/api/submit/count')
             .then(res => {
             const countRespons = res.data.count;
             this.state.countRespons= countRespons;

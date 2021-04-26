@@ -21,7 +21,7 @@ class SubmitFeedback extends Component {
             this.state.prevLink = this.props.match.params.link;
 
         if(this.state.prevLink !== undefined){
-            http.get('http://localhost:5000/api/surveyFill/getSurvey/' + this.state.prevLink)
+            http.get('/api/surveyFill/getSurvey/' + this.state.prevLink)
             .then(res => {          
                 if(res.data[0] !== undefined){
                     this.setState({

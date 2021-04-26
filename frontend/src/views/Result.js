@@ -37,7 +37,7 @@ class Result extends Component {
 
       // edit existing survey
       if(this.state.link !== undefined){
-        http.get('http://localhost:5000/api/surveyRes/getResult/' + this.state.link)
+        http.get('/api/surveyRes/getResult/' + this.state.link)
         .then(res => {          
             if(res.data[0] !== undefined){
               if(this.state.idAdmin == res.data[0].id_admin){
@@ -74,7 +74,7 @@ class Result extends Component {
                 }
               }
               //removed
-              http.get('http://localhost:5000/api/surveyRes/getAnswerByLinkAlter/' + this.state.link)
+              http.get('/api/surveyRes/getAnswerByLinkAlter/' + this.state.link)
               .then(res => {          
                   if(res.data[0] !== undefined){
                     surveyResult = res.data

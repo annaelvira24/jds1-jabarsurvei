@@ -3,8 +3,7 @@ import { Row } from 'react-bootstrap';
 import Table_comp from '../components/Table_comp.js';
 import Carousel_dash from '../components/Carousel_dash.js';
 import Card_dash from '../components/Card_dash.js';
-import PaginationButton from '../components/Pagination'
-import Footer from '../components/Footer'
+import PaginationButton from '../components/Pagination';
 import http from "../http-common";
 import '../assets/css/LandingPage.css';
 
@@ -48,7 +47,7 @@ class LandingPage extends Component {
   }
 
   findAll() {
-    http.get('http://localhost:5000/api/listSurvey/findAll')
+    http.get('/api/listSurvey/findAll')
       .then(res => {
         const listSurvey = res.data;
         const count = Math.ceil(listSurvey.length/this.state.perPage)
@@ -79,7 +78,7 @@ class LandingPage extends Component {
     const parsed = parseInt(button)
 
     const offset = (parsed-1)*this.state.perPage
-    var url = `http://localhost:5000/api/listSurvey/findAll?offset=${offset}&limit=${this.state.perPage}`
+    var url = `/api/listSurvey/findAll?offset=${offset}&limit=${this.state.perPage}`
     if (this.state.search)
       url += `&query=${this.state.search}`
     http.get(url)
@@ -94,7 +93,7 @@ class LandingPage extends Component {
 
   handleSearch(query) {
     if (!query) this.findAll();
-    var url = `http://localhost:5000/api/listSurvey/findAll?query=${query}`
+    var url = `/api/listSurvey/findAll?query=${query}`
     http.get(url)
       .then((res) => {
         const listSurvey = res.data
