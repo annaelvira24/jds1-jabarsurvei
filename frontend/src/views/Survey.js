@@ -51,7 +51,7 @@ class Survey extends Component {
         this.state.link = this.props.match.params.link;
 
       if(this.state.link !== undefined){
-        http.get('http://localhost:5000/api/surveyFill/getSurvey/' + this.state.link)
+        http.get('/api/surveyFill/getSurvey/' + this.state.link)
         .then(res => {          
             if(res.data[0] !== undefined){
               this.setState({
@@ -137,7 +137,7 @@ class Survey extends Component {
         recaptchaResponse: this.state.recaptchaResponse
       }
       
-      http.post("http://localhost:5000/api/submit/submitAnswer", body)
+      http.post("/api/submit/submitAnswer", body)
         .then((res)=>{
           if(res.data == false){
             alert("Anda terdeteksi sebagai robot");

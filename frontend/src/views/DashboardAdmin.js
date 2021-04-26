@@ -51,7 +51,7 @@ class DashboardAdmin extends Component {
       const offset = (parsed-1)*this.state.perPage
       this.setState({currentPage: parsed})
       
-      var url = `http://localhost:5000/api/surveyAdmin/${this.state.id_admin}?offset=${offset}&limit=${this.state.perPage}`
+      var url = `/api/surveyAdmin/${this.state.id_admin}?offset=${offset}&limit=${this.state.perPage}`
       if (this.state.search)
         url += `&query=${this.state.search}`
       http.get(url)
@@ -66,7 +66,7 @@ class DashboardAdmin extends Component {
 
     handleSearch(query) {
       if (!query) this.findAll();
-      var url = `http://localhost:5000/api/surveyAdmin/${this.state.id_admin}?query=${query}`
+      var url = `/api/surveyAdmin/${this.state.id_admin}?query=${query}`
       http.get(url)
         .then((res) => {
           console.log(res.data)
@@ -85,7 +85,7 @@ class DashboardAdmin extends Component {
 
     componentDidMount() {
       if(!this.state.username){
-        let url = 'http://localhost:5000/api/admin/' + this.state.id_admin
+        let url = '/api/admin/' + this.state.id_admin
         http.get(url)
         .then(res => {
           this.setState({ username : res.data[0].username });
@@ -95,7 +95,7 @@ class DashboardAdmin extends Component {
     }
 
     findAll() {
-      let url = 'http://localhost:5000/api/surveyAdmin/' + this.state.id_admin
+      let url = '/api/surveyAdmin/' + this.state.id_admin
       http.get(url)
         .then(res => {
           const listSurveyAdmin = res.data;

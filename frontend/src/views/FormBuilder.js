@@ -51,7 +51,7 @@ class FormBuilder extends Component {
     }
 
     getSurveyTitle(){
-      http.get('http://localhost:5000/api/fBuilder/getTitleById/' + this.state.idSurvey)
+      http.get('/api/fBuilder/getTitleById/' + this.state.idSurvey)
       .then(res =>
         this.setState({
           surveyTitle : res.data[0].survey_title,
@@ -77,7 +77,7 @@ class FormBuilder extends Component {
 
       // edit existing survey
       if(this.state.idSurvey !== undefined){
-        http.get('http://localhost:5000/api/fBuilder/findById/' + this.state.idSurvey)
+        http.get('/api/fBuilder/findById/' + this.state.idSurvey)
         .then(res => {
           for (var i = 0; i<res.data.length; i++){
             formDataTemp.push(JSON.parse(res.data[i].details));
@@ -244,7 +244,7 @@ class FormBuilder extends Component {
       const surveyTitle = document.getElementById('title-input').value;
       const surveyDescription = document.getElementById('description-input').value;
 
-      http.post('http://localhost:5000/api/listSurvey/create', {
+      http.post('/api/listSurvey/create', {
           id_admin : this.state.idAdmin,
           survey_title : surveyTitle,
           decription : surveyDescription,
@@ -255,13 +255,13 @@ class FormBuilder extends Component {
             let idSurvey = res.data.data.id_survey;
             this.setState ({ idSurvey : idSurvey }, function() {
               let jsonform = $(this.fbBuilder.current).formBuilder('getData', 'json');
-                http.post('http://localhost:5000/api/fBuilder/createform', {
+                http.post('/api/fBuilder/createform', {
                   id_survey : this.state.idSurvey,
                   details: jsonform
                 })
                 .then(res => {
                   if(res.status === 200){
-                    http.post(`http://localhost:5000/api/surveyLink/createLink`, {
+                    http.post(`/api/surveyLink/createLink`, {
                         id_survey : this.state.idSurvey,
                         id_admin : this.state.idAdmin
                     })

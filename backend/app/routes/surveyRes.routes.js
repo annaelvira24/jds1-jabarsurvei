@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const surveyResController = require('../controllers/SurveyRes.controller');
+const surveyResController = require('../controllers/surveyRes.controller');
 
 router.get('/getResult/:link', surveyResController.getResult);
 router.get('/getAnswerByLink/:link', surveyResController.getAnswerByLink);

@@ -96,7 +96,7 @@ class Register extends Component{
             let password = document.getElementById('password-input').value;
             
     
-            http.post('http://localhost:5000/api/admin/register', 
+            http.post('/api/admin/register', 
             { 
                 email : email,
                 password : password,

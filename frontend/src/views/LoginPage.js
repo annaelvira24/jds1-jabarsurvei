@@ -20,7 +20,7 @@ class Login extends Component{
         let email = document.getElementById('email-input').value;
         let password = document.getElementById('password-input').value;
 
-        http.post('http://localhost:5000/api/admin/login', { email : email, password : password })
+        http.post('/api/admin/login', { email : email, password : password })
         .then(res => {
             console.log(res);
             if(res.data != null){

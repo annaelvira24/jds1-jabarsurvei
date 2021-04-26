@@ -50,7 +50,7 @@ class ResultSummary extends Component {
         this.state.link = this.props.match.params.link;
 
       if(this.state.link !== undefined){
-      http.get('http://localhost:5000/api/surveyRes/getResult/' + this.state.link)
+      http.get('/api/surveyRes/getResult/' + this.state.link)
         .then(res => {          
             if(res.data[0] !== undefined){
               if(this.state.idAdmin == res.data[0].id_admin){
@@ -63,13 +63,13 @@ class ResultSummary extends Component {
             }
         });
 
-        http.get('http://localhost:5000/api/surveyRes/getAnswerByLink/' + this.state.link)
+        http.get('/api/surveyRes/getAnswerByLink/' + this.state.link)
         .then(res => {          
             if(res.data[0] !== undefined){
               this.setState({
                   surveyResult : res.data
               });
-              http.get('http://localhost:5000/api/surveyRes/getQuestionCount/' + this.state.link)
+              http.get('/api/surveyRes/getQuestionCount/' + this.state.link)
               .then(res => {          
                   if(res.data[0] !== undefined){
                     this.setState({

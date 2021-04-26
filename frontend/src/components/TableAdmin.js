@@ -37,7 +37,7 @@ class TableAdmin extends Component {
 
     handleShowLink(e, idSurvey){
         e.preventDefault();
-        http.get(`http://localhost:5000/api/surveyLink/`+ idSurvey)
+        http.get(`/api/surveyLink/`+ idSurvey)
         .then((res) => {
           console.log(res.data[0].randomlink);
           this.setState({
@@ -51,7 +51,7 @@ class TableAdmin extends Component {
 
     handleUpdateStatus(e, idSurvey, status){
         e.preventDefault();
-        http.post(`http://localhost:5000/api/surveyAdmin/updateStatus`, {
+        http.post(`/api/surveyAdmin/updateStatus`, {
             id : idSurvey,
             status : status
         })
