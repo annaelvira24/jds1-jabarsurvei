@@ -26,6 +26,14 @@ create database crowdsource;
 ```
 mysql -u root crowdsource < crowdsource.sql
 ```
+6. Jika diperlukan, konfigurasikan basis data tersebut pada file backend/app/config/db.config.js sebagai berikut dan sesuaikan user dan password dengan username dan password MySQL yang sedang digunakan.
+```
+host : ‘localhost’,
+user : ‘root’,
+password : ‘’,
+database : ‘crowdsource’
+```
+
 
 #### Instalasi npm atau yarn Backend
 1. Buka terminal ada command prompt pada folder backend
