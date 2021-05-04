@@ -17,7 +17,7 @@ Aplikasi Jabar Survei merupakan aplikasi berbasis web yang digunakan untuk melak
 ```
 mysql -u root
 ```
-4. Buat sebuah database baru dengan nama `crowdsource` dengan menuliskan command berikut
+3. Buat sebuah database baru dengan nama `crowdsource` dengan menuliskan command berikut
 ```
 create database crowdsource;
 ```
