@@ -60,6 +60,24 @@ yarn install
 3. Tunggu hingga proses instalasi selesai dan pastikan tidak ada error
 
 #### Konfigurasi environtment variables
+1. Tambahkan environtment variabel dengan membuat file .env pada root (satu folder dengan package.json) file backend dan frontend
+2. Isi .env pada frontend adalah 
+```
+REACT_APP_PUBLIC_RECAPTHCA_SITE_KEY = xxx
+```
+dengan xxx adalah site key
+3. Isi .env pada backend adalah 
+```
+RECAPTCHA_SECRET_KEY= yyy
+```
+dengan xxx adalah sitekey, dan yyy adalah secret key
+4. Pastikan selalu menjalankan ulang apabila telah merubah file .env
+5. Pastikan file .env tidak terpush
+
+#### Konfigurasi RECAPTCHA
+1. RECAPTCHA digunakan pada form survey
+2. Guna mendapatkan site key dan secret key untuk konfigurasi RECAPTCHA, anda perlu mendaftarkan website anda ke https://www.google.com/recaptcha/admin/create
+3. Masukan key yang didapatkan kedalam environtment variables sesuai yang telah dijelaskan sebelumnya
 
 ### Running the App
 #### Menjalankan Backend
