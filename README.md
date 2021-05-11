@@ -59,28 +59,29 @@ yarn install
 ```
 3. Tunggu hingga proses instalasi selesai dan pastikan tidak ada error
 
+#### Konfigurasi RECAPTCHA
+RECAPTCHA digunakan pada form survei untuk memastikan pengisian survei hanya dilakukan oleh manusia, bukan bot. Anda perlu mendaftarkan google recaptcha untuk memperoleh site key dan secret key yang akan digunakan kemudian. Berikut langkah-langkah untuk mendaftar ke google recaptcha.
+1. Kunjungi https://www.google.com/recaptcha/admin/create
+2. Isikan field label dengan "jabarsurvei" lalu pilih `reCAPTCHA v2"` dengan sub pilihan `"I'm not a robot" Checkbox`.
+3. Tambahkan domain `localhost` atau domain frontend yang nantinya akan digunakan.
+4. Check pilihan `Accept the reCAPTCHA Terms of Service`
+5. Klik Submit
+7. Anda akan dialihkan ke halaman lain yang berisi site key dan secret key.
+8. Masukan key yang didapatkan kedalam environtment variables sesuai yang telah dijelaskan sebelumnya
+
 #### Konfigurasi environtment variables
-1. Tambahkan environtment variabel dengan membuat file .env pada root (satu folder dengan package.json) file backend dan frontend
-2. Isi .env pada frontend adalah 
+1. Tambahkan environtment variabel dengan membuat file .env pada folder backend dan frontend.
+2. Isikan variable berikut pada file .env frontend
 ```
 REACT_APP_PUBLIC_RECAPTHCA_SITE_KEY = xxx
 ```
-dengan xxx adalah site key
+dengan xxx adalah site key yang diperoleh dari reCAPTCHA yang telah dibuat sebelumnya.
 
-3. Isi .env pada backend adalah 
+3. Isikan variable berikut pada file .env backend
 ```
 RECAPTCHA_SECRET_KEY= yyy
 ```
-dengan yyy adalah secret key
-
-4. Pastikan selalu menjalankan ulang apabila telah merubah file .env
-
-5. Pastikan file .env tidak terpush
-
-#### Konfigurasi RECAPTCHA
-1. RECAPTCHA digunakan pada form survey
-2. Guna mendapatkan site key dan secret key untuk konfigurasi RECAPTCHA, anda perlu mendaftarkan website anda ke https://www.google.com/recaptcha/admin/create
-3. Masukan key yang didapatkan kedalam environtment variables sesuai yang telah dijelaskan sebelumnya
+dengan yyy adalah secret key yang diperoleh dari reCAPTCHA yang telah dibuat sebelumnya.
 
 ### Running the App
 #### Menjalankan Backend
