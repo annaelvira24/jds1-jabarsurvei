@@ -67,7 +67,6 @@ RECAPTCHA digunakan pada form survei untuk memastikan pengisian survei hanya dil
 4. Check pilihan `Accept the reCAPTCHA Terms of Service`
 5. Klik Submit
 7. Anda akan dialihkan ke halaman lain yang berisi site key dan secret key.
-8. Masukan key yang didapatkan kedalam environtment variables sesuai yang telah dijelaskan sebelumnya
 
 #### Konfigurasi environtment variables
 1. Tambahkan environtment variabel dengan membuat file .env pada folder backend dan frontend.
