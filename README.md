@@ -1,5 +1,4 @@
-# IF3250-08-jds1-CrowdSource
-## Jabar Survei Kelompok 8 PPL
+# Jabar Survei Kelompok 8
 
 ## Deskripsi
 Aplikasi Jabar Survei merupakan aplikasi berbasis web yang digunakan untuk melakukan proses crowdsourcing di Jawa Barat, yaitu pembuatan survei dan pengisian survei oleh para pengguna web. Link survei dapat dibagikan dengan mudah sehingga dapat memperluas cakupan responden. Hasil dari respons survei tersedia dalam bentuk tabel yang dapat didownload dalam file excel dan dalam bentuk visualisasi data berupa grafik dan diagram. 
